@@ -13,5 +13,10 @@ public class RpcServerLocalCache {
     /**
      * 存放服务名称和服务提供者class的映射
      */
-    public static final Map<String, Object> SERVICE_PROVIDER_MAP = new HashMap<>();
+    public static final Map<String, Object> SERVICE_PROVIDER_CACHE = new HashMap<>();
+
+    /**
+     * 存放本地服务注册信息的缓存
+     */
+    public static final Map<String, Object> REGISTRY_DATA_CACHE = new HashMap<>();
 }

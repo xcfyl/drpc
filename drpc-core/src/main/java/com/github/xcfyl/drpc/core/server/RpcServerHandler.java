@@ -11,7 +11,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.lang.reflect.Method;
 
-import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.SERVICE_PROVIDER_MAP;
+import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.SERVICE_PROVIDER_CACHE;
 
 /**
  * rpc服务端处理器，负责处理请求
@@ -24,7 +24,7 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
         RpcRequest request = RpcTransferProtocolHelper.parseRpcRequest(protocol);
-        Object service = SERVICE_PROVIDER_MAP.get(request.getServiceName());
+        Object service = SERVICE_PROVIDER_CACHE.get(request.getServiceName());
         Method[] methods = service.getClass().getDeclaredMethods();
         Object result = null;
         for (Method method : methods) {

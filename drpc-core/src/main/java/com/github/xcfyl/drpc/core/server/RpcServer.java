@@ -10,7 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.SERVICE_PROVIDER_MAP;
+import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.SERVICE_PROVIDER_CACHE;
 
 /**
  * rpc服务端
@@ -65,7 +65,7 @@ public class RpcServer {
             throw new RuntimeException("服务只能实现一个接口");
         }
         Class<?> interfaceClass = interfaces[0];
-        SERVICE_PROVIDER_MAP.put(interfaceClass.getName(), service);
+        SERVICE_PROVIDER_CACHE.put(interfaceClass.getName(), service);
     }
 
     public static void main(String[] args) throws Throwable {
