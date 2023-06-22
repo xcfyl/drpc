@@ -22,7 +22,6 @@ import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.SERVICE_PROV
 public class RpcServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("搜到一个数据");
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
         RpcRequest request = RpcTransferProtocolHelper.parseRpcRequest(protocol);
         Object service = SERVICE_PROVIDER_MAP.get(request.getServiceName());

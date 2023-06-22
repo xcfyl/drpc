@@ -47,6 +47,8 @@ public class RpcClient {
         RpcClient rpcClient = new RpcClient(clientConfig);
         RpcReference reference = rpcClient.start();
         HelloService helloService = reference.get(HelloService.class);
-        System.out.println(helloService.hello("zhangsan"));
+        for (int i = 0; i < 100; i++) {
+            System.out.println(helloService.hello("zhangsan"));
+        }
     }
 }
