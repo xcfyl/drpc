@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.common.exception;
+package com.github.xcfyl.drpc.core.exception;
 
 /**
  * 请求异常

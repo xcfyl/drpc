@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.common;
+package com.github.xcfyl.drpc.core.protocol;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

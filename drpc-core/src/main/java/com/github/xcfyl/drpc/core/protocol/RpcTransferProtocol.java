@@ -1,7 +1,5 @@
-package com.github.xcfyl.drpc.core.common;
+package com.github.xcfyl.drpc.core.protocol;
 
-import com.github.xcfyl.drpc.core.common.constants.RpcConstants;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -13,25 +11,28 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 09:44
  */
-@ToString
 public class RpcTransferProtocol implements Serializable {
     private static final long serialVersionUID = -3657714509000090585L;
     /**
      * 协议标识，用于检测是否为rpc协议
      */
-    private final short magicNumber = (short) RpcConstants.MAGIC_NUMBER.getCode();
+    private static short magicNumber = 1998;
     /**
      * 本次传输的数据长度
      */
-    private final int length;
+    private int length;
     /**
      * 本次传输的数据内容
      */
-    private final byte[] body;
+    private byte[] body;
     /**
      * 协议的附加属性
      */
-    private final Map<String, Object> attr;
+    private Map<String, Object> attr;
+
+    public RpcTransferProtocol() {
+
+    }
 
     public RpcTransferProtocol(byte[] body) {
         this.length = body.length;
@@ -56,7 +57,7 @@ public class RpcTransferProtocol implements Serializable {
         return 6;
     }
 
-    public short getMagicNumber() {
+    public static short getMagicNumber() {
         return magicNumber;
     }
 
@@ -66,5 +67,13 @@ public class RpcTransferProtocol implements Serializable {
 
     public int getLength() {
         return length;
+    }
+
+    public void setBody(byte[] body) {
+        this.body = body;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 }

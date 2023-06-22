@@ -1,7 +1,9 @@
 package com.github.xcfyl.drpc.core.server;
 
-import com.github.xcfyl.drpc.core.common.RpcTransferProtocolDecoder;
-import com.github.xcfyl.drpc.core.common.RpcTransferProtocolEncoder;
+import com.github.xcfyl.drpc.core.config.RpcConfigLoader;
+import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolDecoder;
+import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolEncoder;
+import com.github.xcfyl.drpc.core.config.RpcServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -29,7 +31,7 @@ public class RpcServer {
      * @throws Exception
      */
     public void start() throws Exception {
-        ServerBootstrap bootstrap = new ServerBootstrap()
+        new ServerBootstrap()
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY, true)
@@ -41,10 +43,12 @@ public class RpcServer {
                     @Override
                     protected void initChannel(SocketChannel channel) throws Exception {
                         channel.pipeline().addLast(new RpcTransferProtocolEncoder());
-                        channel.pipeline().addLast(new RpcTransferProtocolDecoder(config));
+                        channel.pipeline().addLast(new RpcTransferProtocolDecoder());
+                        channel.pipeline().addLast(new RpcServerHandler());
                     }
-                });
-        bootstrap.bind(config.getPort()).sync();
+                })
+                .bind(config.getPort())
+                .sync();
     }
 
     /**
@@ -62,5 +66,12 @@ public class RpcServer {
         }
         Class<?> interfaceClass = interfaces[0];
         SERVICE_PROVIDER_MAP.put(interfaceClass.getName(), service);
+    }
+
+    public static void main(String[] args) throws Throwable {
+        RpcServerConfig serverConfig = RpcConfigLoader.loadRpcServerConfig();
+        RpcServer rpcServer = new RpcServer(serverConfig);
+        rpcServer.registerService(new HelloServiceImpl());
+        rpcServer.start();
     }
 }

@@ -1,10 +1,9 @@
-package com.github.xcfyl.drpc.core.common.utils;
+package com.github.xcfyl.drpc.core.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.drpc.core.common.RpcRequest;
-import com.github.xcfyl.drpc.core.common.RpcResponse;
-import com.github.xcfyl.drpc.core.common.RpcTransferProtocol;
-import com.github.xcfyl.drpc.core.common.constants.RpcConstants;
+import com.github.xcfyl.drpc.core.protocol.RpcRequest;
+import com.github.xcfyl.drpc.core.protocol.RpcResponse;
+import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocol;
 
 /**
  * 协议处理的辅助工具类
@@ -42,6 +41,6 @@ public class RpcTransferProtocolHelper {
      * @return
      */
     public static boolean checkMagicNumber(short magicNumber) {
-        return magicNumber == RpcConstants.MAGIC_NUMBER.getCode();
+        return magicNumber == RpcTransferProtocol.getMagicNumber();
     }
 }
