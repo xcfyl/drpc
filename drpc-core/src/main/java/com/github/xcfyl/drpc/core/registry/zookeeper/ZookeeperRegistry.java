@@ -1,15 +1,15 @@
 package com.github.xcfyl.drpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
+import com.github.xcfyl.drpc.core.client.RpcClientLocalCache;
 import com.github.xcfyl.drpc.core.registry.RegistryData;
 import com.github.xcfyl.drpc.core.registry.RpcRegistry;
+import com.github.xcfyl.drpc.core.server.RpcServerLocalCache;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.REGISTRY_DATA_CACHE;
 
 /**
  * 基于zookeeper实现的注册中心
@@ -42,14 +42,14 @@ public class ZookeeperRegistry implements RpcRegistry {
         // 创建服务提供者的路径
         zkClient.createTemporaryData(providerNodePath, providerMetaData);
         // 到这里就注册成功了，将注册成功的信息，添加到服务端的本地缓存中
-        REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
+        RpcServerLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
     }
 
     @Override
     public void unregister(RegistryData registryData) {
         String providerNodePath = RegistryDataZkHelper.getProviderNodePath(ROOT, registryData);
         zkClient.deleteNode(providerNodePath);
-        REGISTRY_DATA_CACHE.remove(registryData.getServiceName());
+        RpcServerLocalCache.REGISTRY_DATA_CACHE.remove(registryData.getServiceName());
     }
 
     @Override
@@ -67,10 +67,12 @@ public class ZookeeperRegistry implements RpcRegistry {
         zkClient.watchChildNodeData(servicePath, new Watcher() {
             @Override
             public void process(WatchedEvent watchedEvent) {
-                // 这里监听孩子节点的变化，如果服务列表增加或者减少，那么需要更新本地client
-                // 的本地服务缓存列表
+                // todo 这里监听孩子节点的变化，如果服务列表增加或者减少，那么需要更新本地client
+                // todo 的本地服务缓存列表
             }
         });
+        // 本地缓存中添加
+        RpcClientLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
     }
 
     @Override

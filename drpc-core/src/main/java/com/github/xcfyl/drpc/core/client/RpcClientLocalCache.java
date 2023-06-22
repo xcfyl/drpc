@@ -1,7 +1,9 @@
 package com.github.xcfyl.drpc.core.client;
 
 import com.github.xcfyl.drpc.core.protocol.RpcResponse;
+import com.github.xcfyl.drpc.core.registry.RegistryData;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,4 +18,6 @@ public class RpcClientLocalCache {
      * 缓存rpc调用结果，key是请求id，value是本次请求的响应数据
      */
     public static final Map<String, RpcResponse> RESPONSE_MAP = new ConcurrentHashMap<>();
+
+    public static final Map<String, RegistryData> REGISTRY_DATA_CACHE = new HashMap<>();
 }
