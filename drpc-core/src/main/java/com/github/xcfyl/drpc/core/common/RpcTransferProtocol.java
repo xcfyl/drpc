@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.common;
 
+import com.github.xcfyl.drpc.core.common.constants.RpcConstants;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public class RpcTransferProtocol implements Serializable {
     /**
      * 协议标识，用于检测是否为rpc协议
      */
-    private final short flag;
+    private final short magicNumber = (short) RpcConstants.MAGIC_NUMBER.getCode();
     /**
      * 本次传输的数据长度
      */
@@ -26,14 +27,22 @@ public class RpcTransferProtocol implements Serializable {
      */
     private final byte[] body;
 
-    public RpcTransferProtocol(short flag, int length, byte[] body) {
-        this.flag = flag;
-        this.length = length;
+    public RpcTransferProtocol(byte[] body) {
+        this.length = body.length;
         this.body = body;
     }
 
-    public short getFlag() {
-        return flag;
+    /**
+     * 获取协议头部长度
+     *
+     * @return 返回协议头部长度
+     */
+    public int getHeaderLength() {
+        return 6;
+    }
+
+    public short getMagicNumber() {
+        return magicNumber;
     }
 
     public byte[] getBody() {
