@@ -1,7 +1,7 @@
 package com.github.xcfyl.drpc.core.common;
 
 import com.github.xcfyl.drpc.core.common.constants.RpcConstants;
-import com.github.xcfyl.drpc.core.common.config.RpcServerConfig;
+import com.github.xcfyl.drpc.core.server.RpcServerConfig;
 import com.github.xcfyl.drpc.core.common.exception.RequestException;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

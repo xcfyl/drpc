@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.common.config;
+package com.github.xcfyl.drpc.core.client;
 
 /**
  * 存放和rpc客户端相关的配置信息

@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.common.config;
+package com.github.xcfyl.drpc.core.server;
 
 import lombok.Data;
 

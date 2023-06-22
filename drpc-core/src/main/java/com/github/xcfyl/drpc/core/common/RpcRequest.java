@@ -20,11 +20,11 @@ public class RpcRequest {
     /**
      * 服务名
      */
-    private final String service;
+    private final String serviceName;
     /**
      * 方法名
      */
-    private final String method;
+    private final String methodName;
     /**
      * 方法参数
      */
@@ -36,8 +36,8 @@ public class RpcRequest {
 
     public RpcRequest(String id, String service, String method, Object[] args) {
         this.id = id;
-        this.service = service;
-        this.method = method;
+        this.serviceName = service;
+        this.methodName = method;
         this.args = args;
         attr = new HashMap<>();
     }
