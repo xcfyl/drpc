@@ -8,4 +8,5 @@ public class RpcConfigPrefix {
     public final static String SERVER_PORT_CONFIG_PREFIX = "server.port";
     public final static String SERVER_IP_CONFIG_PREFIX = "server.ip";
     public final static String MAX_REQUEST_LENGTH_PREFIX = "request.limit";
+    public final static String REQUEST_TIMEOUT_PREFIX = "request.timeout";
 }

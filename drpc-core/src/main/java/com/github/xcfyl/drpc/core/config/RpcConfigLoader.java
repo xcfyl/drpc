@@ -49,7 +49,9 @@ public class RpcConfigLoader {
         Integer serverPort = getInteger(SERVER_PORT_CONFIG_PREFIX, 1998);
         String serverIp = getString(SERVER_IP_CONFIG_PREFIX, "127.0.0.1");
         Integer maxRequestLength = getInteger(MAX_REQUEST_LENGTH_PREFIX, 1024 * 1024);
+        Long requestTimeout = getLong(REQUEST_TIMEOUT_PREFIX, 3000L);
         clientConfig.setServerAddr(serverIp + ":" + serverPort);
+        clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setMaxRequestLength(maxRequestLength);
         return clientConfig;
     }
@@ -64,6 +66,14 @@ public class RpcConfigLoader {
             return defaultValue;
         }
         return Integer.parseInt(property);
+    }
+
+    private static Long getLong(String key, Long defaultValue) {
+        String property = PROPERTIES.getProperty(key);
+        if (property == null) {
+            return defaultValue;
+        }
+        return Long.parseLong(property);
     }
 
     public static void main(String[] args) {

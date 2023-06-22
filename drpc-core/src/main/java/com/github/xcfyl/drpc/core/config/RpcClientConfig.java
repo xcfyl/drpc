@@ -18,6 +18,18 @@ public class RpcClientConfig {
      * 最长请求限制
      */
     private Integer maxRequestLength;
+    /**
+     * 请求超时时间
+     */
+    private Long requestTimeout;
+
+    public void setRequestTimeout(Long requestTimeout) {
+        this.requestTimeout = requestTimeout;
+    }
+
+    public Long getRequestTimeout() {
+        return requestTimeout;
+    }
 
     public String getServerIp() {
         return serverAddr.split(":")[0];
