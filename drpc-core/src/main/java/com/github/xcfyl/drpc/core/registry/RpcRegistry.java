@@ -27,18 +27,18 @@ public interface RpcRegistry {
     /**
      * 订阅注册中心中某个服务的数据，后续有变更的时候，可以及时获得感知
      *
-     * @param serviceName
+     * @param registryData
      * @return
      */
-    void subscribe(String serviceName);
+    void subscribe(RegistryData registryData);
 
     /**
      * 取消订阅注册中心某个服务的数据，后续将不再关注数据的变化
      *
-     * @param serviceName
+     * @param
      * @return
      */
-    void unsubscribe(String serviceName);
+    void unsubscribe(RegistryData serviceName);
 
     /**
      * 查询某个服务下面所有服务提供者的信息

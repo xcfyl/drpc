@@ -14,13 +14,43 @@ import java.util.Map;
  */
 public class RegistryDataZkHelper {
     /**
+     * 从registryData中解析出当前服务的路径
+     *
+     * @param root
+     * @param registryData
+     * @return
+     */
+    public static String getServicePath(String root, RegistryData registryData) {
+        return getServicePath(root, registryData.getServiceName());
+    }
+
+    public static String getServicePath(String root, String serviceName) {
+        return root + "/" + serviceName + "/provider";
+    }
+
+    /**
+     * 从registryData中解析出某个服务下订阅的消费者列表路径
+     *
+     * @param root
+     * @param registryData
+     * @return
+     */
+    public static String getConsumerPath(String root, RegistryData registryData) {
+        return getConsumerPath(root, registryData.getServiceName());
+    }
+
+    public static String getConsumerPath(String root, String serviceName) {
+        return root + "/" + serviceName + "/consumer";
+    }
+
+    /**
      * 将registryData转换为服务提供者节点在zk中的路径
      *
      * @param registryData
      * @return
      */
     public static String getProviderNodePath(String root, RegistryData registryData) {
-        return root + "/" + registryData.getApplicationName() + "/provider/" + registryData.getIp() + ":" + registryData.getPort();
+        return root + "/" + registryData.getServiceName() + "/provider/" + registryData.getIp() + ":" + registryData.getPort();
     }
 
     /**

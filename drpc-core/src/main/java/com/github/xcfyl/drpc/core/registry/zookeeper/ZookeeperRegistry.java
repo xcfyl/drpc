@@ -1,8 +1,12 @@
 package com.github.xcfyl.drpc.core.registry.zookeeper;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.registry.RegistryData;
 import com.github.xcfyl.drpc.core.registry.RpcRegistry;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.xcfyl.drpc.core.server.RpcServerLocalCache.REGISTRY_DATA_CACHE;
@@ -49,22 +53,51 @@ public class ZookeeperRegistry implements RpcRegistry {
     }
 
     @Override
-    public void subscribe(String serviceName) {
-
+    public void subscribe(RegistryData registryData) {
+        if (!zkClient.existNode(ROOT)) {
+            zkClient.createPersistentData(ROOT, "");
+        }
+        String consumerMetaData = RegistryDataZkHelper.getConsumerMetaData(registryData);
+        String consumerNodePath = RegistryDataZkHelper.getConsumerNodePath(ROOT, registryData);
+        if (zkClient.existNode(consumerNodePath)) {
+            zkClient.deleteNode(consumerNodePath);
+        }
+        zkClient.createTemporaryData(consumerNodePath, consumerMetaData);
+        String servicePath = RegistryDataZkHelper.getServicePath(ROOT, registryData);
+        zkClient.watchChildNodeData(servicePath, new Watcher() {
+            @Override
+            public void process(WatchedEvent watchedEvent) {
+                // 这里监听孩子节点的变化，如果服务列表增加或者减少，那么需要更新本地client
+                // 的本地服务缓存列表
+            }
+        });
     }
 
     @Override
-    public void unsubscribe(String serviceName) {
-
+    public void unsubscribe(RegistryData registryData) {
+        String consumerNodePath = RegistryDataZkHelper.getConsumerNodePath(ROOT, registryData);
+        zkClient.deleteNode(consumerNodePath);
     }
 
     @Override
     public List<RegistryData> queryProviders(String serviceName) {
-        return null;
+        String servicePath = RegistryDataZkHelper.getServicePath(ROOT, serviceName);
+        return queryRegistryDataByPath(servicePath);
     }
 
     @Override
     public List<RegistryData> queryConsumers(String serviceName) {
-        return null;
+        String consumerPath = RegistryDataZkHelper.getConsumerPath(ROOT, serviceName);
+        return queryRegistryDataByPath(consumerPath);
+    }
+
+    private List<RegistryData> queryRegistryDataByPath(String path) {
+        List<String> childrenData = zkClient.getChildrenData(path);
+        List<RegistryData> registryDataList = new ArrayList<>();
+        for (String data : childrenData) {
+            RegistryData registryData = JSON.parseObject(data, RegistryData.class);
+            registryDataList.add(registryData);
+        }
+        return registryDataList;
     }
 }
