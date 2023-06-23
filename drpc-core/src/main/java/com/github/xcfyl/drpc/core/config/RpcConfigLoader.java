@@ -1,16 +1,14 @@
 package com.github.xcfyl.drpc.core.config;
 
-import com.github.xcfyl.drpc.core.constants.RpcConfigPrefix;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 
-import static com.github.xcfyl.drpc.core.constants.RpcConfigPrefix.*;
+import static com.github.xcfyl.drpc.core.constants.RpcConfigName.*;
 
 /**
  * 加载指定路径下的Properties文件，解析配置
