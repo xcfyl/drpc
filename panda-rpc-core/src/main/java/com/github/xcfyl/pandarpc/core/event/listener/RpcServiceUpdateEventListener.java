@@ -1,8 +1,14 @@
 package com.github.xcfyl.pandarpc.core.event.listener;
 
+import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
+import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.pandarpc.core.event.RpcEventListener;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
+import com.github.xcfyl.pandarpc.core.registry.RegistryData;
+import io.netty.channel.ChannelFuture;
+
+import java.util.*;
 
 /**
  * 如果rpc服务列表发生变化，那么会执行该事件监听器的逻辑
@@ -12,9 +18,34 @@ import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
  * @date create at 2023/6/22 23:30
  */
 public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
+    /**
+     * 在这里更新client的连接列表
+     *
+     * @param event
+     */
     @Override
     public void callback(RpcServiceUpdateEvent event) {
         RpcServiceUpdateEventData data = event.getData();
-        System.out.println(data);
+        String serviceName = data.getServiceName();
+        List<RegistryData> newProviderDataList = data.getNewServiceList();
+        List<ConnectionWrapper> connections = ConnectionManager.getConnections(serviceName);
+        Map<String, ConnectionWrapper> connectionWrapperMap = new HashMap<>();
+        for (ConnectionWrapper connectionWrapper : connections) {
+            connectionWrapperMap.put(connectionWrapper.toString(), connectionWrapper);
+        }
+        List<ConnectionWrapper> newConnections = new ArrayList<>();
+        for (RegistryData registryData : newProviderDataList) {
+            String ip = registryData.getIp();
+            Integer port = registryData.getPort();
+            ConnectionWrapper connectionWrapper = new ConnectionWrapper();
+            connectionWrapper.setIp(ip);
+            connectionWrapper.setPort(port);
+            if (!connectionWrapperMap.containsKey(connectionWrapper.toString())) {
+                ChannelFuture channelFuture = ConnectionManager.getChannelFuture(ip, port);
+                connectionWrapper.setChannelFuture(channelFuture);
+            }
+            newConnections.add(connectionWrapper);
+        }
+        ConnectionManager.setConnections(serviceName, newConnections);
     }
 }

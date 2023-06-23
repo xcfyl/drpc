@@ -3,6 +3,8 @@ package com.github.xcfyl.pandarpc.core.client;
 import io.netty.channel.ChannelFuture;
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * 封装了连接对象
  *
@@ -23,4 +25,26 @@ public class ConnectionWrapper {
      * 端口号
      */
     private Integer port;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ConnectionWrapper that = (ConnectionWrapper) o;
+        return Objects.equals(ip, that.ip) && Objects.equals(port, that.port);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ip, port);
+    }
+
+    @Override
+    public String toString() {
+        return ip + ":" + port;
+    }
 }
