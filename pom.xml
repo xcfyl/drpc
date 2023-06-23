@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.xcfyl.drpc</groupId>
-    <artifactId>drpc</artifactId>
+    <artifactId>panda-rpc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>采用模块化实现一款简易的rpc框架</description>
     <modules>
-        <module>drpc-core</module>
+        <module>panda-rpc-core</module>
     </modules>
 
     <properties>
