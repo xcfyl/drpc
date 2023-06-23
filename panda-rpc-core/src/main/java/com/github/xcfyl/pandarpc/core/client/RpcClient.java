@@ -1,9 +1,9 @@
 package com.github.xcfyl.pandarpc.core.client;
 
-import com.github.xcfyl.pandarpc.core.config.RpcClientConfig;
-import com.github.xcfyl.pandarpc.core.config.RpcConfigLoader;
-import com.github.xcfyl.pandarpc.core.enums.ProxyType;
-import com.github.xcfyl.pandarpc.core.enums.RegistryType;
+import com.github.xcfyl.pandarpc.core.common.config.RpcClientConfig;
+import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
+import com.github.xcfyl.pandarpc.core.common.enums.ProxyType;
+import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
@@ -19,8 +19,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-import static com.github.xcfyl.pandarpc.core.enums.ProxyType.JDK;
-import static com.github.xcfyl.pandarpc.core.enums.RegistryType.ZK;
+import static com.github.xcfyl.pandarpc.core.common.enums.ProxyType.JDK;
+import static com.github.xcfyl.pandarpc.core.common.enums.RegistryType.ZK;
 
 /**
  * rpc客户端
@@ -80,6 +80,8 @@ public class RpcClient {
     public void subscribeService(String serviceName) {
         // 在这里订阅服务
         RegistryData registryData = new RegistryData();
+        registryData.setApplicationName(config.getCommonConfig().getApplicationName());
+
     }
 
     public static void main(String[] args) throws Throwable {

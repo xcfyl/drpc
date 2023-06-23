@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.enums;
+package com.github.xcfyl.pandarpc.core.common.enums;
 
 /**
  * rpc通用配置，客户端和服务端公有的配置

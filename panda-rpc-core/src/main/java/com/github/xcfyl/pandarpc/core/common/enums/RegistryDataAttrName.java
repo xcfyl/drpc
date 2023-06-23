@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.enums;
+package com.github.xcfyl.pandarpc.core.common.enums;
 
 /**
  * 对注册数据的系统保留扩展属性定义

@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.utils;
+package com.github.xcfyl.pandarpc.core.protocol;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;

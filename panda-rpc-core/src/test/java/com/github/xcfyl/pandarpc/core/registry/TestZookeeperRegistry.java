@@ -1,6 +1,6 @@
 package com.github.xcfyl.pandarpc.core.registry;
 
-import com.github.xcfyl.pandarpc.core.enums.RegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
 import com.github.xcfyl.pandarpc.core.event.listener.RpcServiceUpdateEventListener;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;

@@ -1,9 +1,9 @@
 package com.github.xcfyl.pandarpc.core.server;
 
-import com.github.xcfyl.pandarpc.core.config.RpcConfigLoader;
+import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
-import com.github.xcfyl.pandarpc.core.config.RpcServerConfig;
+import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

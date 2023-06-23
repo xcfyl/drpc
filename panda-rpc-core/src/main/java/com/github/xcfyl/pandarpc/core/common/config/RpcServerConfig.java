@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.config;
+package com.github.xcfyl.pandarpc.core.common.config;
 
 import lombok.Data;
 import lombok.ToString;

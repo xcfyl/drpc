@@ -1,6 +1,6 @@
-package com.github.xcfyl.pandarpc.core.config;
+package com.github.xcfyl.pandarpc.core.common.config;
 
-import com.github.xcfyl.pandarpc.core.enums.*;
+import com.github.xcfyl.pandarpc.core.common.enums.*;
 
 import java.io.InputStream;
 import java.net.URL;

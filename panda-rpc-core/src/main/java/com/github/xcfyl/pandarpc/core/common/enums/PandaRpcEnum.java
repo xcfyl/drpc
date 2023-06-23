@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.enums;
+package com.github.xcfyl.pandarpc.core.common.enums;
 
 /**
  * panda rpc中的所有枚举类型都要实现该接口

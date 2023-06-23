@@ -1,7 +1,7 @@
 package com.github.xcfyl.pandarpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.pandarpc.core.enums.RegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 
 /**

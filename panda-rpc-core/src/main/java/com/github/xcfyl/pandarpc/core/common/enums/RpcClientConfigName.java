@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.enums;
+package com.github.xcfyl.pandarpc.core.common.enums;
 
 /**
  * @author 西城风雨楼

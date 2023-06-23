@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
-import com.github.xcfyl.pandarpc.core.utils.RpcTransferProtocolHelper;
+import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolHelper;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

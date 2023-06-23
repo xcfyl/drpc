@@ -1,7 +1,6 @@
-package com.github.xcfyl.pandarpc.core.config;
+package com.github.xcfyl.pandarpc.core.common.config;
 
-import com.github.xcfyl.pandarpc.core.enums.ProxyType;
-import com.github.xcfyl.pandarpc.core.enums.RegistryType;
+import com.github.xcfyl.pandarpc.core.common.enums.ProxyType;
 import lombok.Data;
 import lombok.ToString;
 
