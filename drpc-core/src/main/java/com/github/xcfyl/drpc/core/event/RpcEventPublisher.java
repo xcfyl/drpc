@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.core.event;
 
-import com.github.xcfyl.drpc.core.event.data.ServiceUpdateEventData;
+import com.github.xcfyl.drpc.core.event.data.RpcServiceUpdateEventData;
 import com.github.xcfyl.drpc.core.event.listener.RpcServiceUpdateEventListener;
 
 import java.lang.reflect.ParameterizedType;
@@ -59,7 +59,7 @@ public class RpcEventPublisher {
 
     public static void main(String[] args) {
         RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
-        ServiceUpdateEventData serviceChangeInfo = new ServiceUpdateEventData();
+        RpcServiceUpdateEventData serviceChangeInfo = new RpcServiceUpdateEventData();
         serviceChangeInfo.setServiceName("service1");
         serviceChangeInfo.setNewServiceList(new ArrayList<>());
         updateEvent.setData(serviceChangeInfo);

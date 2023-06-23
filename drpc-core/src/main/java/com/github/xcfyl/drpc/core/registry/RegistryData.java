@@ -1,5 +1,7 @@
 package com.github.xcfyl.drpc.core.registry;
 
+import lombok.ToString;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 20:53
  */
+@ToString
 public class RegistryData {
     /**
      * 应用名称

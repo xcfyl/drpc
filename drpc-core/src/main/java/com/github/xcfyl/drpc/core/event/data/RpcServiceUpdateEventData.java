@@ -1,6 +1,7 @@
 package com.github.xcfyl.drpc.core.event.data;
 
 import com.github.xcfyl.drpc.core.registry.RegistryData;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -8,15 +9,16 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/22 23:26
  */
-public class ServiceUpdateEventData {
+@ToString
+public class RpcServiceUpdateEventData {
     private String serviceName;
     private List<RegistryData> newServiceList;
 
-    public ServiceUpdateEventData() {
+    public RpcServiceUpdateEventData() {
 
     }
 
-    public ServiceUpdateEventData(String serviceName, List<RegistryData> newServiceList) {
+    public RpcServiceUpdateEventData(String serviceName, List<RegistryData> newServiceList) {
         this.serviceName = serviceName;
         this.newServiceList = newServiceList;
     }

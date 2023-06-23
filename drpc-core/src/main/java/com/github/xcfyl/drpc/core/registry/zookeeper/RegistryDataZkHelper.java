@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.constants.RegistryDataAttr;
 import com.github.xcfyl.drpc.core.registry.RegistryData;
 
-import java.util.Map;
-
 /**
  * Zookeeper操作Registry的辅助工具类
  *

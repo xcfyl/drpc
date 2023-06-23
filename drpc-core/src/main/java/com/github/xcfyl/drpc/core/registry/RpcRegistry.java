@@ -14,7 +14,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    void register(RegistryData registryData);
+    boolean register(RegistryData registryData);
 
     /**
      * 将某个服务信息从注册中心删除
@@ -22,7 +22,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    void unregister(RegistryData registryData);
+    boolean unregister(RegistryData registryData);
 
     /**
      * 订阅注册中心中某个服务的数据，后续有变更的时候，可以及时获得感知
@@ -30,7 +30,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    void subscribe(RegistryData registryData);
+    boolean subscribe(RegistryData registryData);
 
     /**
      * 取消订阅注册中心某个服务的数据，后续将不再关注数据的变化
@@ -38,7 +38,7 @@ public interface RpcRegistry {
      * @param
      * @return
      */
-    void unsubscribe(RegistryData serviceName);
+    boolean unsubscribe(RegistryData serviceName);
 
     /**
      * 查询某个服务下面所有服务提供者的信息

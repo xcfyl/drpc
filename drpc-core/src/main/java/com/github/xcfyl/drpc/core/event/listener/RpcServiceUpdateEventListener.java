@@ -2,7 +2,7 @@ package com.github.xcfyl.drpc.core.event.listener;
 
 import com.github.xcfyl.drpc.core.event.RpcEventListener;
 import com.github.xcfyl.drpc.core.event.RpcServiceUpdateEvent;
-import com.github.xcfyl.drpc.core.event.data.ServiceUpdateEventData;
+import com.github.xcfyl.drpc.core.event.data.RpcServiceUpdateEventData;
 
 /**
  * 如果rpc服务列表发生变化，那么会执行该事件监听器的逻辑
@@ -14,7 +14,7 @@ import com.github.xcfyl.drpc.core.event.data.ServiceUpdateEventData;
 public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
     @Override
     public void callback(RpcServiceUpdateEvent event) {
-        ServiceUpdateEventData data = event.getData();
+        RpcServiceUpdateEventData data = event.getData();
         System.out.println(data);
     }
 }

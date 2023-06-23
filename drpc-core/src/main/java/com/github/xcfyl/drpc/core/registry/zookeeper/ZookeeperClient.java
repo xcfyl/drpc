@@ -28,6 +28,7 @@ public class ZookeeperClient {
     public ZookeeperClient(String zkAddress, Integer baseSleepTimes, Integer maxRetries) {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(baseSleepTimes, maxRetries);
         curator = CuratorFrameworkFactory.newClient(zkAddress, retryPolicy);
+        curator.start();
     }
 
     public void updateNodeData(String address, String data) {
@@ -52,7 +53,7 @@ public class ZookeeperClient {
         return null;
     }
 
-    public List<String> getChildrenData(String path) {
+    public List<String> getChildrenPaths(String path) {
         try {
             return curator.getChildren().forPath(path);
         } catch (Exception e) {
