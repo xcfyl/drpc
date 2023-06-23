@@ -108,11 +108,4 @@ public class RpcConfigLoader {
         }
         return Long.parseLong(property);
     }
-
-    public static void main(String[] args) {
-        RpcServerConfig serverConfig = RpcConfigLoader.loadRpcServerConfig();
-        RpcClientConfig clientConfig = RpcConfigLoader.loadRpcClientConfig();
-        System.out.println(serverConfig);
-        System.out.println(clientConfig);
-    }
 }

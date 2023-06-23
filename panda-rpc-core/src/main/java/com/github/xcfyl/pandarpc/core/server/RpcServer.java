@@ -92,10 +92,16 @@ public class RpcServer {
      * @param service
      */
     public void registerService(Object service) {
-        String serviceName = service.getClass().getName();
         // 将当前服务名称写入
         threadPoolExecutor.submit(() -> {
             // 首先将当前服务写入注册中心
+            Class<?>[] interfaces = service.getClass().getInterfaces();
+            if (interfaces.length != 1) {
+                log.error("#{} implement too many interface!", service);
+                return;
+            }
+            Class<?> clazz = interfaces[0];
+            String serviceName = clazz.getName();
             RegistryData registryData = new RegistryData();
             registryData.setIp(CommonUtils.getCurrentMachineIp());
             registryData.setServiceName(serviceName);
@@ -112,11 +118,5 @@ public class RpcServer {
                 log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
             }
         });
-    }
-
-    public static void main(String[] args) throws Throwable {
-        RpcServer rpcServer = new RpcServer();
-        rpcServer.registerService(new HelloServiceImpl());
-        rpcServer.init();
     }
 }

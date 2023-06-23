@@ -24,7 +24,7 @@ public class TestZookeeperRegistry {
     @Before
     public void init() {
         rpcEventPublisher = new RpcEventPublisher();
-        zookeeperRegistry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"), rpcEventPublisher);
+        zookeeperRegistry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"));
     }
 
     /**
@@ -38,7 +38,7 @@ public class TestZookeeperRegistry {
         provider1.setPort(1234);
         provider1.setServiceName("service1");
         provider1.setApplicationName("app1");
-        provider1.getAttr().put(RegistryDataAttrName.TYPE.getAttrName(), "provider");
+        provider1.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "provider");
 
         RegistryData provider2 = new RegistryData();
         provider2.setIp("localhost");

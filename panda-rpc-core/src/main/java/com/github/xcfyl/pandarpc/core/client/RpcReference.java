@@ -9,11 +9,9 @@ import com.github.xcfyl.pandarpc.core.router.RpcRouter;
  */
 public class RpcReference {
     private final ProxyFactory proxyFactory;
-    private final RpcRouter router;
 
-    public RpcReference(ProxyFactory proxyFactory, RpcRouter router) {
+    public RpcReference(ProxyFactory proxyFactory) {
         this.proxyFactory = proxyFactory;
-        this.router = router;
     }
 
     /**

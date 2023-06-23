@@ -45,7 +45,7 @@ public class RpcClient {
         config = RpcConfigLoader.loadRpcClientConfig();
     }
 
-    public RpcReference init() {
+    public RpcReference init() throws Exception {
         Bootstrap bootstrap = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
@@ -77,14 +77,13 @@ public class RpcClient {
         }
 
         RpcRouterType routerType = config.getRouterType();
-        RpcRouter router;
         if (routerType.getCode() == RpcRouterType.RANDOM.getCode()) {
-            router = new RpcRandomRouter();
+            RpcRouterRef.setRpcRouter(new RpcRandomRouter());
         } else {
             throw new RuntimeException("暂时不支持的路由类型");
         }
 
-        return new RpcReference(proxyFactory, router);
+        return new RpcReference(proxyFactory);
     }
 
     /**
@@ -112,15 +111,5 @@ public class RpcClient {
         } catch (Exception e) {
             log.debug("register #{} failure! exception is #{}", serviceName, e.getMessage());
         }
-    }
-
-    public static void main(String[] args) throws Throwable {
-        RpcClient rpcClient = new RpcClient();
-        RpcReference rpcReference = rpcClient.init();
-        rpcClient.subscribeService("");
-        rpcClient.subscribeService("");
-        HelloService helloService = rpcReference.get(HelloService.class);
-        String reply = helloService.hello("zhangsan");
-        System.out.println(reply);
     }
 }

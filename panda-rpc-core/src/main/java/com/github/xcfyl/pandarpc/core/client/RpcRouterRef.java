@@ -9,7 +9,7 @@ import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 public class RpcRouterRef {
     private static RpcRouter rpcRouter;
 
-    public void setRpcRouter(RpcRouter rpcRouter) {
+    public static void setRpcRouter(RpcRouter rpcRouter) {
         RpcRouterRef.rpcRouter = rpcRouter;
     }
 
