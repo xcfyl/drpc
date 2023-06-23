@@ -3,6 +3,7 @@ package com.github.xcfyl.pandarpc.core.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/23 15:26
  */
+@Slf4j
 public class ConnectionManager {
     private static Bootstrap bootstrap;
     private static final Map<String, List<ConnectionWrapper>> CONNECT_CACHE = new HashMap<>();
@@ -27,7 +29,7 @@ public class ConnectionManager {
      * 连接给定的服务下面的所有的服务提供者
      *
      * @param serviceName 当前连接的服务
-     * @param addrList 当前服务下面所有服务提供者的访问地址ip:port格式
+     * @param addrList    当前服务下面所有服务提供者的访问地址ip:port格式
      */
     public static void connect(String serviceName, List<String> addrList) {
         for (String addr : addrList) {
@@ -57,7 +59,8 @@ public class ConnectionManager {
         String[] split = addr.split(":");
         String ip = split[0];
         int port = Integer.parseInt(split[1]);
-        ChannelFuture channelFuture = getChannelFuture(ip, port);
+        ChannelFuture channelFuture = null;
+        channelFuture = getChannelFuture(ip, port);
         ConnectionWrapper connectionWrapper = new ConnectionWrapper();
         connectionWrapper.setChannelFuture(channelFuture);
         connectionWrapper.setIp(ip);
@@ -66,6 +69,11 @@ public class ConnectionManager {
     }
 
     public static ChannelFuture getChannelFuture(String ip, Integer port) {
-        return bootstrap.connect(ip, port);
+        try {
+            return bootstrap.connect(ip, port).sync();
+        } catch (Exception e) {
+            log.error("get connection failure ip #{}, port #{}, exception is #{}", ip, port, e.getMessage());
+        }
+        return null;
     }
 }
