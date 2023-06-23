@@ -5,6 +5,7 @@ import com.github.xcfyl.drpc.core.event.RpcEventPublisher;
 import com.github.xcfyl.drpc.core.event.listener.RpcServiceUpdateEventListener;
 import com.github.xcfyl.drpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.drpc.core.registry.zookeeper.ZookeeperRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.junit.Test;
  * @author 西城风雨楼
  * @date create at 2023/6/23 10:16
  */
+@Slf4j
 public class TestZookeeperRegistry {
     private ZookeeperRegistry zookeeperRegistry;
     private RpcEventPublisher rpcEventPublisher;
@@ -29,7 +31,7 @@ public class TestZookeeperRegistry {
      * 测试通过注册中心注册数据的
      */
     @Test
-    public void testRegistry() throws InterruptedException {
+    public void testRegistry() throws Exception {
         // 创建注册数据
         RegistryData provider1 = new RegistryData();
         provider1.setIp("localhost");
@@ -92,5 +94,6 @@ public class TestZookeeperRegistry {
         // 这里不会触发
         zookeeperRegistry.register(provider1);
         Thread.sleep(30);
+        log.debug("测试完毕");
     }
 }

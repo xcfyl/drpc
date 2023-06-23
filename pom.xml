@@ -28,6 +28,7 @@
         <zookeeper.version>3.4.14</zookeeper.version>
         <zkClient.version>0.7</zkClient.version>
         <curator.version>2.12.0</curator.version>
+        <log4j.version>1.7.28</log4j.version>
     </properties>
 
     <dependencyManagement>
@@ -73,6 +74,12 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${log4j.version}</version>
             </dependency>
 
             <dependency>

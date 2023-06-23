@@ -14,7 +14,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    boolean register(RegistryData registryData);
+    void register(RegistryData registryData) throws Exception;
 
     /**
      * 将某个服务信息从注册中心删除
@@ -22,7 +22,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    boolean unregister(RegistryData registryData);
+    void unregister(RegistryData registryData) throws Exception;
 
     /**
      * 订阅注册中心中某个服务的数据，后续有变更的时候，可以及时获得感知
@@ -30,7 +30,7 @@ public interface RpcRegistry {
      * @param registryData
      * @return
      */
-    boolean subscribe(RegistryData registryData);
+    void subscribe(RegistryData registryData) throws Exception;
 
     /**
      * 取消订阅注册中心某个服务的数据，后续将不再关注数据的变化
@@ -38,7 +38,7 @@ public interface RpcRegistry {
      * @param
      * @return
      */
-    boolean unsubscribe(RegistryData serviceName);
+    void unsubscribe(RegistryData serviceName) throws Exception;
 
     /**
      * 查询某个服务下面所有服务提供者的信息
@@ -46,7 +46,7 @@ public interface RpcRegistry {
      * @param serviceName
      * @return
      */
-    List<RegistryData> queryProviders(String serviceName);
+    List<RegistryData> queryProviders(String serviceName) throws Exception;
 
     /**
      * 查询某个服务下面所有消费者的信息
@@ -54,5 +54,5 @@ public interface RpcRegistry {
      * @param serviceName
      * @return
      */
-    List<RegistryData> queryConsumers(String serviceName);
+    List<RegistryData> queryConsumers(String serviceName) throws Exception;
 }

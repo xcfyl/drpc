@@ -30,7 +30,7 @@ public class ZookeeperRegistry implements RpcRegistry {
     }
 
     @Override
-    public boolean register(RegistryData registryData) {
+    public void register(RegistryData registryData) throws Exception {
         if (!zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
@@ -41,18 +41,17 @@ public class ZookeeperRegistry implements RpcRegistry {
         }
         zkClient.createTemporaryData(providerNodePath, providerMetaData);
         RpcServerLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
-        return true;
     }
 
     @Override
-    public boolean unregister(RegistryData registryData) {
+    public void unregister(RegistryData registryData) throws Exception {
         String providerNodePath = RegistryDataZkHelper.getProviderNodePath(ROOT, registryData);
         RpcServerLocalCache.REGISTRY_DATA_CACHE.remove(registryData.getServiceName());
-        return zkClient.deleteNode(providerNodePath);
+        zkClient.deleteNode(providerNodePath);
     }
 
     @Override
-    public boolean subscribe(RegistryData registryData) {
+    public void subscribe(RegistryData registryData) throws Exception {
         if (!zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
@@ -64,23 +63,22 @@ public class ZookeeperRegistry implements RpcRegistry {
         zkClient.createTemporaryData(consumerNodePath, consumerMetaData);
         watchServiceChange(registryData);
         RpcClientLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
-        return true;
     }
 
     @Override
-    public boolean unsubscribe(RegistryData registryData) {
+    public void unsubscribe(RegistryData registryData) throws Exception {
         String consumerNodePath = RegistryDataZkHelper.getConsumerNodePath(ROOT, registryData);
-        return zkClient.deleteNode(consumerNodePath);
+        zkClient.deleteNode(consumerNodePath);
     }
 
     @Override
-    public List<RegistryData> queryProviders(String serviceName) {
+    public List<RegistryData> queryProviders(String serviceName) throws Exception {
         String servicePath = RegistryDataZkHelper.getServicePath(ROOT, serviceName);
         return queryRegistryDataByServicePath(servicePath);
     }
 
     @Override
-    public List<RegistryData> queryConsumers(String serviceName) {
+    public List<RegistryData> queryConsumers(String serviceName) throws Exception {
         String consumerPath = RegistryDataZkHelper.getConsumerPath(ROOT, serviceName);
         return queryRegistryDataByServicePath(consumerPath);
     }
@@ -91,7 +89,7 @@ public class ZookeeperRegistry implements RpcRegistry {
      * @param servicePath
      * @return
      */
-    private List<RegistryData> queryRegistryDataByServicePath(String servicePath) {
+    private List<RegistryData> queryRegistryDataByServicePath(String servicePath) throws Exception {
         List<String> providerAddrList = zkClient.getChildrenPaths(servicePath);
         List<RegistryData> registryDataList = new ArrayList<>();
         for (String addr : providerAddrList) {
@@ -103,25 +101,29 @@ public class ZookeeperRegistry implements RpcRegistry {
         return registryDataList;
     }
 
-    private void watchServiceChange(RegistryData registryData) {
+    private void watchServiceChange(RegistryData registryData) throws Exception {
         String servicePath = RegistryDataZkHelper.getServicePath(ROOT, registryData.getServiceName());
         String consumerNodePath = RegistryDataZkHelper.getConsumerNodePath(ROOT, registryData);
         zkClient.watchChildNodeData(servicePath, watchedEvent -> {
-            if (zkClient.existNode(consumerNodePath)) {
-                // 某个消费者取消订阅之后，就会删除自己的节点信息，因此这里不再进行事件触发，并且不再进行下一次订阅
-                List<RegistryData> registryDataList = queryRegistryDataByServicePath(servicePath);
-                RpcServiceUpdateEventData updateEventData = new RpcServiceUpdateEventData();
-                updateEventData.setServiceName(registryData.getServiceName());
-                updateEventData.setNewServiceList(registryDataList);
-                RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
-                updateEvent.setData(updateEventData);
-                rpcEventPublisher.publishEvent(updateEvent);
-                watchServiceChange(registryData);
+            try {
+                if (zkClient.existNode(consumerNodePath)) {
+                    // 某个消费者取消订阅之后，就会删除自己的节点信息，因此这里不再进行事件触发，并且不再进行下一次订阅
+                    List<RegistryData> registryDataList = queryRegistryDataByServicePath(servicePath);
+                    RpcServiceUpdateEventData updateEventData = new RpcServiceUpdateEventData();
+                    updateEventData.setServiceName(registryData.getServiceName());
+                    updateEventData.setNewServiceList(registryDataList);
+                    RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
+                    updateEvent.setData(updateEventData);
+                    rpcEventPublisher.publishEvent(updateEvent);
+                    watchServiceChange(registryData);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ZookeeperRegistry registry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"), new RpcEventPublisher());
         RegistryData registryData = new RegistryData();
         registryData.setPort(1234);
