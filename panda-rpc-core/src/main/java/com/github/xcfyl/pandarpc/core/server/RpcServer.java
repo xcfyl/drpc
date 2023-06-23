@@ -1,22 +1,23 @@
 package com.github.xcfyl.pandarpc.core.server;
 
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
+import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
 import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
+import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
-import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.*;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ArrayBlockingQueue;
@@ -82,7 +83,7 @@ public class RpcServer {
             ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
             registry = new ZookeeperRegistry(zookeeperClient);
         } else {
-            log.error("未知注册中心类型 -> #{}", registryType.getDescription());
+            throw new ConfigErrorException("未知注册中心类型");
         }
     }
 

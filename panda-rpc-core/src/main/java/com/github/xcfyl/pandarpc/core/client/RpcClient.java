@@ -7,6 +7,7 @@ import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRouterType;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
+import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
@@ -65,7 +66,7 @@ public class RpcClient {
             // 说明需要生成jdk动态代理
             proxyFactory = new JdkProxyFactory();
         } else {
-            throw new RuntimeException("暂不支持的动态代理类型");
+            throw new ConfigErrorException("暂不支持的动态代理类型");
         }
 
         RegistryType registryType = config.getCommonConfig().getRegistryType();
@@ -73,14 +74,14 @@ public class RpcClient {
             ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
             registry = new ZookeeperRegistry(zookeeperClient);
         } else {
-            throw new RuntimeException("暂不支持的注册中心类型");
+            throw new ConfigErrorException("暂不支持的注册中心类型");
         }
 
         RpcRouterType routerType = config.getRouterType();
         if (routerType.getCode() == RpcRouterType.RANDOM.getCode()) {
             RpcRouterRef.setRpcRouter(new RpcRandomRouter());
         } else {
-            throw new RuntimeException("暂时不支持的路由类型");
+            throw new ConfigErrorException("暂时不支持的路由类型");
         }
 
         return new RpcReference(proxyFactory);
