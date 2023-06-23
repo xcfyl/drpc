@@ -1,16 +1,28 @@
 package com.github.xcfyl.pandarpc.core.server;
 
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
+import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
+import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
+import com.github.xcfyl.pandarpc.core.registry.RegistryData;
+import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
+import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
+import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
-import static com.github.xcfyl.pandarpc.core.server.RpcServerLocalCache.SERVICE_PROVIDER_CACHE;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * rpc服务端
@@ -18,19 +30,33 @@ import static com.github.xcfyl.pandarpc.core.server.RpcServerLocalCache.SERVICE_
  * @author 西城风雨楼
  * @date create at 2023/6/22 10:30
  */
+@Slf4j
 public class RpcServer {
+    /**
+     * rpc服务的配置信息
+     */
     private final RpcServerConfig config;
+    /**
+     * 注册中心
+     */
+    private RpcRegistry registry;
+    /**
+     * 用于执行服务注册的线程池
+     */
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10,
+            1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public RpcServer(RpcServerConfig config) {
-        this.config = config;
+    public RpcServer() {
+        config = RpcConfigLoader.loadRpcServerConfig();
     }
 
     /**
-     * 启动rpc服务端
+     * 初始化rpc服务端
      *
      * @throws Exception
      */
-    public void start() throws Exception {
+    public void init() throws Exception {
         new ServerBootstrap()
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
@@ -49,6 +75,15 @@ public class RpcServer {
                 })
                 .bind(config.getPort())
                 .sync();
+
+        RegistryType registryType = config.getCommonConfig().getRegistryType();
+        if (registryType == RegistryType.ZK) {
+            // 如果注册中心的类型是zookeeper
+            ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
+            registry = new ZookeeperRegistry(zookeeperClient);
+        } else {
+            log.error("未知注册中心类型 -> #{}", registryType.getDescription());
+        }
     }
 
     /**
@@ -57,21 +92,31 @@ public class RpcServer {
      * @param service
      */
     public void registerService(Object service) {
-        if (service.getClass().getInterfaces().length == 0) {
-            throw new RuntimeException("服务没有实现任何接口");
-        }
-        Class<?>[] interfaces = service.getClass().getInterfaces();
-        if (interfaces.length > 1) {
-            throw new RuntimeException("服务只能实现一个接口");
-        }
-        Class<?> interfaceClass = interfaces[0];
-        SERVICE_PROVIDER_CACHE.put(interfaceClass.getName(), service);
+        String serviceName = service.getClass().getName();
+        // 将当前服务名称写入
+        threadPoolExecutor.submit(() -> {
+            // 首先将当前服务写入注册中心
+            RegistryData registryData = new RegistryData();
+            registryData.setIp(CommonUtils.getCurrentMachineIp());
+            registryData.setServiceName(serviceName);
+            registryData.setPort(config.getPort());
+            registryData.setApplicationName(config.getCommonConfig().getApplicationName());
+            registryData.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "provider");
+            registryData.getAttr().put(RegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
+            try {
+                registry.register(registryData);
+                // 将当前服务写入本地缓存中
+                RpcServerLocalCache.REGISTRY_DATA_CACHE.put(serviceName, registryData);
+                RpcServerLocalCache.SERVICE_PROVIDER_CACHE.put(serviceName, service);
+            } catch (Exception e) {
+                log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
+            }
+        });
     }
 
     public static void main(String[] args) throws Throwable {
-        RpcServerConfig serverConfig = RpcConfigLoader.loadRpcServerConfig();
-        RpcServer rpcServer = new RpcServer(serverConfig);
+        RpcServer rpcServer = new RpcServer();
         rpcServer.registerService(new HelloServiceImpl());
-        rpcServer.start();
+        rpcServer.init();
     }
 }
