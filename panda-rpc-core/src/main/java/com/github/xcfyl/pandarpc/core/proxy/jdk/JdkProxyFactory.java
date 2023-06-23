@@ -12,16 +12,10 @@ import java.lang.reflect.Proxy;
  * @date create at 2023/6/22 11:16
  */
 public class JdkProxyFactory implements ProxyFactory {
-    private final ChannelFuture channelFuture;
-
-    public JdkProxyFactory(ChannelFuture channelFuture) {
-        this.channelFuture = channelFuture;
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public <T> T getProxy(Class<T> clazz) throws Throwable {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(),
-                new Class<?>[]{clazz}, new RpcInvocationHandler(clazz, channelFuture));
+                new Class<?>[]{clazz}, new RpcInvocationHandler(clazz));
     }
 }

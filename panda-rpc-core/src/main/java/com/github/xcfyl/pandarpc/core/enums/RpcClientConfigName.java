@@ -5,10 +5,8 @@ package com.github.xcfyl.pandarpc.core.enums;
  * @date create at 2023/6/22 18:12
  */
 public enum RpcClientConfigName implements PandaRpcEnum {
-    CLIENT_MAX_REQUEST_LENGTH(0, "client.request.limit"),
-    CLIENT_REQUEST_TIMEOUT(1, "client.request.timeout"),
-    CLIENT_PROXY_TYPE(2, "client.proxy"),
-    CLIENT_REGISTRY_TYPE(3, "client.registry");
+    CLIENT_REQUEST_TIMEOUT(0, "client.request.timeout"),
+    CLIENT_PROXY_TYPE(1, "client.proxy");
 
     private final int code;
     private final String description;

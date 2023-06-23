@@ -1,6 +1,5 @@
 package com.github.xcfyl.pandarpc.core.config;
 
-import com.github.xcfyl.pandarpc.core.enums.RegistryType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -14,15 +13,11 @@ import lombok.ToString;
 @Data
 public class RpcServerConfig {
     /**
+     * 公用配置
+     */
+    private RpcCommonConfig commonConfig;
+    /**
      * 服务端的监听端口号
      */
     private int port;
-    /**
-     * 最长请求限制
-     */
-    private int maxRequestLength;
-    /**
-     * 注册中心的类型
-     */
-    private RegistryType registryType;
 }

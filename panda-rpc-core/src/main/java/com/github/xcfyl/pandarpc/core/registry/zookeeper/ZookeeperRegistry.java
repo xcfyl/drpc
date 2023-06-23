@@ -20,13 +20,10 @@ import java.util.List;
  */
 public class ZookeeperRegistry implements RpcRegistry {
     private static final String ROOT = "/drpc";
-
     private final ZookeeperClient zkClient;
-    private final RpcEventPublisher rpcEventPublisher;
 
-    public ZookeeperRegistry(ZookeeperClient zkClient, RpcEventPublisher rpcEventPublisher) {
+    public ZookeeperRegistry(ZookeeperClient zkClient) {
         this.zkClient = zkClient;
-        this.rpcEventPublisher = rpcEventPublisher;
     }
 
     @Override
@@ -114,7 +111,8 @@ public class ZookeeperRegistry implements RpcRegistry {
                     updateEventData.setNewServiceList(registryDataList);
                     RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
                     updateEvent.setData(updateEventData);
-                    rpcEventPublisher.publishEvent(updateEvent);
+                    RpcEventPublisher eventPublisher = RpcEventPublisher.getInstance();
+                    eventPublisher.publishEvent(updateEvent);
                     watchServiceChange(registryData);
                 }
             } catch (Exception e) {
@@ -124,7 +122,7 @@ public class ZookeeperRegistry implements RpcRegistry {
     }
 
     public static void main(String[] args) throws Exception {
-        ZookeeperRegistry registry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"), new RpcEventPublisher());
+        ZookeeperRegistry registry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"));
         RegistryData registryData = new RegistryData();
         registryData.setPort(1234);
         registryData.setServiceName("service1");

@@ -2,17 +2,25 @@ package com.github.xcfyl.pandarpc.core.client;
 
 import com.github.xcfyl.pandarpc.core.config.RpcClientConfig;
 import com.github.xcfyl.pandarpc.core.config.RpcConfigLoader;
+import com.github.xcfyl.pandarpc.core.enums.ProxyType;
+import com.github.xcfyl.pandarpc.core.enums.RegistryType;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
+import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
 import com.github.xcfyl.pandarpc.core.proxy.jdk.JdkProxyFactory;
+import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
+import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
+import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import com.github.xcfyl.pandarpc.core.server.HelloService;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+
+import static com.github.xcfyl.pandarpc.core.enums.ProxyType.JDK;
+import static com.github.xcfyl.pandarpc.core.enums.RegistryType.ZK;
 
 /**
  * rpc客户端
@@ -23,14 +31,14 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class RpcClient {
     private final RpcClientConfig config;
     private RpcRegistry registry;
-    private JdkProxyFactory jdkProxyFactory;
+    private ProxyFactory proxyFactory;
 
     public RpcClient(RpcClientConfig config) {
         this.config = config;
     }
 
     public RpcReference start() throws Exception {
-        ChannelFuture channelFuture = new Bootstrap()
+        Bootstrap bootstrap = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
                 .handler(new ChannelInitializer<SocketChannel>() {
@@ -40,9 +48,28 @@ public class RpcClient {
                         channel.pipeline().addLast(new RpcTransferProtocolDecoder());
                         channel.pipeline().addLast(new RpcClientHandler());
                     }
-                }).connect(null);
+                });
+        ConnectionManager.setBootstrap(bootstrap);
+        initClient();
+        return new RpcReference(new JdkProxyFactory());
+    }
 
-        return new RpcReference(new JdkProxyFactory(channelFuture));
+    private void initClient() {
+        ProxyType proxyType = config.getProxyType();
+        RegistryType registryType = config.getCommonConfig().getRegistryType();
+        if (proxyType.getCode() == JDK.getCode()) {
+            // 说明需要生成jdk动态代理
+            proxyFactory = new JdkProxyFactory();
+        } else {
+            throw new RuntimeException("暂不支持的动态代理类型");
+        }
+
+        if (registryType.getCode() == ZK.getCode()) {
+            ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
+            registry = new ZookeeperRegistry(zookeeperClient);
+        } else {
+            throw new RuntimeException("暂不支持的注册中心类型");
+        }
     }
 
     /**
@@ -51,7 +78,8 @@ public class RpcClient {
      * @param serviceName
      */
     public void subscribeService(String serviceName) {
-
+        // 在这里订阅服务
+        RegistryData registryData = new RegistryData();
     }
 
     public static void main(String[] args) throws Throwable {

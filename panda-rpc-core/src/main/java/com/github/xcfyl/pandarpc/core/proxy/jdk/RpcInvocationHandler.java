@@ -20,11 +20,8 @@ import java.util.concurrent.TimeoutException;
  */
 public class RpcInvocationHandler implements InvocationHandler {
     private final Class<?> clazz;
-    private final ChannelFuture channelFuture;
-
-    public RpcInvocationHandler(Class<?> clazz, ChannelFuture channelFuture) {
+    public RpcInvocationHandler(Class<?> clazz) {
         this.clazz = clazz;
-        this.channelFuture = channelFuture;
     }
 
     @Override
@@ -34,7 +31,7 @@ public class RpcInvocationHandler implements InvocationHandler {
         String methodName = method.getName();
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
         RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
-        channelFuture.channel().writeAndFlush(protocol);
+        // todo 发送rpc请求
         long beginTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - beginTime < 100 * 1000) {
             RpcResponse response = RpcClientLocalCache.RESPONSE_MAP.get(requestId);

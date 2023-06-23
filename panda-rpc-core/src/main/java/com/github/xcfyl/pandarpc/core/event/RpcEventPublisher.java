@@ -21,6 +21,18 @@ public class RpcEventPublisher {
     private final List<RpcEventListener<?>> eventListeners = new ArrayList<>();
     private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 3, 1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100));
 
+    private static class RpcEventPublisherHolder {
+        static final RpcEventPublisher EVENT_PUBLISHER = new RpcEventPublisher();
+
+        static {
+            // 预先初始化一些监听事件
+            EVENT_PUBLISHER.addEventListener(new RpcServiceUpdateEventListener());
+        }
+    }
+
+    public static RpcEventPublisher getInstance() {
+        return RpcEventPublisherHolder.EVENT_PUBLISHER;
+    }
 
     /**
      * 添加一个新的事件监听器

@@ -5,10 +5,7 @@ package com.github.xcfyl.pandarpc.core.enums;
  * @date create at 2023/6/23 16:05
  */
 public enum RpcServerConfigName implements PandaRpcEnum {
-    SERVER_MAX_REQUEST_LENGTH(0, "server.request.limit"),
-    SERVER_REGISTRY_TYPE(1, "server.registry"),
-    SERVER_PORT(2, "server.port"),
-    SERVER_IP(3, "server.ip");
+    SERVER_PORT(0, "server.port");
 
     private final int code;
     private final String description;

@@ -15,9 +15,9 @@ import lombok.ToString;
 @Data
 public class RpcClientConfig {
     /**
-     * 最长请求限制
+     * rpc的公有配置
      */
-    private Integer maxRequestLength;
+    private RpcCommonConfig commonConfig;
     /**
      * 请求超时时间
      */
@@ -26,8 +26,4 @@ public class RpcClientConfig {
      * 代理类型
      */
     private ProxyType proxyType;
-    /**
-     * 注册中心的类型
-     */
-    private RegistryType registryType;
 }

@@ -1,9 +1,6 @@
 package com.github.xcfyl.pandarpc.core.config;
 
-import com.github.xcfyl.pandarpc.core.enums.ProxyType;
-import com.github.xcfyl.pandarpc.core.enums.RegistryType;
-import com.github.xcfyl.pandarpc.core.enums.RpcClientConfigName;
-import com.github.xcfyl.pandarpc.core.enums.RpcServerConfigName;
+import com.github.xcfyl.pandarpc.core.enums.*;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -12,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Properties;
+import java.util.UUID;
 
 /**
  * 加载指定路径下的Properties文件，解析配置
@@ -22,6 +20,8 @@ import java.util.Properties;
 public class RpcConfigLoader {
     private static final String CONFIG_FILE_NAME = "pandarpc.properties";
     private static final Properties PROPERTIES = new Properties();
+
+    private static final RpcCommonConfig RPC_COMMON_CONFIG;
 
     static {
         URL resource = RpcConfigLoader.class.getClassLoader().getResource(CONFIG_FILE_NAME);
@@ -34,6 +34,7 @@ public class RpcConfigLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        RPC_COMMON_CONFIG = loadRpcCommonConfig();
     }
 
     /**
@@ -45,14 +46,30 @@ public class RpcConfigLoader {
         RpcServerConfig serverConfig = new RpcServerConfig();
         // rpc服务的端口
         Integer port = getInteger(RpcServerConfigName.SERVER_PORT.getDescription(), 1998);
-        // 服务端可以接受的最大请求长度
-        Integer maxRequestLength = getInteger(RpcServerConfigName.SERVER_MAX_REQUEST_LENGTH.getDescription(), 1024 * 1024);
-        // 注册中心的类型
-        String registryType = getString(RpcServerConfigName.SERVER_REGISTRY_TYPE.getDescription(), RegistryType.ZK.getDescription());
         serverConfig.setPort(port);
-        serverConfig.setMaxRequestLength(maxRequestLength);
-        serverConfig.setRegistryType(RegistryType.fromDescription(registryType));
+        serverConfig.setCommonConfig(RPC_COMMON_CONFIG);
         return serverConfig;
+    }
+
+    /**
+     * 加载rpc的公有配置
+     *
+     * @return
+     */
+    public static RpcCommonConfig loadRpcCommonConfig() {
+        String applicationName = getString(RpcCommonConfigName.APPLICATION_NAME.getDescription(),
+                UUID.randomUUID().toString());
+        Integer maxRequestLength = getInteger(RpcCommonConfigName.MAX_REQUEST_LENGTH.getDescription(),
+                1024 * 1024);
+        String registryType = getString(RpcCommonConfigName.REGISTRY_TYPE.getDescription(),
+                RegistryType.ZK.getDescription());
+        String registryAddr = getString(RpcCommonConfigName.REGISTRY_ADDR.getDescription(), "127.0.0.1:2181");
+        RpcCommonConfig rpcCommonConfig = new RpcCommonConfig();
+        rpcCommonConfig.setApplicationName(applicationName);
+        rpcCommonConfig.setMaxRequestLength(maxRequestLength);
+        rpcCommonConfig.setRegistryType(RegistryType.fromDescription(registryType));
+        rpcCommonConfig.setRegistryAddr(registryAddr);
+        return rpcCommonConfig;
     }
 
     /**
@@ -62,18 +79,11 @@ public class RpcConfigLoader {
      */
     public static RpcClientConfig loadRpcClientConfig() {
         RpcClientConfig clientConfig = new RpcClientConfig();
-        // 最大请求内容的长度
-        Integer maxRequestLength = getInteger(RpcClientConfigName.CLIENT_MAX_REQUEST_LENGTH.getDescription(), 1024 * 1024);
-        // 请求超时时间
         Long requestTimeout = getLong(RpcClientConfigName.CLIENT_REQUEST_TIMEOUT.getDescription(), 3000L);
-        // 代理类型
         String proxyType = getString(RpcClientConfigName.CLIENT_PROXY_TYPE.getDescription(), ProxyType.JDK.getDescription());
-        // 注册中心类型
-        String registryType = getString(RpcClientConfigName.CLIENT_REGISTRY_TYPE.getDescription(), RegistryType.ZK.getDescription());
-        clientConfig.setMaxRequestLength(maxRequestLength);
         clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setProxyType(ProxyType.fromDescription(proxyType));
-        clientConfig.setRegistryType(RegistryType.fromDescription(registryType));
+        clientConfig.setCommonConfig(RPC_COMMON_CONFIG);
         return clientConfig;
     }
 
