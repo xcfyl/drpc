@@ -74,7 +74,7 @@ DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got noti
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/drpc/service1/provider for sessionid 0x10032f0d9cf0059
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf0059, packet:: clientPath:null serverPath:null finished:false header:: 42,1  replyHeader:: 42,666,0  request:: '/drpc/service1/provider/localhost:1234,#7b226170706c69636174696f6e4e616d65223a2261707031222c2261747472223a7b2274797065223a2270726f7669646572227d2c226970223a226c6f63616c686f7374222c22706f7274223a313233342c22736572766963654e616d65223a227365727669636531227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/service1/provider/localhost:1234 
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf0059, packet:: clientPath:null serverPath:null finished:false header:: 43,3  replyHeader:: 43,666,-101  request:: '/drpc/service1/consumer/consumer1:localhost,F  response::  
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
 INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
 DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
 DEBUG main org.apache.curator.ConnectionState - Starting
@@ -149,7 +149,7 @@ DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got noti
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/drpc/service1/provider for sessionid 0x10032f0d9cf005a
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005a, packet:: clientPath:null serverPath:null finished:false header:: 40,1  replyHeader:: 40,677,0  request:: '/drpc/service1/provider/localhost:1234,#7b226170706c69636174696f6e4e616d65223a2261707031222c2261747472223a7b2274797065223a2270726f7669646572227d2c226970223a226c6f63616c686f7374222c22706f7274223a313233342c22736572766963654e616d65223a227365727669636531227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/service1/provider/localhost:1234 
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005a, packet:: clientPath:null serverPath:null finished:false header:: 41,3  replyHeader:: 41,677,-101  request:: '/drpc/service1/consumer/consumer1:localhost,F  response::  
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
 INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
 DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
 DEBUG main org.apache.curator.ConnectionState - Starting
@@ -224,9 +224,9 @@ DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got noti
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/drpc/service1/provider for sessionid 0x10032f0d9cf005b
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005b, packet:: clientPath:null serverPath:null finished:false header:: 40,1  replyHeader:: 40,687,0  request:: '/drpc/service1/provider/localhost:1234,#7b226170706c69636174696f6e4e616d65223a2261707031222c2261747472223a7b2274797065223a2270726f7669646572227d2c226970223a226c6f63616c686f7374222c22706f7274223a313233342c22736572766963654e616d65223a227365727669636531227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/service1/provider/localhost:1234 
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005b, packet:: clientPath:null serverPath:null finished:false header:: 41,3  replyHeader:: 41,687,-101  request:: '/drpc/service1/consumer/consumer1:localhost,F  response::  
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
 INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
 DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
 DEBUG main org.apache.curator.ConnectionState - Starting
@@ -301,4 +301,4 @@ DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got noti
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Got WatchedEvent state:SyncConnected type:NodeChildrenChanged path:/drpc/service1/provider for sessionid 0x10032f0d9cf005d
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005d, packet:: clientPath:null serverPath:null finished:false header:: 40,1  replyHeader:: 40,709,0  request:: '/drpc/service1/provider/localhost:1234,#7b226170706c69636174696f6e4e616d65223a2261707031222c2261747472223a7b2274797065223a2270726f7669646572227d2c226970223a226c6f63616c686f7374222c22706f7274223a313233342c22736572766963654e616d65223a227365727669636531227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/service1/provider/localhost:1234 
 DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf005d, packet:: clientPath:null serverPath:null finished:false header:: 41,3  replyHeader:: 41,709,-101  request:: '/drpc/service1/consumer/consumer1:localhost,F  response::  
-DEBUG main com.github.xcfyl.drpc.core.registry.TestZookeeperRegistry - 测试完毕
+DEBUG main registry.com.github.xcfyl.pandarpc.core.TestZookeeperRegistry - 测试完毕
