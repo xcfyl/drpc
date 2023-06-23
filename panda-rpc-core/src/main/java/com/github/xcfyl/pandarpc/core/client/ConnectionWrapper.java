@@ -3,6 +3,7 @@ package com.github.xcfyl.pandarpc.core.client;
 import io.netty.channel.ChannelFuture;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -25,6 +26,11 @@ public class ConnectionWrapper {
      * 端口号
      */
     private Integer port;
+
+    /**
+     * 这些连接可能有权重
+     */
+    private BigDecimal weight;
 
     @Override
     public boolean equals(Object o) {

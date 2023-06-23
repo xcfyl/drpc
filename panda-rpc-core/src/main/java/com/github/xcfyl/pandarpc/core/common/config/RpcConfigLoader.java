@@ -38,20 +38,6 @@ public class RpcConfigLoader {
     }
 
     /**
-     * 从配置文件中加载服务端的配置
-     *
-     * @return
-     */
-    public static RpcServerConfig loadRpcServerConfig() {
-        RpcServerConfig serverConfig = new RpcServerConfig();
-        // rpc服务的端口
-        Integer port = getInteger(RpcServerConfigName.SERVER_PORT.getDescription(), 1998);
-        serverConfig.setPort(port);
-        serverConfig.setCommonConfig(RPC_COMMON_CONFIG);
-        return serverConfig;
-    }
-
-    /**
      * 加载rpc的公有配置
      *
      * @return
@@ -73,6 +59,20 @@ public class RpcConfigLoader {
     }
 
     /**
+     * 从配置文件中加载服务端的配置
+     *
+     * @return
+     */
+    public static RpcServerConfig loadRpcServerConfig() {
+        RpcServerConfig serverConfig = new RpcServerConfig();
+        // rpc服务的端口
+        Integer port = getInteger(RpcServerConfigName.SERVER_PORT.getDescription(), 1998);
+        serverConfig.setPort(port);
+        serverConfig.setCommonConfig(RPC_COMMON_CONFIG);
+        return serverConfig;
+    }
+
+    /**
      * 从配置文件中加载客户端的配置
      *
      * @return
@@ -81,9 +81,11 @@ public class RpcConfigLoader {
         RpcClientConfig clientConfig = new RpcClientConfig();
         Long requestTimeout = getLong(RpcClientConfigName.CLIENT_REQUEST_TIMEOUT.getDescription(), 3000L);
         String proxyType = getString(RpcClientConfigName.CLIENT_PROXY_TYPE.getDescription(), ProxyType.JDK.getDescription());
+        String routerType = getString(RpcClientConfigName.CLIENT_ROUTER_TYPE.getDescription(), RpcRouterType.RANDOM.getDescription());
+        clientConfig.setCommonConfig(RPC_COMMON_CONFIG);
         clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setProxyType(ProxyType.fromDescription(proxyType));
-        clientConfig.setCommonConfig(RPC_COMMON_CONFIG);
+        clientConfig.setRouterType(RpcRouterType.fromDescription(routerType));
         return clientConfig;
     }
 
