@@ -1,7 +1,7 @@
 package com.github.xcfyl.pandarpc.core.proxy.jdk;
 
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
-import io.netty.channel.ChannelFuture;
+import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 
 import java.lang.reflect.Proxy;
 

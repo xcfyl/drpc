@@ -32,6 +32,10 @@ public class ConnectionWrapper {
      */
     private BigDecimal weight;
 
+    public void writeAndFlush(Object data) {
+        channelFuture.channel().writeAndFlush(data);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

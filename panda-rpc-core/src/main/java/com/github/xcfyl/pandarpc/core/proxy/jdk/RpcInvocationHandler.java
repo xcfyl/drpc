@@ -1,10 +1,13 @@
 package com.github.xcfyl.pandarpc.core.proxy.jdk;
 
 import com.alibaba.fastjson.JSON;
+import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.pandarpc.core.client.RpcClientLocalCache;
+import com.github.xcfyl.pandarpc.core.client.RpcRouterRef;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
+import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 import io.netty.channel.ChannelFuture;
 
 import java.lang.reflect.InvocationHandler;
@@ -31,7 +34,8 @@ public class RpcInvocationHandler implements InvocationHandler {
         String methodName = method.getName();
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
         RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
-        // todo 发送rpc请求
+        ConnectionWrapper connectionWrapper = RpcRouterRef.getRpcRouter().select(serviceName);
+        connectionWrapper.writeAndFlush(protocol);
         long beginTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - beginTime < 100 * 1000) {
             RpcResponse response = RpcClientLocalCache.RESPONSE_MAP.get(requestId);

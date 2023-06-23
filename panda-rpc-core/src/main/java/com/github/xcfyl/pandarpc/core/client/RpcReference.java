@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.client;
 
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
+import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 
 /**
  * @author 西城风雨楼
@@ -8,9 +9,11 @@ import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
  */
 public class RpcReference {
     private final ProxyFactory proxyFactory;
+    private final RpcRouter router;
 
-    public RpcReference(ProxyFactory proxyFactory) {
+    public RpcReference(ProxyFactory proxyFactory, RpcRouter router) {
         this.proxyFactory = proxyFactory;
+        this.router = router;
     }
 
     /**

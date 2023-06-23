@@ -2,6 +2,7 @@ package com.github.xcfyl.pandarpc.core.router;
 
 import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/23 22:42
  */
+@Slf4j
 public abstract class RpcAbstractRouter implements RpcRouter {
     protected final List<ConnectionWrapper> cache = new ArrayList<>();
 
@@ -24,6 +26,7 @@ public abstract class RpcAbstractRouter implements RpcRouter {
         cache.clear();
         cache.addAll(connections);
         doRefresh();
+        log.debug("router refreshed -> #{}", cache);
     }
 
     /**

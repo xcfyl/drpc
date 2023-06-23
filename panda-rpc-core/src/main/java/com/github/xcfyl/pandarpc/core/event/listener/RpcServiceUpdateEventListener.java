@@ -2,6 +2,7 @@ package com.github.xcfyl.pandarpc.core.event.listener;
 
 import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
+import com.github.xcfyl.pandarpc.core.client.RpcRouterRef;
 import com.github.xcfyl.pandarpc.core.event.RpcEventListener;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
@@ -46,6 +47,9 @@ public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServic
             }
             newConnections.add(connectionWrapper);
         }
+        // 更新本地连接缓存
         ConnectionManager.setConnections(serviceName, newConnections);
+        // 刷新路由
+        RpcRouterRef.getRpcRouter().refresh(serviceName);
     }
 }
