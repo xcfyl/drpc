@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.server;
 
 import com.alibaba.fastjson.JSON;
+import com.github.xcfyl.pandarpc.core.exception.RequestException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
@@ -24,17 +25,22 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
         RpcRequest request = RpcTransferProtocolHelper.parseRpcRequest(protocol);
         Object service = RpcServerLocalCache.SERVICE_PROVIDER_CACHE.get(request.getServiceName());
         Method[] methods = service.getClass().getDeclaredMethods();
-        Object result = null;
+        Method targetMethod = null;
         for (Method method : methods) {
             if (method.getName().equals(request.getMethodName())) {
-                if (method.getReturnType().equals(Void.TYPE)) {
-                    // 如果方法没有返回值
-                    method.invoke(service, request.getArgs());
-                } else {
-                    result = method.invoke(service, request.getArgs());
-                }
+                targetMethod = method;
                 break;
             }
+        }
+        if (targetMethod == null) {
+            throw new RequestException("未知方法调用");
+        }
+
+        Object result = null;
+        if (targetMethod.getReturnType() == Void.TYPE) {
+            targetMethod.invoke(service, request.getArgs());
+        } else {
+            result = targetMethod.invoke(service, request);
         }
         RpcResponse response = new RpcResponse(request.getId(), result);
         protocol = new RpcTransferProtocol(JSON.toJSONString(response).getBytes());

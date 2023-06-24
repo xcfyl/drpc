@@ -1,7 +1,7 @@
 package com.github.xcfyl.pandarpc.core.proxy.jdk;
 
+import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
-import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 
 import java.lang.reflect.Proxy;
 
@@ -14,8 +14,8 @@ import java.lang.reflect.Proxy;
 public class JdkProxyFactory implements ProxyFactory {
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getProxy(Class<T> clazz) throws Throwable {
-        return (T) Proxy.newProxyInstance(clazz.getClassLoader(),
-                new Class<?>[]{clazz}, new RpcInvocationHandler(clazz));
+    public <T> T getProxy(SubscribedServiceWrapper<T> serviceWrapper) throws Throwable {
+        return (T) Proxy.newProxyInstance(serviceWrapper.getServiceClass().getClassLoader(),
+                new Class<?>[]{serviceWrapper.getServiceClass()}, new RpcInvocationHandler<>(serviceWrapper));
     }
 }

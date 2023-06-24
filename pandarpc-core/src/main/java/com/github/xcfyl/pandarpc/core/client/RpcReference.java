@@ -1,7 +1,6 @@
 package com.github.xcfyl.pandarpc.core.client;
 
 import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
-import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 
 /**
  * @author 西城风雨楼
@@ -22,7 +21,7 @@ public class RpcReference {
      * @param <T> 返回的代理对象类型
      * @throws Throwable 可能抛出的异常
      */
-    public <T> T get(Class<T> clazz) throws Throwable {
-        return proxyFactory.getProxy(clazz);
+    public <T> T get(SubscribedServiceWrapper<T> serviceWrapper) throws Throwable {
+        return proxyFactory.getProxy(serviceWrapper);
     }
 }

@@ -1,5 +1,7 @@
 package com.github.xcfyl.pandarpc.core.proxy;
 
+import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
+
 /**
  * @author 西城风雨楼
  */
@@ -12,5 +14,5 @@ public interface ProxyFactory {
      * @param <T>
      * @throws Throwable
      */
-    <T> T getProxy(Class<T> clazz) throws Throwable;
+    <T> T getProxy(SubscribedServiceWrapper<T> serviceWrapper) throws Throwable;
 }
