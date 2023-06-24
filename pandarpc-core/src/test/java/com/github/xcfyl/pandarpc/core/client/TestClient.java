@@ -15,9 +15,12 @@ public class TestClient {
         wrapper.setSync(true);
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
-        for (int i = 0; i < 1000; i++) {
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
             String reply = helloService.hello("zhangsan" + i);
             System.out.println(reply);
         }
+        long end = System.currentTimeMillis();
+        System.out.println("总共花了: " + (end - start) + "ms");
     }
 }

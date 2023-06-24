@@ -60,7 +60,6 @@ public class RpcClient {
         RpcClientFilterChain filterChain = new RpcClientFilterChain();
         filterChain.addFilter(new RpcClientLogFilter());
         RpcClientContext.setFilterChain(filterChain);
-
         // 生成RpcReference对象
         return new RpcReference(RpcProxyFactory.createRpcProxy(rpcClientConfig));
     }

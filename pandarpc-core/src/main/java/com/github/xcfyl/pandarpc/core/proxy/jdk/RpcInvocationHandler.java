@@ -3,11 +3,12 @@ package com.github.xcfyl.pandarpc.core.proxy.jdk;
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
-import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
 import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
+import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -21,6 +22,7 @@ import java.util.concurrent.TimeoutException;
  * @author 西城风雨楼
  * @date create at 2023/6/22 11:17
  */
+@Slf4j
 public class RpcInvocationHandler<T> implements InvocationHandler {
     private final SubscribedServiceWrapper<T> serviceWrapper;
 
