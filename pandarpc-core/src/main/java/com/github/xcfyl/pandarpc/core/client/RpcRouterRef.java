@@ -4,7 +4,7 @@ import com.github.xcfyl.pandarpc.core.router.RpcRouter;
 
 /**
  * @author 西城风雨楼
- * @date create at 2023/6/23 23:08
+ * @date create at 2023/6/24 09:27
  */
 public class RpcRouterRef {
     private static RpcRouter rpcRouter;

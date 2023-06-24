@@ -12,7 +12,9 @@ public class TestClient {
         RpcReference rpcReference = rpcClient.init();
         rpcClient.subscribeService(HelloService.class.getName());
         HelloService helloService = rpcReference.get(HelloService.class);
-        String reply = helloService.hello("zhangsan");
-        System.out.println(reply);
+        for (int i = 0; i < 1000; i++) {
+            String reply = helloService.hello("zhangsan");
+            System.out.println(reply);
+        }
     }
 }

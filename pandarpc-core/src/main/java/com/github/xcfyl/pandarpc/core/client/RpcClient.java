@@ -1,5 +1,6 @@
 package com.github.xcfyl.pandarpc.core.client;
 
+import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import com.github.xcfyl.pandarpc.core.common.config.RpcClientConfig;
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.pandarpc.core.common.enums.ProxyType;
@@ -17,8 +18,6 @@ import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import com.github.xcfyl.pandarpc.core.router.RpcRandomRouter;
-import com.github.xcfyl.pandarpc.core.router.RpcRouter;
-import com.github.xcfyl.pandarpc.core.server.HelloService;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -84,6 +83,8 @@ public class RpcClient {
             throw new ConfigErrorException("暂时不支持的路由类型");
         }
 
+        RpcContext.setMaxRequestLength(config.getCommonConfig().getMaxRequestLength());
+        RpcContext.setRequestTimeout(config.getRequestTimeout());
         return new RpcReference(proxyFactory);
     }
 

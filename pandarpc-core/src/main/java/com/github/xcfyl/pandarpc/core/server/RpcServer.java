@@ -1,5 +1,6 @@
 package com.github.xcfyl.pandarpc.core.server;
 
+import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
 import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
@@ -85,6 +86,8 @@ public class RpcServer {
         } else {
             throw new ConfigErrorException("未知注册中心类型");
         }
+
+        RpcContext.setMaxRequestLength(config.getCommonConfig().getMaxRequestLength());
     }
 
     /**
