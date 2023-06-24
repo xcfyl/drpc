@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.event;
 
-import com.github.xcfyl.pandarpc.core.event.listener.RpcServiceUpdateEventListener;
+import com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener;
+import com.github.xcfyl.pandarpc.core.event.listener.ServiceUpdateEventListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -22,10 +23,11 @@ public class RpcEventPublisher {
 
     private static class RpcEventPublisherHolder {
         static final RpcEventPublisher EVENT_PUBLISHER = new RpcEventPublisher();
-
         static {
-            // 预先初始化一些监听事件
-            EVENT_PUBLISHER.addEventListener(new RpcServiceUpdateEventListener());
+            // 有新的服务上线或者新的服务下线的时候，触发该事件
+            EVENT_PUBLISHER.addEventListener(new ServiceUpdateEventListener());
+            // 当rpc服务器被正常关闭的时候，触发该事件
+            EVENT_PUBLISHER.addEventListener(new ServerShutdownEventListener());
         }
     }
 

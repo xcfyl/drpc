@@ -6,6 +6,8 @@ import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcSerializeType;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
+import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
+import com.github.xcfyl.pandarpc.core.event.ServerShutdownEvent;
 import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
@@ -95,6 +97,8 @@ public class RpcServer {
         } else {
             throw new ConfigErrorException("暂时不支持的序列化类型");
         }
+
+        registerShutdownHook(registry);
     }
 
     /**
@@ -130,5 +134,19 @@ public class RpcServer {
                 log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
             }
         });
+    }
+
+    /**
+     * 注册钩子函数，用于服务正常下线的时候，取消注册服务
+     *
+     * @param registry
+     */
+    private void registerShutdownHook(RpcRegistry registry) {
+        Runtime.getRuntime().removeShutdownHook(new Thread(() -> {
+            ServerShutdownEvent serverShutdownEvent = new ServerShutdownEvent();
+            serverShutdownEvent.setData(registry);
+            RpcEventPublisher eventPublisher = RpcEventPublisher.getInstance();
+            eventPublisher.publishEvent(serverShutdownEvent);
+        }));
     }
 }

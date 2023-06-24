@@ -1,6 +1,6 @@
 package com.github.xcfyl.pandarpc.core.event;
 
-import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
+import com.github.xcfyl.pandarpc.core.event.data.ServiceUpdateEventData;
 
 /**
  * 服务列表发生变化时，需要发送该事件
@@ -8,16 +8,16 @@ import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
  * @author 西城风雨楼
  * @date create at 2023/6/22 23:25
  */
-public class RpcServiceUpdateEvent implements RpcEvent<RpcServiceUpdateEventData> {
-    private RpcServiceUpdateEventData serviceChangeInfo;
+public class RpcServiceUpdateEvent implements RpcEvent<ServiceUpdateEventData> {
+    private ServiceUpdateEventData serviceChangeInfo;
 
     @Override
-    public RpcServiceUpdateEventData getData() {
+    public ServiceUpdateEventData getData() {
         return serviceChangeInfo;
     }
 
     @Override
-    public void setData(RpcServiceUpdateEventData serviceChangeInfo) {
+    public void setData(ServiceUpdateEventData serviceChangeInfo) {
         this.serviceChangeInfo = serviceChangeInfo;
     }
 

@@ -10,15 +10,15 @@ import java.util.List;
  * @date create at 2023/6/22 23:26
  */
 @ToString
-public class RpcServiceUpdateEventData {
+public class ServiceUpdateEventData {
     private String serviceName;
     private List<RegistryData> newServiceList;
 
-    public RpcServiceUpdateEventData() {
+    public ServiceUpdateEventData() {
 
     }
 
-    public RpcServiceUpdateEventData(String serviceName, List<RegistryData> newServiceList) {
+    public ServiceUpdateEventData(String serviceName, List<RegistryData> newServiceList) {
         this.serviceName = serviceName;
         this.newServiceList = newServiceList;
     }

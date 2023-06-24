@@ -5,7 +5,7 @@ import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
 import com.github.xcfyl.pandarpc.core.event.RpcEventListener;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
-import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
+import com.github.xcfyl.pandarpc.core.event.data.ServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import io.netty.channel.ChannelFuture;
 
@@ -21,7 +21,7 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 23:30
  */
-public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
+public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
     /**
      * 在这里更新client的连接列表
      *
@@ -29,7 +29,7 @@ public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServic
      */
     @Override
     public void callback(RpcServiceUpdateEvent event) {
-        RpcServiceUpdateEventData data = event.getData();
+        ServiceUpdateEventData data = event.getData();
         String serviceName = data.getServiceName();
         List<RegistryData> newProviderDataList = data.getNewServiceList();
         List<ConnectionWrapper> connections = ConnectionManager.getConnections(serviceName);

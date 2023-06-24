@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
 import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
-import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
+import com.github.xcfyl.pandarpc.core.event.data.ServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import com.github.xcfyl.pandarpc.core.server.RpcServerContext;
@@ -106,7 +106,7 @@ public class ZookeeperRegistry implements RpcRegistry {
                 if (zkClient.existNode(consumerNodePath)) {
                     // 某个消费者取消订阅之后，就会删除自己的节点信息，因此这里不再进行事件触发，并且不再进行下一次订阅
                     List<RegistryData> registryDataList = queryRegistryDataByServicePath(servicePath);
-                    RpcServiceUpdateEventData updateEventData = new RpcServiceUpdateEventData();
+                    ServiceUpdateEventData updateEventData = new ServiceUpdateEventData();
                     updateEventData.setServiceName(registryData.getServiceName());
                     updateEventData.setNewServiceList(registryDataList);
                     RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();

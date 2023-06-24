@@ -1,10 +1,13 @@
 package com.github.xcfyl.pandarpc.core.server;
 
 import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
+import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
 
+import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * rpc服务端的上下文，用于存放一些公共参数
@@ -21,7 +24,7 @@ public class RpcServerContext {
     /**
      * 存放本地服务注册信息的缓存
      */
-    private static final Map<String, Object> REGISTRY_DATA_CACHE = new HashMap<>();
+    private static final Map<String, RegistryData> REGISTRY_DATA_CACHE = new HashMap<>();
 
     private static RpcServerConfig rpcServerConfig;
 
@@ -43,7 +46,7 @@ public class RpcServerContext {
         return rpcServerConfig;
     }
 
-    public static Map<String, Object> getRegistryDataCache() {
+    public static Map<String, RegistryData> getRegistryDataCache() {
         return REGISTRY_DATA_CACHE;
     }
 
