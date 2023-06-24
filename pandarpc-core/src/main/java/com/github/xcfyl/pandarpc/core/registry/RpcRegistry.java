@@ -55,4 +55,18 @@ public interface RpcRegistry {
      * @return
      */
     List<RegistryData> queryConsumers(String serviceName) throws Exception;
+
+    /**
+     * 启动注册中心
+     *
+     * @throws Exception
+     */
+    void start() throws Exception;
+
+    /**
+     * 关闭注册中心
+     *
+     * @throws Exception
+     */
+    void close() throws Exception;
 }

@@ -8,6 +8,7 @@ import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.pandarpc.core.event.data.ServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import io.netty.channel.ChannelFuture;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 23:30
  */
+@Slf4j
 public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
     /**
      * 在这里更新client的连接列表

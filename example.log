@@ -1,0 +1,601 @@
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 63978 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0x5317651f7690cf17
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
+DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
+DEBUG main org.apache.curator.ConnectionState - Starting
+DEBUG main org.apache.curator.ConnectionState - reset
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=localhost
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_372
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Azul Systems, Inc.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/cat.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/charsets.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/cldrdata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/crs-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/dnsns.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/jaccess.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/localedata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/nashorn.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunec.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/zipfs.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jce.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jfr.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jsse.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/management-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/resources.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/rt.jar:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/test-classes:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/classes:/Users/dql/.m2/repository/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final.jar:/Users/dql/.m2/repository/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar:/Users/dql/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/Users/dql/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/Users/dql/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/dql/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/dql/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/Users/dql/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/Users/dql/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/Users/dql/.m2/repository/com/101tec/zkclient/0.7/zkclient-0.7.jar:/Users/dql/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar:/Users/dql/.m2/repository/org/apache/curator/curator-framework/2.12.0/curator-framework-2.12.0.jar:/Users/dql/.m2/repository/org/apache/curator/curator-client/2.12.0/curator-client-2.12.0.jar:/Users/dql/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1.jar:/Users/dql/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/Users/dql/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-log4j12/1.7.28/slf4j-log4j12-1.7.28.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/Users/dql/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T/
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Mac OS X
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=aarch64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=13.3.1
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/Users/dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/Users/dql/Workspace/JavaProjects/github/pandarpc
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=60000 watcher=org.apache.curator.ConnectionState@289d1c02
+DEBUG main org.apache.zookeeper.ClientCnxn - zookeeper.disableAutoWatchReset is false
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2181, initiating session
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - rpc server shutdown 了
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2181
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 70669 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0xaa062606eba91367
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
+DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
+DEBUG main org.apache.curator.ConnectionState - Starting
+DEBUG main org.apache.curator.ConnectionState - reset
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=localhost
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_372
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Azul Systems, Inc.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/cat.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/charsets.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/cldrdata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/crs-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/dnsns.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/jaccess.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/localedata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/nashorn.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunec.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/zipfs.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jce.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jfr.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jsse.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/management-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/resources.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/rt.jar:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/test-classes:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/classes:/Users/dql/.m2/repository/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final.jar:/Users/dql/.m2/repository/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar:/Users/dql/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/Users/dql/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/Users/dql/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/dql/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/dql/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/Users/dql/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/Users/dql/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/Users/dql/.m2/repository/com/101tec/zkclient/0.7/zkclient-0.7.jar:/Users/dql/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar:/Users/dql/.m2/repository/org/apache/curator/curator-framework/2.12.0/curator-framework-2.12.0.jar:/Users/dql/.m2/repository/org/apache/curator/curator-client/2.12.0/curator-client-2.12.0.jar:/Users/dql/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1.jar:/Users/dql/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/Users/dql/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-log4j12/1.7.28/slf4j-log4j12-1.7.28.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/Users/dql/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T/
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Mac OS X
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=aarch64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=13.3.1
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/Users/dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/Users/dql/Workspace/JavaProjects/github/pandarpc
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=60000 watcher=org.apache.curator.ConnectionState@289d1c02
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2181, initiating session
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - rpc server shutdown 了
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - rpc server shutdown 了
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - 测试
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - 测试
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687587395664, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687588124478, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687588220189, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687588588419, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687588609287, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 25143 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0x3866a6f3a6deacb0
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
+DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
+DEBUG main org.apache.curator.ConnectionState - Starting
+DEBUG main org.apache.curator.ConnectionState - reset
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=localhost
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_372
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Azul Systems, Inc.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/cat.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/charsets.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/cldrdata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/crs-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/dnsns.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/jaccess.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/localedata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/nashorn.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunec.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/zipfs.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jce.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jfr.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jsse.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/management-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/resources.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/rt.jar:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/test-classes:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/classes:/Users/dql/.m2/repository/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final.jar:/Users/dql/.m2/repository/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar:/Users/dql/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/Users/dql/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/Users/dql/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/dql/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/dql/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/Users/dql/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/Users/dql/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/Users/dql/.m2/repository/com/101tec/zkclient/0.7/zkclient-0.7.jar:/Users/dql/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar:/Users/dql/.m2/repository/org/apache/curator/curator-framework/2.12.0/curator-framework-2.12.0.jar:/Users/dql/.m2/repository/org/apache/curator/curator-client/2.12.0/curator-client-2.12.0.jar:/Users/dql/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1.jar:/Users/dql/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/Users/dql/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-log4j12/1.7.28/slf4j-log4j12-1.7.28.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar:/Users/dql/Library/Caches/JetBrains/IntelliJIdea2023.1/captureAgent/debugger-agent.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/Users/dql/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T/
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Mac OS X
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=aarch64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=13.3.1
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/Users/dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/Users/dql/Workspace/JavaProjects/github/pandarpc
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=60000 watcher=org.apache.curator.ConnectionState@7e0e6aa2
+DEBUG main org.apache.zookeeper.ClientCnxn - zookeeper.disableAutoWatchReset is false
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2181, initiating session
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2181
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x10032f0d9cf00d0, negotiated timeout = 40000
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 34341 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0x38bb490007c4b595
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
+DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
+DEBUG main org.apache.curator.ConnectionState - Starting
+DEBUG main org.apache.curator.ConnectionState - reset
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=localhost
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_372
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Azul Systems, Inc.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/cat.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/charsets.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/cldrdata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/crs-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/dnsns.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/jaccess.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/localedata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/nashorn.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunec.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/zipfs.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jce.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jfr.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jsse.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/management-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/resources.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/rt.jar:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/test-classes:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/classes:/Users/dql/.m2/repository/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final.jar:/Users/dql/.m2/repository/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar:/Users/dql/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/Users/dql/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/Users/dql/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/dql/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/dql/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/Users/dql/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/Users/dql/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/Users/dql/.m2/repository/com/101tec/zkclient/0.7/zkclient-0.7.jar:/Users/dql/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar:/Users/dql/.m2/repository/org/apache/curator/curator-framework/2.12.0/curator-framework-2.12.0.jar:/Users/dql/.m2/repository/org/apache/curator/curator-client/2.12.0/curator-client-2.12.0.jar:/Users/dql/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1.jar:/Users/dql/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/Users/dql/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-log4j12/1.7.28/slf4j-log4j12-1.7.28.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/Users/dql/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T/
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Mac OS X
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=aarch64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=13.3.1
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/Users/dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/Users/dql/Workspace/JavaProjects/github/pandarpc
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=60000 watcher=org.apache.curator.ConnectionState@17d0685f
+DEBUG main org.apache.zookeeper.ClientCnxn - zookeeper.disableAutoWatchReset is false
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2181, initiating session
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2181
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x10032f0d9cf00d1, negotiated timeout = 40000
+INFO main-EventThread org.apache.curator.framework.state.ConnectionStateManager - State change: CONNECTED
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d1, packet:: clientPath:null serverPath:null finished:false header:: 1,3  replyHeader:: 1,1062,0  request:: '/drpc,F  response:: s{2,2,1687485281741,1687485281741,0,4,0,0,0,4,745} 
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d1, packet:: clientPath:null serverPath:null finished:false header:: 2,3  replyHeader:: 2,1062,-101  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,F  response::  
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d1, packet:: clientPath:null serverPath:null finished:false header:: 3,1  replyHeader:: 3,1063,0  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,#7b226170706c69636174696f6e4e616d65223a2270616e6461222c2261747472223a7b2263726561746554696d65223a313638373538383836333134362c2274797065223a2270726f7669646572227d2c226970223a223139322e3136382e302e313035222c22706f7274223a313939382c22736572766963654e616d65223a22636f6d2e6769746875622e786366796c2e70616e64617270632e636f72652e7365727665722e48656c6c6f53657276696365227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998 
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d1, packet:: clientPath:null serverPath:null finished:false header:: 4,2  replyHeader:: 4,1064,0  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,-1  response:: null
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d1, packet:: clientPath:null serverPath:null finished:false header:: 5,2  replyHeader:: 5,1065,-101  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,-1  response:: null
+ERROR Thread-1 com.github.xcfyl.pandarpc.core.event.listener.ServerShutdownEventListener - close rpc server, unregister service #RegistryData(applicationName=panda, ip=192.168.0.105, port=1998, serviceName=com.github.xcfyl.pandarpc.core.server.HelloService, attr={createTime=1687588863146, type=provider}) failure! exception is #KeeperErrorCode = NoNode for /drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 64819 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0x328bd6da958442c1
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+ERROR pool-1-thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - register service failure, service name is #com.github.xcfyl.pandarpc.core.server.HelloServiceImpl@d78841, exception is #null
+DEBUG Thread-0 com.github.xcfyl.pandarpc.core.server.RpcServer - close registry failure
+DEBUG main io.netty.util.internal.logging.InternalLoggerFactory - Using SLF4J as the default logging framework
+DEBUG main io.netty.channel.MultithreadEventLoopGroup - -Dio.netty.eventLoopThreads: 16
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Buffer.address: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.theUnsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - sun.misc.Unsafe.copyMemory: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - direct buffer constructor: available
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.Bits.unaligned: available, true
+DEBUG main io.netty.util.internal.PlatformDependent0 - java.nio.DirectByteBuffer.<init>(long, int): available
+DEBUG main io.netty.util.internal.Cleaner0 - java.nio.ByteBuffer.cleaner(): available
+DEBUG main io.netty.util.internal.PlatformDependent - Java version: 8
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noUnsafe: false
+DEBUG main io.netty.util.internal.PlatformDependent - sun.misc.Unsafe: available
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noJavassist: false
+DEBUG main io.netty.util.internal.PlatformDependent - Javassist: unavailable
+DEBUG main io.netty.util.internal.PlatformDependent - You don't have Javassist in your class path or you don't have enough permission to load dynamically generated classes.  Please check the configuration for better performance.
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.tmpdir: /var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T (java.io.tmpdir)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+DEBUG main io.netty.util.internal.PlatformDependent - -Dio.netty.noPreferDirect: false
+DEBUG main io.netty.util.internal.PlatformDependent - io.netty.maxDirectMemory: 3817865216 bytes
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.noKeySetOptimization: false
+DEBUG main io.netty.channel.nio.NioEventLoop - -Dio.netty.selectorAutoRebuildThreshold: 512
+DEBUG main io.netty.util.internal.PlatformDependent - org.jctools-core.MpscChunkedArrayQueue: available
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.processId: 67162 (auto-detected)
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv4Stack: false
+DEBUG main io.netty.util.NetUtil - -Djava.net.preferIPv6Addresses: false
+DEBUG main io.netty.util.NetUtil - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0)
+DEBUG main io.netty.util.NetUtil - /proc/sys/net/core/somaxconn: 128 (non-existent)
+DEBUG main io.netty.channel.DefaultChannelId - -Dio.netty.machineId: c8:89:f3:ff:fe:ad:ac:cb (auto-detected)
+DEBUG main io.netty.util.internal.ThreadLocalRandom - -Dio.netty.initialSeedUniquifier: 0x1bfacc3deceee9bd
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.level: simple
+DEBUG main io.netty.util.ResourceLeakDetector - -Dio.netty.leakDetection.maxRecords: 4
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numHeapArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.numDirectArenas: 16
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.pageSize: 8192
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxOrder: 11
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.chunkSize: 16777216
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.tinyCacheSize: 512
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.smallCacheSize: 256
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.normalCacheSize: 64
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+DEBUG main io.netty.buffer.PooledByteBufAllocator - -Dio.netty.allocator.cacheTrimInterval: 8192
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.allocator.type: pooled
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.threadLocalDirectBufferSize: 65536
+DEBUG main io.netty.buffer.ByteBufUtil - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+INFO main org.apache.curator.framework.imps.CuratorFrameworkImpl - Starting
+DEBUG main org.apache.curator.CuratorZookeeperClient - Starting
+DEBUG main org.apache.curator.ConnectionState - Starting
+DEBUG main org.apache.curator.ConnectionState - reset
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:zookeeper.version=3.4.14-4c25d480e66aadd371de8bd2fd8da255ac140bcf, built on 03/06/2019 16:18 GMT
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:host.name=localhost
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.version=1.8.0_372
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.vendor=Azul Systems, Inc.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.home=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.class.path=/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/cat.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/charsets.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/cldrdata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/crs-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/dnsns.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/jaccess.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/localedata.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/nashorn.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunec.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunjce_provider.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/sunpkcs11.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/ext/zipfs.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jce.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jfr.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/jsse.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/management-agent.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/resources.jar:/Users/dql/Library/Java/JavaVirtualMachines/azul-1.8.0_372/Contents/Home/jre/lib/rt.jar:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/test-classes:/Users/dql/Workspace/JavaProjects/github/pandarpc/pandarpc-core/target/classes:/Users/dql/.m2/repository/io/netty/netty-all/4.1.6.Final/netty-all-4.1.6.Final.jar:/Users/dql/.m2/repository/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar:/Users/dql/.m2/repository/org/apache/zookeeper/zookeeper/3.4.14/zookeeper-3.4.14.jar:/Users/dql/.m2/repository/com/github/spotbugs/spotbugs-annotations/3.1.9/spotbugs-annotations-3.1.9.jar:/Users/dql/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/Users/dql/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar:/Users/dql/.m2/repository/jline/jline/0.9.94/jline-0.9.94.jar:/Users/dql/.m2/repository/org/apache/yetus/audience-annotations/0.5.0/audience-annotations-0.5.0.jar:/Users/dql/.m2/repository/io/netty/netty/3.10.6.Final/netty-3.10.6.Final.jar:/Users/dql/.m2/repository/com/101tec/zkclient/0.7/zkclient-0.7.jar:/Users/dql/.m2/repository/org/projectlombok/lombok/1.18.26/lombok-1.18.26.jar:/Users/dql/.m2/repository/org/apache/curator/curator-framework/2.12.0/curator-framework-2.12.0.jar:/Users/dql/.m2/repository/org/apache/curator/curator-client/2.12.0/curator-client-2.12.0.jar:/Users/dql/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1.jar:/Users/dql/.m2/repository/junit/junit/4.13.1/junit-4.13.1.jar:/Users/dql/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar:/Users/dql/.m2/repository/org/slf4j/slf4j-log4j12/1.7.28/slf4j-log4j12-1.7.28.jar:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.library.path=/Users/dql/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:.
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.io.tmpdir=/var/folders/t7/hxrnl_zj099_lfx6fvx46hj40000gn/T/
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:java.compiler=<NA>
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.name=Mac OS X
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.arch=aarch64
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:os.version=13.3.1
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.name=dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.home=/Users/dql
+INFO main org.apache.zookeeper.ZooKeeper - Client environment:user.dir=/Users/dql/Workspace/JavaProjects/github/pandarpc
+INFO main org.apache.zookeeper.ZooKeeper - Initiating client connection, connectString=127.0.0.1:2181 sessionTimeout=60000 watcher=org.apache.curator.ConnectionState@289d1c02
+DEBUG main org.apache.zookeeper.ClientCnxn - zookeeper.disableAutoWatchReset is false
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.SaslServerPrincipal - Canonicalized address to localhost
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Socket connection established to localhost/127.0.0.1:2181, initiating session
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment request sent on localhost/127.0.0.1:2181
+INFO main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x10032f0d9cf00d2, negotiated timeout = 40000
+INFO main-EventThread org.apache.curator.framework.state.ConnectionStateManager - State change: CONNECTED
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d2, packet:: clientPath:null serverPath:null finished:false header:: 1,3  replyHeader:: 1,1067,0  request:: '/drpc,F  response:: s{2,2,1687485281741,1687485281741,0,4,0,0,0,4,745} 
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d2, packet:: clientPath:null serverPath:null finished:false header:: 2,3  replyHeader:: 2,1067,-101  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,F  response::  
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d2, packet:: clientPath:null serverPath:null finished:false header:: 3,1  replyHeader:: 3,1068,0  request:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998,#7b226170706c69636174696f6e4e616d65223a2270616e6461222c2261747472223a7b2263726561746554696d65223a313638373538393334313833302c2274797065223a2270726f7669646572227d2c226970223a223139322e3136382e302e313035222c22706f7274223a313939382c22736572766963654e616d65223a22636f6d2e6769746875622e786366796c2e70616e64617270632e636f72652e7365727665722e48656c6c6f53657276696365227d,v{s{31,s{'world,'anyone}}},1  response:: '/drpc/com.github.xcfyl.pandarpc.core.server.HelloService/provider/192.168.0.105:1998 
+DEBUG Thread-1 org.apache.curator.framework.imps.CuratorFrameworkImpl - Closing
+INFO Curator-Framework-0 org.apache.curator.framework.imps.CuratorFrameworkImpl - backgroundOperationsLoop exiting
+DEBUG Thread-1 org.apache.curator.CuratorZookeeperClient - Closing
+DEBUG Thread-1 org.apache.curator.ConnectionState - Closing
+DEBUG Thread-1 org.apache.zookeeper.ZooKeeper - Closing session: 0x10032f0d9cf00d2
+DEBUG Thread-1 org.apache.zookeeper.ClientCnxn - Closing client for session: 0x10032f0d9cf00d2
+DEBUG main-SendThread(localhost:2181) org.apache.zookeeper.ClientCnxn - Reading reply sessionid:0x10032f0d9cf00d2, packet:: clientPath:null serverPath:null finished:false header:: 4,-11  replyHeader:: 4,1069,0  request:: null response:: null
+DEBUG Thread-1 org.apache.zookeeper.ClientCnxn - Disconnecting client for session: 0x10032f0d9cf00d2
+INFO Thread-1 org.apache.zookeeper.ZooKeeper - Session: 0x10032f0d9cf00d2 closed
+INFO main-EventThread org.apache.zookeeper.ClientCnxn - EventThread shut down for session: 0x10032f0d9cf00d2
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - close registry success!
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set registry
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - set serializer
+DEBUG main com.github.xcfyl.pandarpc.core.server.RpcServer - register shutdown hook
+DEBUG main com.github.xcfyl.pandarpc.core.router.RpcAbstractRouter - router refreshed -> #[192.168.0.105:1998]
+DEBUG Thread-1 com.github.xcfyl.pandarpc.core.server.RpcServer - close registry success!
+DEBUG main-EventThread com.github.xcfyl.pandarpc.core.router.RpcAbstractRouter - router refreshed -> #[]

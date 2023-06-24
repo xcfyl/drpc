@@ -17,13 +17,22 @@ import java.util.List;
  * @date create at 2023/6/22 21:39
  */
 public class ZookeeperClient {
-    private final CuratorFramework curator;
+    private CuratorFramework curator;
+    private final Integer baseSleepTimes;
+    private final Integer maxRetries;
+    private final String zkAddress;
 
     public ZookeeperClient(String zkAddress) {
         this(zkAddress, 1000, 3);
     }
 
     public ZookeeperClient(String zkAddress, Integer baseSleepTimes, Integer maxRetries) {
+        this.zkAddress = zkAddress;
+        this.baseSleepTimes = baseSleepTimes;
+        this.maxRetries = maxRetries;
+    }
+
+    public void start() {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(baseSleepTimes, maxRetries);
         curator = CuratorFrameworkFactory.newClient(zkAddress, retryPolicy);
         curator.start();

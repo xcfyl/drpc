@@ -24,6 +24,7 @@ public class ZookeeperRegistry implements RpcRegistry {
 
     public ZookeeperRegistry(ZookeeperClient zkClient) {
         this.zkClient = zkClient;
+        zkClient.start();
     }
 
     @Override
@@ -78,6 +79,16 @@ public class ZookeeperRegistry implements RpcRegistry {
     public List<RegistryData> queryConsumers(String serviceName) throws Exception {
         String consumerPath = RegistryDataZkHelper.getConsumerPath(ROOT, serviceName);
         return queryRegistryDataByServicePath(consumerPath);
+    }
+
+    @Override
+    public void start() throws Exception {
+        zkClient.start();
+    }
+
+    @Override
+    public void close() throws Exception {
+        zkClient.destroy();
     }
 
     /**

@@ -19,12 +19,12 @@ public class RpcServerContext {
     /**
      * 存放服务名称和服务提供者class的映射
      */
-    private static final Map<String, Object> SERVICE_PROVIDER_CACHE = new HashMap<>();
+    private static final Map<String, Object> SERVICE_PROVIDER_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 存放本地服务注册信息的缓存
      */
-    private static final Map<String, RegistryData> REGISTRY_DATA_CACHE = new HashMap<>();
+    private static final Map<String, RegistryData> REGISTRY_DATA_CACHE = new ConcurrentHashMap<>();
 
     private static RpcServerConfig rpcServerConfig;
 

@@ -6,8 +6,6 @@ import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcSerializeType;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
-import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
-import com.github.xcfyl.pandarpc.core.event.ServerShutdownEvent;
 import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
@@ -80,6 +78,7 @@ public class RpcServer {
                 .bind(rpcServerConfig.getPort())
                 .sync();
 
+        log.debug("set registry");
         RpcRegistryType registryType = rpcServerConfig.getCommonConfig().getRegistryType();
         if (registryType == RpcRegistryType.ZK) {
             // 如果注册中心的类型是zookeeper
@@ -89,6 +88,7 @@ public class RpcServer {
             throw new ConfigErrorException("未知注册中心类型");
         }
 
+        log.debug("set serializer");
         RpcSerializeType serializeType = rpcServerConfig.getCommonConfig().getSerializeType();
         if (serializeType.getCode() == RpcSerializeType.JDK.getCode()) {
             RpcServerContext.setSerializeFactory(new JdkRpcSerializeFactory());
@@ -98,6 +98,7 @@ public class RpcServer {
             throw new ConfigErrorException("暂时不支持的序列化类型");
         }
 
+        log.debug("register shutdown hook");
         registerShutdownHook(registry);
     }
 
@@ -142,11 +143,13 @@ public class RpcServer {
      * @param registry
      */
     private void registerShutdownHook(RpcRegistry registry) {
-        Runtime.getRuntime().removeShutdownHook(new Thread(() -> {
-            ServerShutdownEvent serverShutdownEvent = new ServerShutdownEvent();
-            serverShutdownEvent.setData(registry);
-            RpcEventPublisher eventPublisher = RpcEventPublisher.getInstance();
-            eventPublisher.publishEvent(serverShutdownEvent);
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                registry.close();
+                log.debug("close registry success!");
+            } catch (Exception e) {
+                log.error("close registry failure!");
+            }
         }));
     }
 }
