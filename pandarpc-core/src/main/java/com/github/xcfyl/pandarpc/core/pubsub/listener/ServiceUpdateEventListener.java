@@ -33,7 +33,7 @@ public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUp
         ServiceUpdateEventData data = event.getData();
         String serviceName = data.getServiceName();
         List<RegistryData> newProviderDataList = data.getNewServiceList();
-        List<ConnectionWrapper> connections = ConnectionManager.getConnections(serviceName);
+        List<ConnectionWrapper> connections = ConnectionManager.getOriginalConnections(serviceName);
         Map<String, ConnectionWrapper> connectionWrapperMap = new HashMap<>();
         for (ConnectionWrapper connectionWrapper : connections) {
             connectionWrapperMap.put(connectionWrapper.toString(), connectionWrapper);

@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.proxy.jdk;
 
 import com.alibaba.fastjson.JSON;
+import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
 import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
@@ -10,6 +11,7 @@ import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
@@ -32,8 +34,13 @@ public class RpcInvocationHandler<T> implements InvocationHandler {
         String serviceName = serviceWrapper.getServiceClass().getName();
         String methodName = method.getName();
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
-        RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
+        // 获取需要过滤的连接缓存
+        List<ConnectionWrapper> filteredConnections = ConnectionManager.getFilteredConnections(serviceName);
+        // 对连接缓存进行过滤
+        RpcClientContext.getFilterChain().doFilter(filteredConnections, request);
+        // 由路由对象从过滤后的连接缓存中选择一个连接对象
         ConnectionWrapper connectionWrapper = RpcClientContext.getRouter().select(serviceName);
+        RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
         connectionWrapper.writeAndFlush(protocol);
 
         // 判断是否是同步方法调用

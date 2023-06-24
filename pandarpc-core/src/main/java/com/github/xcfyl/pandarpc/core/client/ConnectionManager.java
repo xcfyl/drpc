@@ -19,7 +19,14 @@ import java.util.Map;
 @Slf4j
 public class ConnectionManager {
     private static Bootstrap bootstrap;
-    private static final Map<String, List<ConnectionWrapper>> CONNECT_CACHE = new HashMap<>();
+    /**
+     * 没有经过过滤器处理的连接缓存
+     */
+    private static final Map<String, List<ConnectionWrapper>> ORIGINAL_CONNECT_CACHE = new HashMap<>();
+    /**
+     * 经过过滤器处理的连接缓存
+     */
+    private static final Map<String, List<ConnectionWrapper>> FILTERED_CONNECT_CACHE = new HashMap<>();
 
     public static void setBootstrap(Bootstrap bootstrap) {
         ConnectionManager.bootstrap = bootstrap;
@@ -29,18 +36,24 @@ public class ConnectionManager {
         ConnectionWrapper connectionWrapper = getConnectionWrapper(addr);
         // 缓存当前连接对象
         List<ConnectionWrapper> connectionWrappers =
-                CONNECT_CACHE.getOrDefault(serviceName, new ArrayList<>());
+                ORIGINAL_CONNECT_CACHE.getOrDefault(serviceName, new ArrayList<>());
         connectionWrappers.add(connectionWrapper);
-        CONNECT_CACHE.put(serviceName, connectionWrappers);
+        ORIGINAL_CONNECT_CACHE.put(serviceName, connectionWrappers);
         RpcClientContext.getRouter().refresh(serviceName);
     }
 
-    public static List<ConnectionWrapper> getConnections(String serviceName) {
-        return CONNECT_CACHE.get(serviceName);
+    public static List<ConnectionWrapper> getOriginalConnections(String serviceName) {
+        return ORIGINAL_CONNECT_CACHE.get(serviceName);
+    }
+
+    public static List<ConnectionWrapper> getFilteredConnections(String serviceName) {
+        FILTERED_CONNECT_CACHE.clear();
+        FILTERED_CONNECT_CACHE.putAll(ORIGINAL_CONNECT_CACHE);
+        return FILTERED_CONNECT_CACHE.get(serviceName);
     }
 
     public static void setConnections(String serviceName, List<ConnectionWrapper> connectionWrappers) {
-        CONNECT_CACHE.put(serviceName, connectionWrappers);
+        ORIGINAL_CONNECT_CACHE.put(serviceName, connectionWrappers);
     }
 
     public static ConnectionWrapper getConnectionWrapper(String addr) {

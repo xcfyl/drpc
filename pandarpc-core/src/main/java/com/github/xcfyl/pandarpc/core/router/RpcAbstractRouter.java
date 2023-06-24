@@ -17,12 +17,13 @@ public abstract class RpcAbstractRouter implements RpcRouter {
 
     @Override
     public synchronized ConnectionWrapper select(String serviceName) throws Exception {
+        // 在这里进行消息过滤
         return doSelect(serviceName);
     }
 
     @Override
     public synchronized void refresh(String serviceName) {
-        List<ConnectionWrapper> connections = ConnectionManager.getConnections(serviceName);
+        List<ConnectionWrapper> connections = ConnectionManager.getFilteredConnections(serviceName);
         cache.clear();
         cache.addAll(connections);
         doRefresh();
