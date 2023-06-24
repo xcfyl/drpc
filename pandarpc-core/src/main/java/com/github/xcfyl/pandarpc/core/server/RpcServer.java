@@ -89,9 +89,9 @@ public class RpcServer {
 
         RpcSerializeType serializeType = rpcServerConfig.getCommonConfig().getSerializeType();
         if (serializeType.getCode() == RpcSerializeType.JDK.getCode()) {
-            RpcServerContext.setSerializeFactory(new JdkRpcSerializeFactory<>());
+            RpcServerContext.setSerializeFactory(new JdkRpcSerializeFactory());
         } else if (serializeType.getCode() == RpcSerializeType.FASTJSON.getCode()) {
-            RpcServerContext.setSerializeFactory(new FastJsonRpcSerializeFactory<>());
+            RpcServerContext.setSerializeFactory(new FastJsonRpcSerializeFactory());
         } else {
             throw new ConfigErrorException("暂时不支持的序列化类型");
         }

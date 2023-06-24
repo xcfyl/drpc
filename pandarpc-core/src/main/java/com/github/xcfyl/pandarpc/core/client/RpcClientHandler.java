@@ -2,7 +2,6 @@ package com.github.xcfyl.pandarpc.core.client;
 
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
-import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolHelper;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -19,7 +18,7 @@ public class RpcClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
-        RpcResponse response = RpcTransferProtocolHelper.parseRpcResponse(protocol);
+        RpcResponse response = RpcClientContext.getSerializeFactory().deserialize(protocol.getBody(), RpcResponse.class);
         RpcClientContext.getResponseCache().put(response.getId(), response);
         ReferenceCountUtil.release(msg);
     }

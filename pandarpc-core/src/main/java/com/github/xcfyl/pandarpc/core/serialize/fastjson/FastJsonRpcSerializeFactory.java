@@ -9,14 +9,14 @@ import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
  * @author 西城风雨楼
  * @date create at 2023/6/24 10:08
  */
-public class FastJsonRpcSerializeFactory<T> implements RpcSerializeFactory<T> {
+public class FastJsonRpcSerializeFactory implements RpcSerializeFactory {
     @Override
-    public byte[] serialize(T obj) throws Exception {
+    public <T> byte[] serialize(T obj) {
         return JSON.toJSONString(obj).getBytes();
     }
 
     @Override
-    public T deserialize(byte[] bytes, Class<T> clazz) throws Exception {
-        return JSON.parseObject(new String(bytes), clazz);
+    public <T> T deserialize(byte[] data, Class<T> clazz) {
+        return JSON.parseObject(new String(data), clazz);
     }
 }

@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.serialize.jdk;
 
 import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -13,20 +14,51 @@ import java.io.ObjectOutputStream;
  * @author 西城风雨楼
  * @date create at 2023/6/24 10:03
  */
-public class JdkRpcSerializeFactory<T> implements RpcSerializeFactory<T> {
-
+@Slf4j
+public class JdkRpcSerializeFactory implements RpcSerializeFactory {
     @Override
-    public byte[] serialize(T obj) throws Exception {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(bos);
-        oos.writeObject(obj);
-        return bos.toByteArray();
+    public <T> byte[] serialize(T obj) throws Exception {
+        ByteArrayOutputStream bos = null;
+        ObjectOutputStream oos = null;
+        try {
+            bos = new ByteArrayOutputStream();
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.flush();
+            return bos.toByteArray();
+        } finally {
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+                if (oos != null) {
+                    oos.close();
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
     }
 
     @Override
-    public T deserialize(byte[] bytes, Class<T> clazz) throws Exception {
-        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-        ObjectInputStream ois = new ObjectInputStream(bis);
-        return clazz.cast(ois.readObject());
+    public <T> T deserialize(byte[] bytes, Class<T> clazz) throws Exception {
+        ByteArrayInputStream bis = null;
+        ObjectInputStream ois = null;
+        try {
+            bis = new ByteArrayInputStream(bytes);
+            ois = new ObjectInputStream(bis);
+            return clazz.cast(ois.readObject());
+        } finally {
+            try {
+                if (bis != null) {
+                    bis.close();
+                }
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+        }
     }
 }

@@ -5,14 +5,14 @@ package com.github.xcfyl.pandarpc.core.serialize;
  *
  * @author 西城风雨楼
  */
-public interface RpcSerializeFactory<T> {
+public interface RpcSerializeFactory {
     /**
      * 将目标对象序列化为字节数组
      *
      * @param obj
      * @return
      */
-    byte[] serialize(T obj) throws Exception;
+    <T> byte[] serialize(T obj) throws Exception;
 
     /**
      * 将字节数组反序列化为目标对象
@@ -21,5 +21,5 @@ public interface RpcSerializeFactory<T> {
      * @param clazz
      * @return
      */
-    T deserialize(byte[] bytes, Class<T> clazz) throws Exception;
+    <T> T deserialize(byte[] bytes, Class<T> clazz) throws Exception;
 }

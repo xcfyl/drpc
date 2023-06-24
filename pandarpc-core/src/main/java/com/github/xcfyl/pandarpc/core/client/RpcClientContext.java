@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author 西城风雨楼
  * @date create at 2023/6/22 12:24
  */
+@SuppressWarnings("rawtypes")
 public class RpcClientContext {
     /**
      * 缓存rpc调用结果，key是请求id，value是本次请求的响应数据
@@ -34,13 +35,13 @@ public class RpcClientContext {
      */
     private static RpcClientConfig rpcClientConfig;
 
-    private static RpcSerializeFactory<?> serializeFactory;
+    private static RpcSerializeFactory serializeFactory;
 
-    public static void setSerializeFactory(RpcSerializeFactory<?> serializeFactory) {
+    public static void setSerializeFactory(RpcSerializeFactory serializeFactory) {
         RpcClientContext.serializeFactory = serializeFactory;
     }
 
-    public static RpcSerializeFactory<?> getSerializeFactory() {
+    public static RpcSerializeFactory getSerializeFactory() {
         return serializeFactory;
     }
 

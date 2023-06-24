@@ -25,13 +25,13 @@ public class RpcServerContext {
 
     private static RpcServerConfig rpcServerConfig;
 
-    public static RpcSerializeFactory<?> serializeFactory;
+    public static RpcSerializeFactory serializeFactory;
 
-    public static void setSerializeFactory(RpcSerializeFactory<?> serializeFactory) {
+    public static void setSerializeFactory(RpcSerializeFactory serializeFactory) {
         RpcServerContext.serializeFactory = serializeFactory;
     }
 
-    public static RpcSerializeFactory<?> getSerializeFactory() {
+    public static RpcSerializeFactory getSerializeFactory() {
         return serializeFactory;
     }
 
