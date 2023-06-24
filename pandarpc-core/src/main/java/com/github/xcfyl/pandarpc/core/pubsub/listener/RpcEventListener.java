@@ -1,4 +1,6 @@
-package com.github.xcfyl.pandarpc.core.event;
+package com.github.xcfyl.pandarpc.core.pubsub.listener;
+
+import com.github.xcfyl.pandarpc.core.pubsub.event.RpcEvent;
 
 /**
  * @author 西城风雨楼

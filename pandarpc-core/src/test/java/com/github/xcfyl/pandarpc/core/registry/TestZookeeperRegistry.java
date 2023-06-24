@@ -1,8 +1,8 @@
 package com.github.xcfyl.pandarpc.core.registry;
 
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
-import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
-import com.github.xcfyl.pandarpc.core.event.listener.ServiceUpdateEventListener;
+import com.github.xcfyl.pandarpc.core.pubsub.RpcEventPublisher;
+import com.github.xcfyl.pandarpc.core.pubsub.listener.ServiceUpdateEventListener;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import lombok.extern.slf4j.Slf4j;

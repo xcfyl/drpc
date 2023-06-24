@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.event;
+package com.github.xcfyl.pandarpc.core.pubsub.event;
 
 /**
  * rpc事件接口

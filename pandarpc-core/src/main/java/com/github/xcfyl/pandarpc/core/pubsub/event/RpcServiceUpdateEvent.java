@@ -1,6 +1,4 @@
-package com.github.xcfyl.pandarpc.core.event;
-
-import com.github.xcfyl.pandarpc.core.event.data.ServiceUpdateEventData;
+package com.github.xcfyl.pandarpc.core.pubsub.event;
 
 /**
  * 服务列表发生变化时，需要发送该事件

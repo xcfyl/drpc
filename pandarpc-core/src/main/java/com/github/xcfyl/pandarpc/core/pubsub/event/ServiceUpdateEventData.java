@@ -1,4 +1,4 @@
-package com.github.xcfyl.pandarpc.core.event.data;
+package com.github.xcfyl.pandarpc.core.pubsub.event;
 
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import lombok.ToString;
