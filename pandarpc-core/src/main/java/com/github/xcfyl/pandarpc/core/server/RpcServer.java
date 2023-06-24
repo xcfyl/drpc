@@ -53,7 +53,7 @@ public class RpcServer {
     public void init() throws Exception {
         // 设置配置项
         RpcServerConfig rpcServerConfig = RpcConfigLoader.loadRpcServerConfig();
-        RpcServerContext.setRpcServerConfig(rpcServerConfig);
+        RpcServerContext.setServerConfig(rpcServerConfig);
 
         new ServerBootstrap()
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup())
@@ -96,7 +96,7 @@ public class RpcServer {
                 log.error("#{} implement too many interface!", service);
                 return;
             }
-            RpcServerConfig rpcServerConfig = RpcServerContext.getRpcServerConfig();
+            RpcServerConfig rpcServerConfig = RpcServerContext.getServerConfig();
             Class<?> clazz = interfaces[0];
             String serviceName = clazz.getName();
             RegistryData registryData = new RegistryData();

@@ -26,7 +26,7 @@ public class RpcServerContext {
     /**
      * 服务端的缓存
      */
-    private static RpcServerConfig rpcServerConfig;
+    private static RpcServerConfig serverConfig;
     /**
      * 序列化工厂
      */
@@ -34,14 +34,14 @@ public class RpcServerContext {
     /**
      * 服务端的过滤器
      */
-    private static RpcServerFilterChain serverFilterChain;
+    private static RpcServerFilterChain filterChain;
 
-    public static void setServerFilterChain(RpcServerFilterChain serverFilterChain) {
-        RpcServerContext.serverFilterChain = serverFilterChain;
+    public static void setFilterChain(RpcServerFilterChain filterChain) {
+        RpcServerContext.filterChain = filterChain;
     }
 
-    public static RpcServerFilterChain getServerFilterChain() {
-        return serverFilterChain;
+    public static RpcServerFilterChain getFilterChain() {
+        return filterChain;
     }
 
     public static void setSerializer(RpcSerializer serializer) {
@@ -52,12 +52,12 @@ public class RpcServerContext {
         return serializer;
     }
 
-    public static void setRpcServerConfig(RpcServerConfig rpcServerConfig) {
-        RpcServerContext.rpcServerConfig = rpcServerConfig;
+    public static void setServerConfig(RpcServerConfig serverConfig) {
+        RpcServerContext.serverConfig = serverConfig;
     }
 
-    public static RpcServerConfig getRpcServerConfig() {
-        return rpcServerConfig;
+    public static RpcServerConfig getServerConfig() {
+        return serverConfig;
     }
 
     public static Map<String, RegistryData> getRegistryDataCache() {

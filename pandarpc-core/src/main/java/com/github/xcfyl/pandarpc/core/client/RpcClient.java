@@ -8,11 +8,8 @@ import com.github.xcfyl.pandarpc.core.common.factory.RpcRegistryFactory;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcRouterFactory;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcSerializerFactory;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
-import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
-import com.github.xcfyl.pandarpc.core.proxy.RpcProxy;
-import com.github.xcfyl.pandarpc.core.proxy.jdk.RpcJdkProxy;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import io.netty.bootstrap.Bootstrap;
@@ -23,8 +20,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
-
-import static com.github.xcfyl.pandarpc.core.common.enums.RpcProxyType.JDK;
 
 /**
  * rpc客户端
@@ -40,7 +35,7 @@ public class RpcClient {
 
     public RpcReference init() throws Exception {
         RpcClientConfig rpcClientConfig = RpcConfigLoader.loadRpcClientConfig();
-        RpcClientContext.setRpcClientConfig(rpcClientConfig);
+        RpcClientContext.setClientConfig(rpcClientConfig);
         Bootstrap bootstrap = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
@@ -56,7 +51,7 @@ public class RpcClient {
         // 创建注册中心
         registry = RpcRegistryFactory.createRpcRegistry(rpcClientConfig.getCommonConfig());
         // 创建路由对象
-        RpcClientContext.setRpcRouter(RpcRouterFactory.createRpcRouter(rpcClientConfig));
+        RpcClientContext.setRouter(RpcRouterFactory.createRpcRouter(rpcClientConfig));
         // 创建序列化器对象
         RpcClientContext.setSerializer(RpcSerializerFactory.createRpcSerializer(rpcClientConfig.getCommonConfig()));
         // 生成RpcReference对象
@@ -71,7 +66,7 @@ public class RpcClient {
     public void subscribeService(String serviceName) {
         // 在这里订阅服务
         RegistryData registryData = new RegistryData();
-        RpcClientConfig rpcClientConfig = RpcClientContext.getRpcClientConfig();
+        RpcClientConfig rpcClientConfig = RpcClientContext.getClientConfig();
         registryData.setApplicationName(rpcClientConfig.getCommonConfig().getApplicationName());
         registryData.setIp(CommonUtils.getCurrentMachineIp());
         registryData.setServiceName(serviceName);

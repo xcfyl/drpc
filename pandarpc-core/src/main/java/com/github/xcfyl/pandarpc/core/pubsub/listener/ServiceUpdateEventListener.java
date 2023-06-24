@@ -54,6 +54,6 @@ public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUp
         // 更新本地连接缓存
         ConnectionManager.setConnections(serviceName, newConnections);
         // 刷新路由
-        RpcClientContext.getRpcRouter().refresh(serviceName);
+        RpcClientContext.getRouter().refresh(serviceName);
     }
 }

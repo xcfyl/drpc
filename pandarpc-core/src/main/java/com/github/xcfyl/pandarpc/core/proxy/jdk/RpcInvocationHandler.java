@@ -33,13 +33,13 @@ public class RpcInvocationHandler<T> implements InvocationHandler {
         String methodName = method.getName();
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
         RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
-        ConnectionWrapper connectionWrapper = RpcClientContext.getRpcRouter().select(serviceName);
+        ConnectionWrapper connectionWrapper = RpcClientContext.getRouter().select(serviceName);
         connectionWrapper.writeAndFlush(protocol);
 
         // 判断是否是同步方法调用
         if (serviceWrapper.isSync()) {
             long beginTime = System.currentTimeMillis();
-            long timeout = RpcClientContext.getRpcClientConfig().getRequestTimeout();
+            long timeout = RpcClientContext.getClientConfig().getRequestTimeout();
             while (System.currentTimeMillis() - beginTime < timeout) {
                 RpcResponse response = RpcClientContext.getResponseCache().get(requestId);
                 if (response != null) {

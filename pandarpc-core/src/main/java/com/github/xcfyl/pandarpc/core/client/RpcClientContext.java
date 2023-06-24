@@ -30,11 +30,11 @@ public class RpcClientContext {
     /**
      * 当前rpc客户端使用的路由器
      */
-    private static RpcRouter rpcRouter;
+    private static RpcRouter router;
     /**
      * 当前Rpc客户端的配置数据
      */
-    private static RpcClientConfig rpcClientConfig;
+    private static RpcClientConfig clientConfig;
 
     /**
      * 序列化工厂
@@ -44,14 +44,14 @@ public class RpcClientContext {
     /**
      * 客户端的过滤器
      */
-    private static RpcClientFilterChain clientFilterChain;
+    private static RpcClientFilterChain filterChain;
 
-    public static void setClientFilterChain(RpcClientFilterChain clientFilterChain) {
-        RpcClientContext.clientFilterChain = clientFilterChain;
+    public static void setFilterChain(RpcClientFilterChain filterChain) {
+        RpcClientContext.filterChain = filterChain;
     }
 
-    public static RpcClientFilterChain getClientFilterChain() {
-        return clientFilterChain;
+    public static RpcClientFilterChain getFilterChain() {
+        return filterChain;
     }
 
     public static void setSerializer(RpcSerializer serializer) {
@@ -62,20 +62,20 @@ public class RpcClientContext {
         return serializer;
     }
 
-    public static void setRpcClientConfig(RpcClientConfig rpcClientConfig) {
-        RpcClientContext.rpcClientConfig = rpcClientConfig;
+    public static void setClientConfig(RpcClientConfig clientConfig) {
+        RpcClientContext.clientConfig = clientConfig;
     }
 
-    public static RpcClientConfig getRpcClientConfig() {
-        return rpcClientConfig;
+    public static RpcClientConfig getClientConfig() {
+        return clientConfig;
     }
 
-    public static void setRpcRouter(RpcRouter rpcRouter) {
-        RpcClientContext.rpcRouter = rpcRouter;
+    public static void setRouter(RpcRouter router) {
+        RpcClientContext.router = router;
     }
 
-    public static RpcRouter getRpcRouter() {
-        return rpcRouter;
+    public static RpcRouter getRouter() {
+        return router;
     }
 
     public static Map<String, RpcResponse> getResponseCache() {

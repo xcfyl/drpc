@@ -32,7 +32,7 @@ public class ConnectionManager {
                 CONNECT_CACHE.getOrDefault(serviceName, new ArrayList<>());
         connectionWrappers.add(connectionWrapper);
         CONNECT_CACHE.put(serviceName, connectionWrappers);
-        RpcClientContext.getRpcRouter().refresh(serviceName);
+        RpcClientContext.getRouter().refresh(serviceName);
     }
 
     public static List<ConnectionWrapper> getConnections(String serviceName) {
