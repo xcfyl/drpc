@@ -1,15 +1,15 @@
 package com.github.xcfyl.pandarpc.core.client;
 
-import com.github.xcfyl.pandarpc.core.proxy.ProxyFactory;
+import com.github.xcfyl.pandarpc.core.proxy.RpcProxy;
 
 /**
  * @author 西城风雨楼
  * @date create at 2023/6/22 12:05
  */
 public class RpcReference {
-    private final ProxyFactory proxyFactory;
+    private final RpcProxy proxyFactory;
 
-    public RpcReference(ProxyFactory proxyFactory) {
+    public RpcReference(RpcProxy proxyFactory) {
         this.proxyFactory = proxyFactory;
     }
 
@@ -22,6 +22,6 @@ public class RpcReference {
      * @throws Throwable 可能抛出的异常
      */
     public <T> T get(SubscribedServiceWrapper<T> serviceWrapper) throws Throwable {
-        return proxyFactory.getProxy(serviceWrapper);
+        return proxyFactory.get(serviceWrapper);
     }
 }

@@ -1,11 +1,11 @@
-package com.github.xcfyl.pandarpc.core.serialize;
+package com.github.xcfyl.pandarpc.core.serializer;
 
 /**
  * rpc序列化工厂
  *
  * @author 西城风雨楼
  */
-public interface RpcSerializeFactory {
+public interface RpcSerializer {
     /**
      * 将目标对象序列化为字节数组
      *

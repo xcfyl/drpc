@@ -18,7 +18,7 @@ public class RpcClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
-        RpcResponse response = RpcClientContext.getSerializeFactory().deserialize(protocol.getBody(), RpcResponse.class);
+        RpcResponse response = RpcClientContext.getSerializer().deserialize(protocol.getBody(), RpcResponse.class);
         RpcClientContext.getResponseCache().put(response.getId(), response);
         ReferenceCountUtil.release(msg);
     }

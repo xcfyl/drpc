@@ -3,18 +3,13 @@ package com.github.xcfyl.pandarpc.core.server;
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
-import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType;
-import com.github.xcfyl.pandarpc.core.common.enums.RpcSerializeType;
+import com.github.xcfyl.pandarpc.core.common.factory.RpcRegistryFactory;
+import com.github.xcfyl.pandarpc.core.common.factory.RpcSerializerFactory;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
-import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
-import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
-import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
-import com.github.xcfyl.pandarpc.core.serialize.fastjson.FastJsonRpcSerializeFactory;
-import com.github.xcfyl.pandarpc.core.serialize.jdk.JdkRpcSerializeFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -47,7 +42,8 @@ public class RpcServer {
             1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public RpcServer() {}
+    public RpcServer() {
+    }
 
     /**
      * 初始化rpc服务端
@@ -78,27 +74,11 @@ public class RpcServer {
                 .bind(rpcServerConfig.getPort())
                 .sync();
 
-        log.debug("set registry");
-        RpcRegistryType registryType = rpcServerConfig.getCommonConfig().getRegistryType();
-        if (registryType == RpcRegistryType.ZK) {
-            // 如果注册中心的类型是zookeeper
-            ZookeeperClient zookeeperClient = new ZookeeperClient(rpcServerConfig.getCommonConfig().getRegistryAddr());
-            registry = new ZookeeperRegistry(zookeeperClient);
-        } else {
-            throw new ConfigErrorException("未知注册中心类型");
-        }
-
-        log.debug("set serializer");
-        RpcSerializeType serializeType = rpcServerConfig.getCommonConfig().getSerializeType();
-        if (serializeType.getCode() == RpcSerializeType.JDK.getCode()) {
-            RpcServerContext.setSerializeFactory(new JdkRpcSerializeFactory());
-        } else if (serializeType.getCode() == RpcSerializeType.FASTJSON.getCode()) {
-            RpcServerContext.setSerializeFactory(new FastJsonRpcSerializeFactory());
-        } else {
-            throw new ConfigErrorException("暂时不支持的序列化类型");
-        }
-
-        log.debug("register shutdown hook");
+        // 创建注册中心对象
+        registry = RpcRegistryFactory.createRpcRegistry(rpcServerConfig.getCommonConfig());
+        // 创建序列化器对象
+        RpcServerContext.setSerializer(RpcSerializerFactory.createRpcSerializer(rpcServerConfig.getCommonConfig()));
+        // 注册钩子函数
         registerShutdownHook(registry);
     }
 

@@ -1,7 +1,7 @@
-package com.github.xcfyl.pandarpc.core.serialize.fastjson;
+package com.github.xcfyl.pandarpc.core.serializer.fastjson;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
+import com.github.xcfyl.pandarpc.core.serializer.RpcSerializer;
 
 /**
  * 基于fastjson的序列化和反序列化工厂
@@ -9,7 +9,7 @@ import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
  * @author 西城风雨楼
  * @date create at 2023/6/24 10:08
  */
-public class FastJsonRpcSerializeFactory implements RpcSerializeFactory {
+public class FastJsonRpcSerializer implements RpcSerializer {
     @Override
     public <T> byte[] serialize(T obj) {
         return JSON.toJSONString(obj).getBytes();

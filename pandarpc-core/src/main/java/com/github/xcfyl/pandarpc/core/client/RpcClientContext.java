@@ -1,10 +1,11 @@
 package com.github.xcfyl.pandarpc.core.client;
 
 import com.github.xcfyl.pandarpc.core.common.config.RpcClientConfig;
+import com.github.xcfyl.pandarpc.core.filter.client.RpcClientFilterChain;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.router.RpcRouter;
-import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
+import com.github.xcfyl.pandarpc.core.serializer.RpcSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,14 +36,30 @@ public class RpcClientContext {
      */
     private static RpcClientConfig rpcClientConfig;
 
-    private static RpcSerializeFactory serializeFactory;
+    /**
+     * 序列化工厂
+     */
+    private static RpcSerializer serializer;
 
-    public static void setSerializeFactory(RpcSerializeFactory serializeFactory) {
-        RpcClientContext.serializeFactory = serializeFactory;
+    /**
+     * 客户端的过滤器
+     */
+    private static RpcClientFilterChain clientFilterChain;
+
+    public static void setClientFilterChain(RpcClientFilterChain clientFilterChain) {
+        RpcClientContext.clientFilterChain = clientFilterChain;
     }
 
-    public static RpcSerializeFactory getSerializeFactory() {
-        return serializeFactory;
+    public static RpcClientFilterChain getClientFilterChain() {
+        return clientFilterChain;
+    }
+
+    public static void setSerializer(RpcSerializer serializer) {
+        RpcClientContext.serializer = serializer;
+    }
+
+    public static RpcSerializer getSerializer() {
+        return serializer;
     }
 
     public static void setRpcClientConfig(RpcClientConfig rpcClientConfig) {

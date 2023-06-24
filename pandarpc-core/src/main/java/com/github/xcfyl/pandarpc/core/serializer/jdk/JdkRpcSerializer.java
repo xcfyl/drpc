@@ -1,6 +1,6 @@
-package com.github.xcfyl.pandarpc.core.serialize.jdk;
+package com.github.xcfyl.pandarpc.core.serializer.jdk;
 
-import com.github.xcfyl.pandarpc.core.serialize.RpcSerializeFactory;
+import com.github.xcfyl.pandarpc.core.serializer.RpcSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
@@ -15,7 +15,7 @@ import java.io.ObjectOutputStream;
  * @date create at 2023/6/24 10:03
  */
 @Slf4j
-public class JdkRpcSerializeFactory implements RpcSerializeFactory {
+public class JdkRpcSerializer implements RpcSerializer {
     @Override
     public <T> byte[] serialize(T obj) throws Exception {
         ByteArrayOutputStream bos = null;
