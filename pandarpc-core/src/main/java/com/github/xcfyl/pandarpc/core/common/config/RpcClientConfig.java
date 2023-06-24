@@ -1,6 +1,6 @@
 package com.github.xcfyl.pandarpc.core.common.config;
 
-import com.github.xcfyl.pandarpc.core.common.enums.ProxyType;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcProxyType;
 import com.github.xcfyl.pandarpc.core.common.enums.RpcRouterType;
 import lombok.Data;
 import lombok.ToString;
@@ -25,7 +25,7 @@ public class RpcClientConfig {
     /**
      * 代理类型
      */
-    private ProxyType proxyType;
+    private RpcProxyType proxyType;
     /**
      * 内置的路由类型
      */

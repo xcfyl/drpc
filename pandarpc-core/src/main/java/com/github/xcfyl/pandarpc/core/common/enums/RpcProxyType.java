@@ -3,14 +3,14 @@ package com.github.xcfyl.pandarpc.core.common.enums;
 /**
  * @author 西城风雨楼
  */
-public enum ProxyType implements PandaRpcEnum {
+public enum RpcProxyType implements PandaRpcEnum {
     JDK(0, "jdk");
 
     private final int code;
 
     private final String description;
 
-    ProxyType(int code, String description) {
+    RpcProxyType(int code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -25,8 +25,8 @@ public enum ProxyType implements PandaRpcEnum {
         return description;
     }
 
-    public static ProxyType fromCode(int code) {
-        for (ProxyType proxyType : values()) {
+    public static RpcProxyType fromCode(int code) {
+        for (RpcProxyType proxyType : values()) {
             if (proxyType.code == code) {
                 return proxyType;
             }
@@ -34,8 +34,8 @@ public enum ProxyType implements PandaRpcEnum {
         throw new RuntimeException("code转ProxyType失败");
     }
 
-    public static ProxyType fromDescription(String description) {
-        for (ProxyType proxyType : values()) {
+    public static RpcProxyType fromDescription(String description) {
+        for (RpcProxyType proxyType : values()) {
             if (proxyType.getDescription().equals(description)) {
                 return proxyType;
             }

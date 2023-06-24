@@ -1,6 +1,5 @@
 package com.github.xcfyl.pandarpc.core.protocol;
 
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import com.github.xcfyl.pandarpc.core.exception.RequestException;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,11 +24,6 @@ public class RpcTransferProtocolDecoder extends ByteToMessageDecoder {
         }
 
         int length = byteBuf.readInt();
-        if (length >= RpcContext.getMaxRequestLength()) {
-            ctx.close();
-            throw new RequestException("请求长度超过最大限制");
-        }
-
         if (byteBuf.readableBytes() < length) {
             // 当前数据没有完整到来
             byteBuf.readerIndex(readIndex);

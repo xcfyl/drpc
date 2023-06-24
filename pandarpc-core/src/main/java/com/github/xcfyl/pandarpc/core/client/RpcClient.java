@@ -1,12 +1,8 @@
 package com.github.xcfyl.pandarpc.core.client;
 
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import com.github.xcfyl.pandarpc.core.common.config.RpcClientConfig;
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
-import com.github.xcfyl.pandarpc.core.common.enums.ProxyType;
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
-import com.github.xcfyl.pandarpc.core.common.enums.RpcRouterType;
+import com.github.xcfyl.pandarpc.core.common.enums.*;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
 import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
@@ -18,6 +14,9 @@ import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
 import com.github.xcfyl.pandarpc.core.router.RpcRandomRouter;
+import com.github.xcfyl.pandarpc.core.router.RpcRoundRobinRouter;
+import com.github.xcfyl.pandarpc.core.serialize.fastjson.FastJsonRpcSerializeFactory;
+import com.github.xcfyl.pandarpc.core.serialize.jdk.JdkRpcSerializeFactory;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -27,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static com.github.xcfyl.pandarpc.core.common.enums.ProxyType.JDK;
-import static com.github.xcfyl.pandarpc.core.common.enums.RegistryType.ZK;
+import static com.github.xcfyl.pandarpc.core.common.enums.RpcProxyType.JDK;
+import static com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType.ZK;
 
 /**
  * rpc客户端
@@ -38,14 +37,14 @@ import static com.github.xcfyl.pandarpc.core.common.enums.RegistryType.ZK;
  */
 @Slf4j
 public class RpcClient {
-    private final RpcClientConfig config;
     private RpcRegistry registry;
 
-    public RpcClient() {
-        config = RpcConfigLoader.loadRpcClientConfig();
-    }
+    public RpcClient() {}
 
     public RpcReference init() throws Exception {
+        RpcClientConfig rpcClientConfig = RpcConfigLoader.loadRpcClientConfig();
+        RpcClientContext.setRpcClientConfig(rpcClientConfig);
+
         Bootstrap bootstrap = new Bootstrap()
                 .group(new NioEventLoopGroup())
                 .channel(NioSocketChannel.class)
@@ -59,7 +58,7 @@ public class RpcClient {
                 });
 
         ConnectionManager.setBootstrap(bootstrap);
-        ProxyType proxyType = config.getProxyType();
+        RpcProxyType proxyType = rpcClientConfig.getProxyType();
         ProxyFactory proxyFactory;
         if (proxyType.getCode() == JDK.getCode()) {
             // 说明需要生成jdk动态代理
@@ -68,23 +67,31 @@ public class RpcClient {
             throw new ConfigErrorException("暂不支持的动态代理类型");
         }
 
-        RegistryType registryType = config.getCommonConfig().getRegistryType();
+        RpcRegistryType registryType = rpcClientConfig.getCommonConfig().getRegistryType();
         if (registryType.getCode() == ZK.getCode()) {
-            ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
+            ZookeeperClient zookeeperClient = new ZookeeperClient(rpcClientConfig.getCommonConfig().getRegistryAddr());
             registry = new ZookeeperRegistry(zookeeperClient);
         } else {
             throw new ConfigErrorException("暂不支持的注册中心类型");
         }
 
-        RpcRouterType routerType = config.getRouterType();
+        RpcRouterType routerType = rpcClientConfig.getRouterType();
         if (routerType.getCode() == RpcRouterType.RANDOM.getCode()) {
-            RpcRouterRef.setRpcRouter(new RpcRandomRouter());
+            RpcClientContext.setRpcRouter(new RpcRandomRouter());
+        } else if (routerType.getCode() == RpcRouterType.ROUND_ROBIN.getCode()){
+            RpcClientContext.setRpcRouter(new RpcRoundRobinRouter());
         } else {
             throw new ConfigErrorException("暂时不支持的路由类型");
         }
 
-        RpcContext.setMaxRequestLength(config.getCommonConfig().getMaxRequestLength());
-        RpcContext.setRequestTimeout(config.getRequestTimeout());
+        RpcSerializeType serializeType = rpcClientConfig.getCommonConfig().getSerializeType();
+        if (serializeType.getCode() == RpcSerializeType.JDK.getCode()) {
+            RpcClientContext.setSerializeFactory(new JdkRpcSerializeFactory<>());
+        } else if (serializeType.getCode() == RpcSerializeType.FASTJSON.getCode()) {
+            RpcClientContext.setSerializeFactory(new FastJsonRpcSerializeFactory<>());
+        } else {
+            throw new ConfigErrorException("暂时不支持的序列化类型");
+        }
         return new RpcReference(proxyFactory);
     }
 
@@ -96,11 +103,12 @@ public class RpcClient {
     public void subscribeService(String serviceName) {
         // 在这里订阅服务
         RegistryData registryData = new RegistryData();
-        registryData.setApplicationName(config.getCommonConfig().getApplicationName());
+        RpcClientConfig rpcClientConfig = RpcClientContext.getRpcClientConfig();
+        registryData.setApplicationName(rpcClientConfig.getCommonConfig().getApplicationName());
         registryData.setIp(CommonUtils.getCurrentMachineIp());
         registryData.setServiceName(serviceName);
-        registryData.getAttr().put(RegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
-        registryData.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "consumer");
+        registryData.getAttr().put(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
+        registryData.getAttr().put(RpcRegistryDataAttrName.TYPE.getDescription(), "consumer");
         try {
             registry.subscribe(registryData);
             // 订阅之后，尝试和当前服务下的所有服务列表建立连接

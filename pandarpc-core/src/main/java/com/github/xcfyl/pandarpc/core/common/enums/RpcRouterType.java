@@ -5,7 +5,8 @@ package com.github.xcfyl.pandarpc.core.common.enums;
  * @date create at 2023/6/23 22:55
  */
 public enum RpcRouterType implements PandaRpcEnum {
-    RANDOM(0, "random");
+    RANDOM(0, "random"),
+    ROUND_ROBIN(1, "roundrobin");
 
     private final int code;
     private final String description;

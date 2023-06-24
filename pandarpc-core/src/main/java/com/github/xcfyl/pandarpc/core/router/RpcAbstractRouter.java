@@ -16,7 +16,7 @@ public abstract class RpcAbstractRouter implements RpcRouter {
     protected final List<ConnectionWrapper> cache = new ArrayList<>();
 
     @Override
-    public synchronized ConnectionWrapper select(String serviceName) {
+    public synchronized ConnectionWrapper select(String serviceName) throws Exception {
         return doSelect(serviceName);
     }
 
@@ -40,5 +40,5 @@ public abstract class RpcAbstractRouter implements RpcRouter {
      * @param serviceName
      * @return
      */
-    protected abstract ConnectionWrapper doSelect(String serviceName);
+    protected abstract ConnectionWrapper doSelect(String serviceName) throws Exception;
 }

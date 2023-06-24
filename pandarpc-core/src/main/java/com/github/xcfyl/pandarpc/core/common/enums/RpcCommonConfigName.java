@@ -9,7 +9,8 @@ public enum RpcCommonConfigName implements PandaRpcEnum {
     MAX_REQUEST_LENGTH(0, "request.limit"),
     REGISTRY_TYPE(1, "registry.type"),
     REGISTRY_ADDR(2, "registry.addr"),
-    APPLICATION_NAME(3, "application.name");
+    APPLICATION_NAME(3, "application.name"),
+    SERIALIZE_TYPE(4, "serizlize");
 
     private final int code;
     private final String description;

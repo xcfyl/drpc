@@ -48,13 +48,15 @@ public class RpcConfigLoader {
         Integer maxRequestLength = getInteger(RpcCommonConfigName.MAX_REQUEST_LENGTH.getDescription(),
                 1024 * 1024);
         String registryType = getString(RpcCommonConfigName.REGISTRY_TYPE.getDescription(),
-                RegistryType.ZK.getDescription());
+                RpcRegistryType.ZK.getDescription());
         String registryAddr = getString(RpcCommonConfigName.REGISTRY_ADDR.getDescription(), "127.0.0.1:2181");
+        String serializeType = getString(RpcCommonConfigName.SERIALIZE_TYPE.toString(), RpcSerializeType.FASTJSON.getDescription());
         RpcCommonConfig rpcCommonConfig = new RpcCommonConfig();
         rpcCommonConfig.setApplicationName(applicationName);
         rpcCommonConfig.setMaxRequestLength(maxRequestLength);
-        rpcCommonConfig.setRegistryType(RegistryType.fromDescription(registryType));
+        rpcCommonConfig.setRegistryType(RpcRegistryType.fromDescription(registryType));
         rpcCommonConfig.setRegistryAddr(registryAddr);
+        rpcCommonConfig.setSerializeType(RpcSerializeType.fromDescription(serializeType));
         return rpcCommonConfig;
     }
 
@@ -80,11 +82,11 @@ public class RpcConfigLoader {
     public static RpcClientConfig loadRpcClientConfig() {
         RpcClientConfig clientConfig = new RpcClientConfig();
         Long requestTimeout = getLong(RpcClientConfigName.CLIENT_REQUEST_TIMEOUT.getDescription(), 3000L);
-        String proxyType = getString(RpcClientConfigName.CLIENT_PROXY_TYPE.getDescription(), ProxyType.JDK.getDescription());
+        String proxyType = getString(RpcClientConfigName.CLIENT_PROXY_TYPE.getDescription(), RpcProxyType.JDK.getDescription());
         String routerType = getString(RpcClientConfigName.CLIENT_ROUTER_TYPE.getDescription(), RpcRouterType.RANDOM.getDescription());
         clientConfig.setCommonConfig(RPC_COMMON_CONFIG);
         clientConfig.setRequestTimeout(requestTimeout);
-        clientConfig.setProxyType(ProxyType.fromDescription(proxyType));
+        clientConfig.setProxyType(RpcProxyType.fromDescription(proxyType));
         clientConfig.setRouterType(RpcRouterType.fromDescription(routerType));
         return clientConfig;
     }

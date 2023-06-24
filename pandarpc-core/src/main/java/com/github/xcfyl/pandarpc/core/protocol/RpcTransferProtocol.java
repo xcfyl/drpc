@@ -1,6 +1,9 @@
 package com.github.xcfyl.pandarpc.core.protocol;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +14,8 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 09:44
  */
+@Data
+@NoArgsConstructor
 public class RpcTransferProtocol implements Serializable {
     private static final long serialVersionUID = -3657714509000090585L;
     /**
@@ -30,22 +35,10 @@ public class RpcTransferProtocol implements Serializable {
      */
     private Map<String, Object> attr;
 
-    public RpcTransferProtocol() {
-
-    }
-
     public RpcTransferProtocol(byte[] body) {
         this.length = body.length;
         this.body = body;
         attr = new HashMap<>();
-    }
-
-    public void putAttr(String key, Object value) {
-        attr.put(key, value);
-    }
-
-    public Object getAttr(String key) {
-        return attr.get(key);
     }
 
     /**
@@ -59,21 +52,5 @@ public class RpcTransferProtocol implements Serializable {
 
     public static short getMagicNumber() {
         return magicNumber;
-    }
-
-    public byte[] getBody() {
-        return body;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 }

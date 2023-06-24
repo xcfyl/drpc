@@ -6,7 +6,7 @@ package com.github.xcfyl.pandarpc.core.common.enums;
  * @author 西城风雨楼
  * @date create at 2023/6/22 22:04
  */
-public enum RegistryDataAttrName implements PandaRpcEnum {
+public enum RpcRegistryDataAttrName implements PandaRpcEnum {
     CREATE_TIME(0, "createTime"),
     WEIGHT(1, "weight"),
     TYPE(2, "type");
@@ -14,7 +14,7 @@ public enum RegistryDataAttrName implements PandaRpcEnum {
     private final int code;
     private final String description;
 
-    RegistryDataAttrName(int code, String description) {
+    RpcRegistryDataAttrName(int code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -29,8 +29,8 @@ public enum RegistryDataAttrName implements PandaRpcEnum {
         return description;
     }
 
-    public static RegistryDataAttrName fromCode(int code) {
-        for (RegistryDataAttrName attrName : values()) {
+    public static RpcRegistryDataAttrName fromCode(int code) {
+        for (RpcRegistryDataAttrName attrName : values()) {
             if (attrName.code == code) {
                 return attrName;
             }
@@ -38,8 +38,8 @@ public enum RegistryDataAttrName implements PandaRpcEnum {
         throw new RuntimeException("code转RegistryDataAttrName失败");
     }
 
-    public static RegistryDataAttrName fromDescription(String description) {
-        for (RegistryDataAttrName attrName : values()) {
+    public static RpcRegistryDataAttrName fromDescription(String description) {
+        for (RpcRegistryDataAttrName attrName : values()) {
             if (attrName.description.equals(description)) {
                 return attrName;
             }

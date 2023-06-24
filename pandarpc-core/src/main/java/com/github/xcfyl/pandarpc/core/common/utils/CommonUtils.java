@@ -1,6 +1,5 @@
 package com.github.xcfyl.pandarpc.core.common.utils;
 
-import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.Inet4Address;

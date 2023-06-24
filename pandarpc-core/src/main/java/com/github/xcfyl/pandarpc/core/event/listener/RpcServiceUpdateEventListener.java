@@ -2,15 +2,17 @@ package com.github.xcfyl.pandarpc.core.event.listener;
 
 import com.github.xcfyl.pandarpc.core.client.ConnectionManager;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
-import com.github.xcfyl.pandarpc.core.client.RpcRouterRef;
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
+import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
 import com.github.xcfyl.pandarpc.core.event.RpcEventListener;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import io.netty.channel.ChannelFuture;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 如果rpc服务列表发生变化，那么会执行该事件监听器的逻辑
@@ -51,6 +53,6 @@ public class RpcServiceUpdateEventListener implements RpcEventListener<RpcServic
         // 更新本地连接缓存
         ConnectionManager.setConnections(serviceName, newConnections);
         // 刷新路由
-        RpcRouterRef.getRpcRouter().refresh(serviceName);
+        RpcClientContext.getRpcRouter().refresh(serviceName);
     }
 }

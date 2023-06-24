@@ -23,7 +23,7 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
         RpcRequest request = RpcTransferProtocolHelper.parseRpcRequest(protocol);
-        Object service = RpcServerLocalCache.SERVICE_PROVIDER_CACHE.get(request.getServiceName());
+        Object service = RpcServerContext.getServiceProviderCache().get(request.getServiceName());
         Method[] methods = service.getClass().getDeclaredMethods();
         Method targetMethod = null;
         for (Method method : methods) {
@@ -40,7 +40,7 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
         if (targetMethod.getReturnType() == Void.TYPE) {
             targetMethod.invoke(service, request.getArgs());
         } else {
-            result = targetMethod.invoke(service, request);
+            result = targetMethod.invoke(service, request.getArgs());
         }
         RpcResponse response = new RpcResponse(request.getId(), result);
         protocol = new RpcTransferProtocol(JSON.toJSONString(response).getBytes());

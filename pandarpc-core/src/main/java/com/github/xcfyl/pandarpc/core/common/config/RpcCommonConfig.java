@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.common.config;
 
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcSerializeType;
 import lombok.Data;
 import lombok.ToString;
 
@@ -22,9 +23,13 @@ public class RpcCommonConfig {
     /**
      * 注册中心类型
      */
-    private RegistryType registryType;
+    private RpcRegistryType registryType;
     /**
      * 注册中心的地址
      */
     private String registryAddr;
+    /**
+     * 序列化类型
+     */
+    private RpcSerializeType serializeType;
 }

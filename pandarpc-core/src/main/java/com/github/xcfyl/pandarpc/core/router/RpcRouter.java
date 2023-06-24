@@ -14,7 +14,7 @@ public interface RpcRouter {
      * @param serviceName
      * @return
      */
-    ConnectionWrapper select(String serviceName);
+    ConnectionWrapper select(String serviceName) throws Exception;
 
     /**
      * 刷新路由，当本地的服务提供者列表发生变化的时候

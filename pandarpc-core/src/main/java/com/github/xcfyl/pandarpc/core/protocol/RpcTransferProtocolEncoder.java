@@ -13,7 +13,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class RpcTransferProtocolEncoder extends MessageToByteEncoder<RpcTransferProtocol> {
     @Override
     protected void encode(ChannelHandlerContext ctx, RpcTransferProtocol protocol, ByteBuf byteBuf) throws Exception {
-        byteBuf.writeShort(protocol.getMagicNumber());
+        byteBuf.writeShort(RpcTransferProtocol.getMagicNumber());
         byteBuf.writeInt(protocol.getLength());
         byteBuf.writeBytes(protocol.getBody());
     }

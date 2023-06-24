@@ -1,6 +1,5 @@
 package com.github.xcfyl.pandarpc.core.event;
 
-import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.event.listener.RpcServiceUpdateEventListener;
 
 import java.lang.reflect.ParameterizedType;
@@ -67,18 +66,5 @@ public class RpcEventPublisher {
             return (Class<?>) type;
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
-        RpcServiceUpdateEventData serviceChangeInfo = new RpcServiceUpdateEventData();
-        serviceChangeInfo.setServiceName("service1");
-        serviceChangeInfo.setNewServiceList(new ArrayList<>());
-        updateEvent.setData(serviceChangeInfo);
-        RpcEventPublisher eventPublisher = new RpcEventPublisher();
-        RpcServiceUpdateEventListener updateEventListener = new RpcServiceUpdateEventListener();
-        eventPublisher.addEventListener(updateEventListener);
-        eventPublisher.publishEvent(updateEvent);
-        System.out.println(eventPublisher.parseEventType(updateEventListener));
     }
 }

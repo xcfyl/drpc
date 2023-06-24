@@ -1,10 +1,10 @@
 package com.github.xcfyl.pandarpc.core.server;
 
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import com.github.xcfyl.pandarpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.pandarpc.core.common.config.RpcServerConfig;
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryType;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryType;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcSerializeType;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
 import com.github.xcfyl.pandarpc.core.exception.ConfigErrorException;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
@@ -13,6 +13,8 @@ import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperRegistry;
+import com.github.xcfyl.pandarpc.core.serialize.fastjson.FastJsonRpcSerializeFactory;
+import com.github.xcfyl.pandarpc.core.serialize.jdk.JdkRpcSerializeFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -35,10 +37,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RpcServer {
     /**
-     * rpc服务的配置信息
-     */
-    private final RpcServerConfig config;
-    /**
      * 注册中心
      */
     private RpcRegistry registry;
@@ -49,9 +47,7 @@ public class RpcServer {
             1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public RpcServer() {
-        config = RpcConfigLoader.loadRpcServerConfig();
-    }
+    public RpcServer() {}
 
     /**
      * 初始化rpc服务端
@@ -59,6 +55,10 @@ public class RpcServer {
      * @throws Exception
      */
     public void init() throws Exception {
+        // 设置配置项
+        RpcServerConfig rpcServerConfig = RpcConfigLoader.loadRpcServerConfig();
+        RpcServerContext.setRpcServerConfig(rpcServerConfig);
+
         new ServerBootstrap()
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)
@@ -75,19 +75,26 @@ public class RpcServer {
                         channel.pipeline().addLast(new RpcServerHandler());
                     }
                 })
-                .bind(config.getPort())
+                .bind(rpcServerConfig.getPort())
                 .sync();
 
-        RegistryType registryType = config.getCommonConfig().getRegistryType();
-        if (registryType == RegistryType.ZK) {
+        RpcRegistryType registryType = rpcServerConfig.getCommonConfig().getRegistryType();
+        if (registryType == RpcRegistryType.ZK) {
             // 如果注册中心的类型是zookeeper
-            ZookeeperClient zookeeperClient = new ZookeeperClient(config.getCommonConfig().getRegistryAddr());
+            ZookeeperClient zookeeperClient = new ZookeeperClient(rpcServerConfig.getCommonConfig().getRegistryAddr());
             registry = new ZookeeperRegistry(zookeeperClient);
         } else {
             throw new ConfigErrorException("未知注册中心类型");
         }
 
-        RpcContext.setMaxRequestLength(config.getCommonConfig().getMaxRequestLength());
+        RpcSerializeType serializeType = rpcServerConfig.getCommonConfig().getSerializeType();
+        if (serializeType.getCode() == RpcSerializeType.JDK.getCode()) {
+            RpcServerContext.setSerializeFactory(new JdkRpcSerializeFactory<>());
+        } else if (serializeType.getCode() == RpcSerializeType.FASTJSON.getCode()) {
+            RpcServerContext.setSerializeFactory(new FastJsonRpcSerializeFactory<>());
+        } else {
+            throw new ConfigErrorException("暂时不支持的序列化类型");
+        }
     }
 
     /**
@@ -104,20 +111,21 @@ public class RpcServer {
                 log.error("#{} implement too many interface!", service);
                 return;
             }
+            RpcServerConfig rpcServerConfig = RpcServerContext.getRpcServerConfig();
             Class<?> clazz = interfaces[0];
             String serviceName = clazz.getName();
             RegistryData registryData = new RegistryData();
             registryData.setIp(CommonUtils.getCurrentMachineIp());
             registryData.setServiceName(serviceName);
-            registryData.setPort(config.getPort());
-            registryData.setApplicationName(config.getCommonConfig().getApplicationName());
-            registryData.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "provider");
-            registryData.getAttr().put(RegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
+            registryData.setPort(rpcServerConfig.getPort());
+            registryData.setApplicationName(rpcServerConfig.getCommonConfig().getApplicationName());
+            registryData.getAttr().put(RpcRegistryDataAttrName.TYPE.getDescription(), "provider");
+            registryData.getAttr().put(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
             try {
                 registry.register(registryData);
                 // 将当前服务写入本地缓存中
-                RpcServerLocalCache.REGISTRY_DATA_CACHE.put(serviceName, registryData);
-                RpcServerLocalCache.SERVICE_PROVIDER_CACHE.put(serviceName, service);
+                RpcServerContext.getRegistryDataCache().put(serviceName, registryData);
+                RpcServerContext.getServiceProviderCache().put(serviceName, service);
             } catch (Exception e) {
                 log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
             }

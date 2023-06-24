@@ -1,13 +1,13 @@
 package com.github.xcfyl.pandarpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.pandarpc.core.client.RpcClientLocalCache;
+import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
 import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
 import com.github.xcfyl.pandarpc.core.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.pandarpc.core.event.data.RpcServiceUpdateEventData;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 import com.github.xcfyl.pandarpc.core.registry.RpcRegistry;
-import com.github.xcfyl.pandarpc.core.server.RpcServerLocalCache;
+import com.github.xcfyl.pandarpc.core.server.RpcServerContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +37,13 @@ public class ZookeeperRegistry implements RpcRegistry {
             zkClient.deleteNode(providerNodePath);
         }
         zkClient.createTemporaryData(providerNodePath, providerMetaData);
-        RpcServerLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
+        RpcServerContext.getRegistryDataCache().put(registryData.getApplicationName(), registryData);
     }
 
     @Override
     public void unregister(RegistryData registryData) throws Exception {
         String providerNodePath = RegistryDataZkHelper.getProviderNodePath(ROOT, registryData);
-        RpcServerLocalCache.REGISTRY_DATA_CACHE.remove(registryData.getServiceName());
+        RpcServerContext.getRegistryDataCache().remove(registryData.getServiceName());
         zkClient.deleteNode(providerNodePath);
     }
 
@@ -59,7 +59,7 @@ public class ZookeeperRegistry implements RpcRegistry {
         }
         zkClient.createTemporaryData(consumerNodePath, consumerMetaData);
         watchServiceChange(registryData);
-        RpcClientLocalCache.REGISTRY_DATA_CACHE.put(registryData.getApplicationName(), registryData);
+        RpcClientContext.getRegistryDataCache().put(registryData.getApplicationName(), registryData);
     }
 
     @Override
@@ -119,16 +119,5 @@ public class ZookeeperRegistry implements RpcRegistry {
                 e.printStackTrace();
             }
         });
-    }
-
-    public static void main(String[] args) throws Exception {
-        ZookeeperRegistry registry = new ZookeeperRegistry(new ZookeeperClient("127.0.0.1:2181"));
-        RegistryData registryData = new RegistryData();
-        registryData.setPort(1234);
-        registryData.setServiceName("service1");
-        registryData.setApplicationName("app1");
-        registryData.setIp("127.0.0.1");
-        registry.register(registryData);
-        System.out.println(registry.queryProviders("service1"));
     }
 }

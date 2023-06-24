@@ -1,6 +1,6 @@
 package com.github.xcfyl.pandarpc.core.registry;
 
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.event.RpcEventPublisher;
 import com.github.xcfyl.pandarpc.core.event.listener.RpcServiceUpdateEventListener;
 import com.github.xcfyl.pandarpc.core.registry.zookeeper.ZookeeperClient;
@@ -38,7 +38,7 @@ public class TestZookeeperRegistry {
         provider1.setPort(1234);
         provider1.setServiceName("service1");
         provider1.setApplicationName("app1");
-        provider1.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "provider");
+        provider1.getAttr().put(RpcRegistryDataAttrName.TYPE.getDescription(), "provider");
 
         RegistryData provider2 = new RegistryData();
         provider2.setIp("localhost");

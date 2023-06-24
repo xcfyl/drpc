@@ -12,7 +12,7 @@ public class TestClient {
         RpcReference rpcReference = rpcClient.init();
         rpcClient.subscribeService(HelloService.class.getName());
         SubscribedServiceWrapper<HelloService> wrapper = new SubscribedServiceWrapper<>();
-        wrapper.setSync(false);
+        wrapper.setSync(true);
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         for (int i = 0; i < 1000; i++) {

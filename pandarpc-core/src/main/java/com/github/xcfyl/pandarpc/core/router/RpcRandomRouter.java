@@ -1,6 +1,7 @@
 package com.github.xcfyl.pandarpc.core.router;
 
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
+import com.github.xcfyl.pandarpc.core.exception.RouterException;
 
 import java.util.Collections;
 import java.util.Random;
@@ -19,8 +20,11 @@ public class RpcRandomRouter extends RpcAbstractRouter {
     }
 
     @Override
-    public ConnectionWrapper doSelect(String serviceName) {
+    public ConnectionWrapper doSelect(String serviceName) throws Exception {
         Random random = new Random();
+        if (cache.size() == 0) {
+            throw new RouterException("no router found!");
+        }
         int index = random.nextInt(cache.size());
         return cache.get(index);
     }

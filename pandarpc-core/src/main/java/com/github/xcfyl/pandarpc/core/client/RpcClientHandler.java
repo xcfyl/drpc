@@ -8,7 +8,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 
-import static com.github.xcfyl.pandarpc.core.client.RpcClientLocalCache.RESPONSE_MAP;
 
 /**
  * rpc客户端处理器
@@ -21,7 +20,7 @@ public class RpcClientHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
         RpcResponse response = RpcTransferProtocolHelper.parseRpcResponse(protocol);
-        RESPONSE_MAP.put(response.getId(), response);
+        RpcClientContext.getResponseCache().put(response.getId(), response);
         ReferenceCountUtil.release(msg);
     }
 

@@ -1,7 +1,7 @@
 package com.github.xcfyl.pandarpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.pandarpc.core.common.enums.RegistryDataAttrName;
+import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
 
 /**
@@ -87,7 +87,7 @@ public class RegistryDataZkHelper {
         registryData.setIp("localhost");
         registryData.setPort(1234);
         registryData.setApplicationName("drpc-core");
-        registryData.getAttr().put(RegistryDataAttrName.TYPE.getDescription(), "consumer");
+        registryData.getAttr().put(RpcRegistryDataAttrName.TYPE.getDescription(), "consumer");
         System.out.println(JSON.toJSONString(registryData));
     }
 }

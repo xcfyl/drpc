@@ -21,7 +21,7 @@ public class RpcRoundRobinRouter extends RpcAbstractRouter {
     }
 
     @Override
-    public ConnectionWrapper doSelect(String serviceName) {
+    public ConnectionWrapper doSelect(String serviceName) throws Exception {
         if (nextIndex == cache.size()) {
             nextIndex = 0;
         }

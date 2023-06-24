@@ -2,10 +2,8 @@ package com.github.xcfyl.pandarpc.core.proxy.jdk;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.pandarpc.core.client.ConnectionWrapper;
-import com.github.xcfyl.pandarpc.core.client.RpcRouterRef;
 import com.github.xcfyl.pandarpc.core.client.SubscribedServiceWrapper;
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
-import com.github.xcfyl.pandarpc.core.client.RpcClientLocalCache;
+import com.github.xcfyl.pandarpc.core.client.RpcClientContext;
 import com.github.xcfyl.pandarpc.core.protocol.RpcRequest;
 import com.github.xcfyl.pandarpc.core.protocol.RpcResponse;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocol;
@@ -35,15 +33,15 @@ public class RpcInvocationHandler<T> implements InvocationHandler {
         String methodName = method.getName();
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
         RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
-        ConnectionWrapper connectionWrapper = RpcRouterRef.getRpcRouter().select(serviceName);
+        ConnectionWrapper connectionWrapper = RpcClientContext.getRpcRouter().select(serviceName);
         connectionWrapper.writeAndFlush(protocol);
 
         // 判断是否是同步方法调用
         if (serviceWrapper.isSync()) {
             long beginTime = System.currentTimeMillis();
-            long timeout = RpcContext.getRequestTimeout();
+            long timeout = RpcClientContext.getRpcClientConfig().getRequestTimeout();
             while (System.currentTimeMillis() - beginTime < timeout) {
-                RpcResponse response = RpcClientLocalCache.RESPONSE_MAP.get(requestId);
+                RpcResponse response = RpcClientContext.getResponseCache().get(requestId);
                 if (response != null) {
                     return response.getBody();
                 }

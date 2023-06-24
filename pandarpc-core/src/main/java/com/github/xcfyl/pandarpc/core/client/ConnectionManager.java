@@ -1,7 +1,6 @@
 package com.github.xcfyl.pandarpc.core.client;
 
 
-import com.github.xcfyl.pandarpc.core.common.RpcContext;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
@@ -26,18 +25,6 @@ public class ConnectionManager {
         ConnectionManager.bootstrap = bootstrap;
     }
 
-    /**
-     * 连接给定的服务下面的所有的服务提供者
-     *
-     * @param serviceName 当前连接的服务
-     * @param addrList    当前服务下面所有服务提供者的访问地址ip:port格式
-     */
-    public static void connect(String serviceName, List<String> addrList) {
-        for (String addr : addrList) {
-            connect(serviceName, addr);
-        }
-    }
-
     public static void connect(String serviceName, String addr) {
         ConnectionWrapper connectionWrapper = getConnectionWrapper(addr);
         // 缓存当前连接对象
@@ -45,7 +32,7 @@ public class ConnectionManager {
                 CONNECT_CACHE.getOrDefault(serviceName, new ArrayList<>());
         connectionWrappers.add(connectionWrapper);
         CONNECT_CACHE.put(serviceName, connectionWrappers);
-        RpcRouterRef.getRpcRouter().refresh(serviceName);
+        RpcClientContext.getRpcRouter().refresh(serviceName);
     }
 
     public static List<ConnectionWrapper> getConnections(String serviceName) {

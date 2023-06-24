@@ -1,5 +1,8 @@
 package com.github.xcfyl.pandarpc.core.protocol;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +12,8 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 09:41
  */
+@Data
+@NoArgsConstructor
 public class RpcRequest {
     /**
      * 当前请求的唯一标识
@@ -31,56 +36,12 @@ public class RpcRequest {
      */
     private Map<String, Object> attr;
 
-    public RpcRequest() {
-
-    }
-
     public RpcRequest(String id, String service, String method, Object[] args) {
         this.id = id;
         this.serviceName = service;
         this.methodName = method;
         this.args = args;
         attr = new HashMap<>();
-    }
-
-    public void putAttr(String key, Object value) {
-        attr.put(key, value);
-    }
-
-    public Object getAttr(String key) {
-        return attr.get(key);
-    }
-
-    public void setArgs(Object[] args) {
-        this.args = args;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
-    }
-
-    public Object[] getArgs() {
-        return args;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public String getServiceName() {
-        return serviceName;
     }
 }
 
