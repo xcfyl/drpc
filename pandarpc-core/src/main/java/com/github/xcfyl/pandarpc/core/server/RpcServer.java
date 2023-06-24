@@ -6,6 +6,8 @@ import com.github.xcfyl.pandarpc.core.common.enums.RpcRegistryDataAttrName;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcRegistryFactory;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcSerializerFactory;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
+import com.github.xcfyl.pandarpc.core.filter.server.RpcServerFilterChain;
+import com.github.xcfyl.pandarpc.core.filter.server.RpcServerLogFilter;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
@@ -78,6 +80,10 @@ public class RpcServer {
         registry = RpcRegistryFactory.createRpcRegistry(rpcServerConfig.getCommonConfig());
         // 创建序列化器对象
         RpcServerContext.setSerializer(RpcSerializerFactory.createRpcSerializer(rpcServerConfig.getCommonConfig()));
+        // 创建过滤器
+        RpcServerFilterChain filterChain = new RpcServerFilterChain();
+        filterChain.addFilter(new RpcServerLogFilter());
+        RpcServerContext.setFilterChain(filterChain);
         // 注册钩子函数
         registerShutdownHook(registry);
     }

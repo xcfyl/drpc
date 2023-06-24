@@ -12,14 +12,5 @@ public class TestServer {
         RpcServer rpcServer = new RpcServer();
         rpcServer.init();
         rpcServer.registerService(new HelloServiceImpl());
-        new Thread(() -> {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("over");
-            System.exit(0);
-        }).start();
     }
 }

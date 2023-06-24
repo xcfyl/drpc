@@ -8,6 +8,8 @@ import com.github.xcfyl.pandarpc.core.common.factory.RpcRegistryFactory;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcRouterFactory;
 import com.github.xcfyl.pandarpc.core.common.factory.RpcSerializerFactory;
 import com.github.xcfyl.pandarpc.core.common.utils.CommonUtils;
+import com.github.xcfyl.pandarpc.core.filter.client.RpcClientFilterChain;
+import com.github.xcfyl.pandarpc.core.filter.client.RpcClientLogFilter;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.pandarpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.pandarpc.core.registry.RegistryData;
@@ -54,6 +56,11 @@ public class RpcClient {
         RpcClientContext.setRouter(RpcRouterFactory.createRpcRouter(rpcClientConfig));
         // 创建序列化器对象
         RpcClientContext.setSerializer(RpcSerializerFactory.createRpcSerializer(rpcClientConfig.getCommonConfig()));
+        // 创建过滤器对象
+        RpcClientFilterChain filterChain = new RpcClientFilterChain();
+        filterChain.addFilter(new RpcClientLogFilter());
+        RpcClientContext.setFilterChain(filterChain);
+
         // 生成RpcReference对象
         return new RpcReference(RpcProxyFactory.createRpcProxy(rpcClientConfig));
     }

@@ -22,6 +22,8 @@ public class RpcServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
         RpcRequest request = RpcServerContext.getSerializer().deserialize(protocol.getBody(), RpcRequest.class);
+        // 执行过滤逻辑
+        RpcServerContext.getFilterChain().doFilter(request);
         Object service = RpcServerContext.getServiceProviderCache().get(request.getServiceName());
         Method[] methods = service.getClass().getDeclaredMethods();
         Method targetMethod = null;
