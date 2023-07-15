@@ -1,6 +1,7 @@
 package com.github.xcfyl.drpc.core.common.factory;
 
-import com.github.xcfyl.drpc.core.common.config.RpcClientConfig;
+import com.github.xcfyl.drpc.core.client.ConnectionManager;
+import com.github.xcfyl.drpc.core.client.RpcClientConfig;
 import com.github.xcfyl.drpc.core.common.enums.RpcRouterType;
 import com.github.xcfyl.drpc.core.router.RpcRandomRouter;
 import com.github.xcfyl.drpc.core.router.RpcRoundRobinRouter;
@@ -15,10 +16,10 @@ import java.util.Objects;
  */
 @Slf4j
 public class RpcRouterFactory {
-    public static RpcRouter createRpcRouter(RpcClientConfig config) {
+    public static RpcRouter createRpcRouter(RpcClientConfig config, ConnectionManager connectionManager) {
         if (Objects.requireNonNull(config.getRouterType()) == RpcRouterType.RANDOM) {
-            return new RpcRandomRouter();
+            return new RpcRandomRouter(connectionManager);
         }
-        return new RpcRoundRobinRouter();
+        return new RpcRoundRobinRouter(connectionManager);
     }
 }

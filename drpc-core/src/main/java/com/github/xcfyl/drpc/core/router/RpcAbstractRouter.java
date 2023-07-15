@@ -2,6 +2,7 @@ package com.github.xcfyl.drpc.core.router;
 
 import com.github.xcfyl.drpc.core.client.ConnectionManager;
 import com.github.xcfyl.drpc.core.client.ConnectionWrapper;
+import com.github.xcfyl.drpc.core.client.RpcClientContext;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import java.util.List;
 @Slf4j
 public abstract class RpcAbstractRouter implements RpcRouter {
     protected final List<ConnectionWrapper> cache = new ArrayList<>();
+    private final ConnectionManager connectionManager;
+
+    public RpcAbstractRouter(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     @Override
     public synchronized ConnectionWrapper select(String serviceName) throws Exception {
@@ -23,9 +29,9 @@ public abstract class RpcAbstractRouter implements RpcRouter {
 
     @Override
     public synchronized void refresh(String serviceName) {
-        List<ConnectionWrapper> connections = ConnectionManager.getFilteredConnections(serviceName);
+        List<ConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
         cache.clear();
-        cache.addAll(connections);
+        cache.addAll(originalConnections);
         doRefresh();
         log.debug("router refreshed -> #{}", cache);
     }

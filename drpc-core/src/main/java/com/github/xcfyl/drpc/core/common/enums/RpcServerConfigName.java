@@ -4,7 +4,7 @@ package com.github.xcfyl.drpc.core.common.enums;
  * @author 西城风雨楼
  * @date create at 2023/6/23 16:05
  */
-public enum RpcServerConfigName implements PandaRpcEnum {
+public enum RpcServerConfigName implements RpcEnum {
     SERVER_PORT(0, "server.port");
 
     private final int code;

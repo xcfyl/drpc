@@ -3,7 +3,7 @@ package com.github.xcfyl.drpc.core.common.enums;
 /**
  * @author 西城风雨楼
  */
-public enum RpcProxyType implements PandaRpcEnum {
+public enum RpcProxyType implements RpcEnum {
     JDK(0, "jdk");
 
     private final int code;

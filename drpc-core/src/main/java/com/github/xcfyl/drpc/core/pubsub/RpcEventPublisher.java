@@ -2,15 +2,11 @@ package com.github.xcfyl.drpc.core.pubsub;
 
 import com.github.xcfyl.drpc.core.pubsub.event.RpcEvent;
 import com.github.xcfyl.drpc.core.pubsub.listener.RpcEventListener;
-import com.github.xcfyl.drpc.core.pubsub.listener.ServiceUpdateEventListener;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * rpc事件发布器
@@ -20,14 +16,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class RpcEventPublisher {
     private final List<RpcEventListener<?>> eventListeners = new ArrayList<>();
-    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 3, 1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100));
 
     private static class RpcEventPublisherHolder {
         static final RpcEventPublisher EVENT_PUBLISHER = new RpcEventPublisher();
-        static {
-            // 有新的服务上线或者新的服务下线的时候，触发该事件
-            EVENT_PUBLISHER.addEventListener(new ServiceUpdateEventListener());
-        }
     }
 
     public static RpcEventPublisher getInstance() {
@@ -49,11 +40,10 @@ public class RpcEventPublisher {
      * @param event
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public synchronized void publishEvent(RpcEvent<?> event) {
+    public synchronized void publishEvent(RpcEvent event) {
         for (RpcEventListener listener : eventListeners) {
             Class eventType = parseEventType(listener);
             if (eventType == event.getClass()) {
-//                threadPoolExecutor.submit(() -> listener.callback(event));
                 listener.callback(event);
             }
         }

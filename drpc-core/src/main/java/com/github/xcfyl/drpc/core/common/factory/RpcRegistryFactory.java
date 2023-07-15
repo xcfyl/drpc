@@ -1,9 +1,9 @@
 package com.github.xcfyl.drpc.core.common.factory;
 
 import com.github.xcfyl.drpc.core.registry.RpcRegistry;
-import com.github.xcfyl.drpc.core.registry.zookeeper.ZookeeperRegistry;
+import com.github.xcfyl.drpc.core.registry.zookeeper.ZkRegistry;
 import com.github.xcfyl.drpc.core.common.config.RpcCommonConfig;
-import com.github.xcfyl.drpc.core.registry.zookeeper.ZookeeperClient;
+import com.github.xcfyl.drpc.core.registry.zookeeper.ZkClient;
 
 /**
  * @author 西城风雨楼
@@ -11,7 +11,7 @@ import com.github.xcfyl.drpc.core.registry.zookeeper.ZookeeperClient;
  */
 public class RpcRegistryFactory {
     public static RpcRegistry createRpcRegistry(RpcCommonConfig config) {
-        ZookeeperClient zookeeperClient = new ZookeeperClient(config.getRegistryAddr());
-        return new ZookeeperRegistry(zookeeperClient);
+        ZkClient zookeeperClient = new ZkClient(config.getRegistryAddr());
+        return new ZkRegistry(zookeeperClient);
     }
 }

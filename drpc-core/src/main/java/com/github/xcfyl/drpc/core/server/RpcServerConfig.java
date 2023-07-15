@@ -1,5 +1,6 @@
-package com.github.xcfyl.drpc.core.common.config;
+package com.github.xcfyl.drpc.core.server;
 
+import com.github.xcfyl.drpc.core.common.config.RpcCommonConfig;
 import lombok.Data;
 import lombok.ToString;
 

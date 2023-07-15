@@ -5,7 +5,7 @@ package com.github.xcfyl.drpc.core.common.enums;
  *
  * @author 西城风雨楼
  */
-public enum RpcCommonConfigName implements PandaRpcEnum {
+public enum RpcCommonConfigName implements RpcEnum {
     MAX_REQUEST_LENGTH(0, "request.limit"),
     REGISTRY_TYPE(1, "registry.type"),
     REGISTRY_ADDR(2, "registry.addr"),

@@ -5,7 +5,7 @@ import com.github.xcfyl.drpc.core.client.ConnectionManager;
 import com.github.xcfyl.drpc.core.client.RpcClientContext;
 import com.github.xcfyl.drpc.core.pubsub.event.RpcServiceUpdateEvent;
 import com.github.xcfyl.drpc.core.pubsub.event.ServiceUpdateEventData;
-import com.github.xcfyl.drpc.core.registry.RegistryData;
+import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +23,12 @@ import java.util.Map;
  */
 @Slf4j
 public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
+    private final RpcClientContext rpcClientContext;
+
+    public ServiceUpdateEventListener(RpcClientContext rpcClientContext) {
+        this.rpcClientContext = rpcClientContext;
+    }
+
     /**
      * 在这里更新client的连接列表
      *
@@ -32,28 +38,29 @@ public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUp
     public void callback(RpcServiceUpdateEvent event) {
         ServiceUpdateEventData data = event.getData();
         String serviceName = data.getServiceName();
-        List<RegistryData> newProviderDataList = data.getNewServiceList();
-        List<ConnectionWrapper> connections = ConnectionManager.getOriginalConnections(serviceName);
+        List<ProviderRegistryData> newProviderDataList = data.getNewServiceList();
+        ConnectionManager connectionManager = rpcClientContext.getConnectionManager();
+        List<ConnectionWrapper> connections =connectionManager.getOriginalConnections(serviceName);
         Map<String, ConnectionWrapper> connectionWrapperMap = new HashMap<>();
         for (ConnectionWrapper connectionWrapper : connections) {
             connectionWrapperMap.put(connectionWrapper.toString(), connectionWrapper);
         }
         List<ConnectionWrapper> newConnections = new ArrayList<>();
-        for (RegistryData registryData : newProviderDataList) {
+        for (ProviderRegistryData registryData : newProviderDataList) {
             String ip = registryData.getIp();
             Integer port = registryData.getPort();
             ConnectionWrapper connectionWrapper = new ConnectionWrapper();
             connectionWrapper.setIp(ip);
             connectionWrapper.setPort(port);
             if (!connectionWrapperMap.containsKey(connectionWrapper.toString())) {
-                ChannelFuture channelFuture = ConnectionManager.getChannelFuture(ip, port);
+                ChannelFuture channelFuture = connectionManager.getChannelFuture(ip, port);
                 connectionWrapper.setChannelFuture(channelFuture);
             }
             newConnections.add(connectionWrapper);
         }
         // 更新本地连接缓存
-        ConnectionManager.setConnections(serviceName, newConnections);
+        connectionManager.setConnections(serviceName, newConnections);
         // 刷新路由
-        RpcClientContext.getRouter().refresh(serviceName);
+        rpcClientContext.getRouter().refresh(serviceName);
     }
 }

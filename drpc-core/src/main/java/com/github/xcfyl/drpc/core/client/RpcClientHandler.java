@@ -15,11 +15,17 @@ import io.netty.util.ReferenceCountUtil;
  * @date create at 2023/6/22 10:30
  */
 public class RpcClientHandler extends ChannelInboundHandlerAdapter {
+    private final RpcClientContext rpcClientContext;
+
+    public RpcClientHandler(RpcClientContext rpcClientContext) {
+        this.rpcClientContext = rpcClientContext;
+    }
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RpcTransferProtocol protocol = (RpcTransferProtocol) msg;
-        RpcResponse response = RpcClientContext.getSerializer().deserialize(protocol.getBody(), RpcResponse.class);
-        RpcClientContext.getResponseCache().put(response.getId(), response);
+        RpcResponse response = rpcClientContext.getSerializer().deserialize(protocol.getBody(), RpcResponse.class);
+        rpcClientContext.getResponseCache().put(response.getId(), response);
         ReferenceCountUtil.release(msg);
     }
 

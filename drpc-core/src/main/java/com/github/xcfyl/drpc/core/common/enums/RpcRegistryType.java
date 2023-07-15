@@ -3,7 +3,7 @@ package com.github.xcfyl.drpc.core.common.enums;
 /**
  * @author 西城风雨楼
  */
-public enum RpcRegistryType implements PandaRpcEnum {
+public enum RpcRegistryType implements RpcEnum {
     ZK(0, "zookeeper");
 
     private final int code;

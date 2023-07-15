@@ -16,17 +16,17 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/22 21:39
  */
-public class ZookeeperClient {
+public class ZkClient {
     private CuratorFramework curator;
     private final Integer baseSleepTimes;
     private final Integer maxRetries;
     private final String zkAddress;
 
-    public ZookeeperClient(String zkAddress) {
+    public ZkClient(String zkAddress) {
         this(zkAddress, 1000, 3);
     }
 
-    public ZookeeperClient(String zkAddress, Integer baseSleepTimes, Integer maxRetries) {
+    public ZkClient(String zkAddress, Integer baseSleepTimes, Integer maxRetries) {
         this.zkAddress = zkAddress;
         this.baseSleepTimes = baseSleepTimes;
         this.maxRetries = maxRetries;
@@ -91,10 +91,6 @@ public class ZookeeperClient {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public void watchNodeData(String path, Watcher watcher) throws Exception {
-        curator.getData().usingWatcher(watcher).forPath(path);
     }
 
     public void watchChildNodeData(String path, Watcher watcher) throws Exception {

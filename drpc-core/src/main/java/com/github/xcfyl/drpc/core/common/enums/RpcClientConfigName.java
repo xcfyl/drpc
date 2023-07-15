@@ -4,7 +4,7 @@ package com.github.xcfyl.drpc.core.common.enums;
  * @author 西城风雨楼
  * @date create at 2023/6/22 18:12
  */
-public enum RpcClientConfigName implements PandaRpcEnum {
+public enum RpcClientConfigName implements RpcEnum {
     CLIENT_REQUEST_TIMEOUT(0, "client.request.timeout"),
     CLIENT_PROXY_TYPE(1, "client.proxy"),
     CLIENT_ROUTER_TYPE(2, "client.router");

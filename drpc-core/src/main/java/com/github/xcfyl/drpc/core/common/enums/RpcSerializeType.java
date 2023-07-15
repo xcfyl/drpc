@@ -3,7 +3,7 @@ package com.github.xcfyl.drpc.core.common.enums;
 /**
  * @author 西城风雨楼
  */
-public enum RpcSerializeType implements PandaRpcEnum {
+public enum RpcSerializeType implements RpcEnum {
     JDK(0, "jdk"),
     FASTJSON(1, "fastjson");
 

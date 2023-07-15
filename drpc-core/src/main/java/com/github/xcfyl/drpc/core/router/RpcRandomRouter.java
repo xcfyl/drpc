@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.router;
 
+import com.github.xcfyl.drpc.core.client.ConnectionManager;
 import com.github.xcfyl.drpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.drpc.core.exception.RouterException;
 
@@ -13,6 +14,10 @@ import java.util.Random;
  * @date create at 2023/6/23 22:37
  */
 public class RpcRandomRouter extends RpcAbstractRouter {
+    public RpcRandomRouter(ConnectionManager connectionManager) {
+        super(connectionManager);
+    }
+
     @Override
     public void doRefresh() {
         // 将cache中的数据进行扰乱

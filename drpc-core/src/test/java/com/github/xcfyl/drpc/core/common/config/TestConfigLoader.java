@@ -1,5 +1,7 @@
 package com.github.xcfyl.drpc.core.common.config;
 
+import com.github.xcfyl.drpc.core.client.RpcClientConfig;
+import com.github.xcfyl.drpc.core.server.RpcServerConfig;
 import org.junit.Test;
 
 /**

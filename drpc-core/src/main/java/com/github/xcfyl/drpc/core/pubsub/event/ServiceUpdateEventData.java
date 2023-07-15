@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.core.pubsub.event;
 
-import com.github.xcfyl.drpc.core.registry.RegistryData;
+import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
 import lombok.ToString;
 
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.List;
 @ToString
 public class ServiceUpdateEventData {
     private String serviceName;
-    private List<RegistryData> newServiceList;
+    private List<ProviderRegistryData> newServiceList;
 
     public ServiceUpdateEventData() {
 
     }
 
-    public ServiceUpdateEventData(String serviceName, List<RegistryData> newServiceList) {
+    public ServiceUpdateEventData(String serviceName, List<ProviderRegistryData> newServiceList) {
         this.serviceName = serviceName;
         this.newServiceList = newServiceList;
     }
@@ -27,7 +27,7 @@ public class ServiceUpdateEventData {
         return serviceName;
     }
 
-    public List<RegistryData> getNewServiceList() {
+    public List<ProviderRegistryData> getNewServiceList() {
         return newServiceList;
     }
 
@@ -35,7 +35,7 @@ public class ServiceUpdateEventData {
         this.serviceName = serviceName;
     }
 
-    public void setNewServiceList(List<RegistryData> newServiceList) {
+    public void setNewServiceList(List<ProviderRegistryData> newServiceList) {
         this.newServiceList = newServiceList;
     }
 }

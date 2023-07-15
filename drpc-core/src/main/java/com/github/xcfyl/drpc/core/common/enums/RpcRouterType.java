@@ -4,7 +4,7 @@ package com.github.xcfyl.drpc.core.common.enums;
  * @author 西城风雨楼
  * @date create at 2023/6/23 22:55
  */
-public enum RpcRouterType implements PandaRpcEnum {
+public enum RpcRouterType implements RpcEnum {
     RANDOM(0, "random"),
     ROUND_ROBIN(1, "roundrobin");
 

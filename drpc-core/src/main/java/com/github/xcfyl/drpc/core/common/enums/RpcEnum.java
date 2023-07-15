@@ -6,7 +6,7 @@ package com.github.xcfyl.drpc.core.common.enums;
  * @author 西城风雨楼
  * @date create at 2023/6/23 15:42
  */
-public interface PandaRpcEnum {
+public interface RpcEnum {
     int getCode();
     String getDescription();
 }

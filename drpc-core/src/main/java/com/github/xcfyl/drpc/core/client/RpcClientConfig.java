@@ -1,5 +1,6 @@
-package com.github.xcfyl.drpc.core.common.config;
+package com.github.xcfyl.drpc.core.client;
 
+import com.github.xcfyl.drpc.core.common.config.RpcCommonConfig;
 import com.github.xcfyl.drpc.core.common.enums.RpcProxyType;
 import com.github.xcfyl.drpc.core.common.enums.RpcRouterType;
 import lombok.Data;

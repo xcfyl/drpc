@@ -1,11 +1,12 @@
 package com.github.xcfyl.drpc.core.client;
 
-import com.github.xcfyl.drpc.core.common.config.RpcClientConfig;
 import com.github.xcfyl.drpc.core.filter.client.RpcClientFilterChain;
 import com.github.xcfyl.drpc.core.protocol.RpcResponse;
-import com.github.xcfyl.drpc.core.registry.RegistryData;
-import com.github.xcfyl.drpc.core.serializer.RpcSerializer;
+import com.github.xcfyl.drpc.core.proxy.RpcProxy;
+import com.github.xcfyl.drpc.core.registry.ConsumerRegistryData;
+import com.github.xcfyl.drpc.core.registry.RpcRegistry;
 import com.github.xcfyl.drpc.core.router.RpcRouter;
+import com.github.xcfyl.drpc.core.serializer.RpcSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,67 +22,104 @@ public class RpcClientContext {
     /**
      * 缓存rpc调用结果，key是请求id，value是本次请求的响应数据
      */
-    private static final Map<String, RpcResponse> RESPONSE_CACHE = new ConcurrentHashMap<>();
+    private final Map<String, RpcResponse> responseCache = new ConcurrentHashMap<>();
     /**
      * 缓存当前客户端本地缓存的注册数据
      */
-    private static final Map<String, RegistryData> REGISTRY_DATA_CACHE = new HashMap<>();
+    private final Map<String, ConsumerRegistryData> registerDataCache = new HashMap<>();
+    /**
+     * 连接管理器
+     */
+    private ConnectionManager connectionManager;
     /**
      * 当前rpc客户端使用的路由器
      */
-    private static RpcRouter router;
+    private RpcRouter router;
     /**
      * 当前Rpc客户端的配置数据
      */
-    private static RpcClientConfig clientConfig;
-
+    private RpcClientConfig clientConfig;
     /**
      * 序列化工厂
      */
-    private static RpcSerializer serializer;
-
+    private RpcSerializer serializer;
     /**
      * 客户端的过滤器
      */
-    private static RpcClientFilterChain filterChain;
+    private RpcClientFilterChain filterChain;
+    /**
+     * 客户端的注册中心
+     */
+    private RpcRegistry registry;
+    /**
+     * 客户端所使用的代理对象
+     */
+    private RpcProxy rpcProxy;
 
-    public static void setFilterChain(RpcClientFilterChain filterChain) {
-        RpcClientContext.filterChain = filterChain;
+    public RpcClientContext() {
     }
 
-    public static RpcClientFilterChain getFilterChain() {
-        return filterChain;
+    public Map<String, RpcResponse> getResponseCache() {
+        return responseCache;
     }
 
-    public static void setSerializer(RpcSerializer serializer) {
-        RpcClientContext.serializer = serializer;
+    public Map<String, ConsumerRegistryData> getRegisterDataCache() {
+        return registerDataCache;
     }
 
-    public static RpcSerializer getSerializer() {
-        return serializer;
-    }
-
-    public static void setClientConfig(RpcClientConfig clientConfig) {
-        RpcClientContext.clientConfig = clientConfig;
-    }
-
-    public static RpcClientConfig getClientConfig() {
-        return clientConfig;
-    }
-
-    public static void setRouter(RpcRouter router) {
-        RpcClientContext.router = router;
-    }
-
-    public static RpcRouter getRouter() {
+    public RpcRouter getRouter() {
         return router;
     }
 
-    public static Map<String, RpcResponse> getResponseCache() {
-        return RESPONSE_CACHE;
+    public void setRouter(RpcRouter router) {
+        this.router = router;
     }
 
-    public static Map<String, RegistryData> getRegistryDataCache() {
-        return REGISTRY_DATA_CACHE;
+    public RpcClientConfig getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(RpcClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+    }
+
+    public RpcSerializer getSerializer() {
+        return serializer;
+    }
+
+    public void setSerializer(RpcSerializer serializer) {
+        this.serializer = serializer;
+    }
+
+    public RpcClientFilterChain getFilterChain() {
+        return filterChain;
+    }
+
+    public void setFilterChain(RpcClientFilterChain filterChain) {
+        this.filterChain = filterChain;
+    }
+
+    public RpcRegistry getRegistry() {
+        return registry;
+    }
+
+    public void setRegistry(RpcRegistry registry) {
+        this.registry = registry;
+    }
+
+    public ConnectionManager getConnectionManager() {
+        return connectionManager;
+    }
+
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
+    public RpcProxy getRpcProxy() {
+        return rpcProxy;
+    }
+
+    public void setRpcProxy(RpcProxy rpcProxy) {
+        this.rpcProxy = rpcProxy;
     }
 }
