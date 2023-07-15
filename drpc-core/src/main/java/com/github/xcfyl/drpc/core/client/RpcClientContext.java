@@ -55,6 +55,10 @@ public class RpcClientContext {
      * 客户端所使用的代理对象
      */
     private RpcProxy rpcProxy;
+    /**
+     * 客户端的配置文件名称
+     */
+    private String configFileName;
 
     public RpcClientContext() {
     }
@@ -121,5 +125,13 @@ public class RpcClientContext {
 
     public void setRpcProxy(RpcProxy rpcProxy) {
         this.rpcProxy = rpcProxy;
+    }
+
+    public String getConfigFileName() {
+        return configFileName;
+    }
+
+    public void setConfigFileName(String configFileName) {
+        this.configFileName = configFileName;
     }
 }

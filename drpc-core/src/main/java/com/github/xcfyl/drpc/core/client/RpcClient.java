@@ -34,9 +34,16 @@ import java.util.List;
 @Slf4j
 public class RpcClient {
     private final RpcClientContext context;
-    public RpcClient() {
+
+    public RpcClient(String configFileName) {
         context = new RpcClientContext();
-        context.setClientConfig(RpcConfigLoader.loadRpcClientConfig());
+        context.setConfigFileName(configFileName);
+        RpcConfigLoader rpcConfigLoader = new RpcConfigLoader(configFileName);
+        context.setClientConfig(rpcConfigLoader.loadRpcClientConfig());
+    }
+
+    public RpcClient() {
+        this("drpc.properties");
     }
 
     public RpcReference init() throws Exception {

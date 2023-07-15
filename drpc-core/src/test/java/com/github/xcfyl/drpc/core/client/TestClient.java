@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.client;
 
+import com.github.xcfyl.drpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.drpc.core.server.HelloService;
 
 /**
@@ -8,7 +9,7 @@ import com.github.xcfyl.drpc.core.server.HelloService;
  */
 public class TestClient {
     public static void main(String[] args) throws Throwable {
-        RpcClient rpcClient = new RpcClient();
+        RpcClient rpcClient = new RpcClient("drpc1.properties");
         RpcReference rpcReference = rpcClient.init();
         rpcClient.subscribeService(HelloService.class.getName());
         SubscribedServiceWrapper<HelloService> wrapper = new SubscribedServiceWrapper<>();
@@ -16,7 +17,7 @@ public class TestClient {
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 10; i++) {
             String reply = helloService.hello("zhangsan" + i);
             System.out.println(reply);
         }

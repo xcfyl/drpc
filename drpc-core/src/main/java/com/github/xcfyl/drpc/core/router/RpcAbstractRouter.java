@@ -23,8 +23,11 @@ public abstract class RpcAbstractRouter implements RpcRouter {
 
     @Override
     public synchronized ConnectionWrapper select(String serviceName) throws Exception {
-        // 在这里进行消息过滤
-        return doSelect(serviceName);
+        ConnectionWrapper connectionWrapper = doSelect(serviceName);
+        if (log.isDebugEnabled()) {
+            log.debug("router -> {}, select connection is {}", this.getClass().getName(), connectionWrapper);
+        }
+        return connectionWrapper;
     }
 
     @Override

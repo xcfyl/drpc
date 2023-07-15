@@ -20,23 +20,25 @@ import java.util.UUID;
  * @date create at 2023/6/22 17:40
  */
 public class RpcConfigLoader {
-    private static final String CONFIG_FILE_NAME = "pandarpc.properties";
-    private static final Properties PROPERTIES = new Properties();
+    private final Properties properties;
 
-    private static final RpcCommonConfig RPC_COMMON_CONFIG;
+    public RpcConfigLoader(String configName) {
+        properties = getProperties(configName);
+    }
 
-    static {
-        URL resource = RpcConfigLoader.class.getClassLoader().getResource(CONFIG_FILE_NAME);
+    private static Properties getProperties(String configFileName) {
+        URL resource = RpcConfigLoader.class.getClassLoader().getResource(configFileName);
         if (resource == null) {
             throw new RuntimeException("未找到配置文件");
         }
+        Properties properties = new Properties();
         Path path = Paths.get(resource.getPath());
         try (InputStream input = Files.newInputStream(path, StandardOpenOption.READ)) {
-            PROPERTIES.load(input);
+            properties.load(input);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        RPC_COMMON_CONFIG = loadRpcCommonConfig();
+        return properties;
     }
 
     /**
@@ -44,7 +46,7 @@ public class RpcConfigLoader {
      *
      * @return
      */
-    public static RpcCommonConfig loadRpcCommonConfig() {
+    public RpcCommonConfig loadRpcCommonConfig() {
         String applicationName = getString(RpcCommonConfigName.APPLICATION_NAME.getDescription(),
                 UUID.randomUUID().toString());
         Integer maxRequestLength = getInteger(RpcCommonConfigName.MAX_REQUEST_LENGTH.getDescription(),
@@ -67,12 +69,12 @@ public class RpcConfigLoader {
      *
      * @return
      */
-    public static RpcServerConfig loadRpcServerConfig() {
+    public RpcServerConfig loadRpcServerConfig() {
         RpcServerConfig serverConfig = new RpcServerConfig();
         // rpc服务的端口
         Integer port = getInteger(RpcServerConfigName.SERVER_PORT.getDescription(), 1998);
         serverConfig.setPort(port);
-        serverConfig.setCommonConfig(RPC_COMMON_CONFIG);
+        serverConfig.setCommonConfig(loadRpcCommonConfig());
         return serverConfig;
     }
 
@@ -81,32 +83,32 @@ public class RpcConfigLoader {
      *
      * @return
      */
-    public static RpcClientConfig loadRpcClientConfig() {
+    public RpcClientConfig loadRpcClientConfig() {
         RpcClientConfig clientConfig = new RpcClientConfig();
         Long requestTimeout = getLong(RpcClientConfigName.CLIENT_REQUEST_TIMEOUT.getDescription(), 3000L);
         String proxyType = getString(RpcClientConfigName.CLIENT_PROXY_TYPE.getDescription(), RpcProxyType.JDK.getDescription());
         String routerType = getString(RpcClientConfigName.CLIENT_ROUTER_TYPE.getDescription(), RpcRouterType.RANDOM.getDescription());
-        clientConfig.setCommonConfig(RPC_COMMON_CONFIG);
+        clientConfig.setCommonConfig(loadRpcCommonConfig());
         clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setProxyType(RpcProxyType.fromDescription(proxyType));
         clientConfig.setRouterType(RpcRouterType.fromDescription(routerType));
         return clientConfig;
     }
 
-    private static String getString(String key, String defaultValue) {
-        return PROPERTIES.getProperty(key, defaultValue);
+    private String getString(String key, String defaultValue) {
+        return properties.getProperty(key, defaultValue);
     }
 
-    private static Integer getInteger(String key, Integer defaultValue) {
-        String property = PROPERTIES.getProperty(key);
+    private Integer getInteger(String key, Integer defaultValue) {
+        String property = properties.getProperty(key);
         if (property == null) {
             return defaultValue;
         }
         return Integer.parseInt(property);
     }
 
-    private static Long getLong(String key, Long defaultValue) {
-        String property = PROPERTIES.getProperty(key);
+    private Long getLong(String key, Long defaultValue) {
+        String property = properties.getProperty(key);
         if (property == null) {
             return defaultValue;
         }

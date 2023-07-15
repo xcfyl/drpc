@@ -43,9 +43,23 @@ public class RpcServer {
             1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
-    public RpcServer() {
+    /**
+     * 创建Rpc服务器
+     *
+     * @param configFileName
+     */
+    public RpcServer(String configFileName) {
         context = new RpcServerContext();
-        context.setServerConfig(RpcConfigLoader.loadRpcServerConfig());
+        context.setConfigFileName(configFileName);
+        RpcConfigLoader rpcConfigLoader = new RpcConfigLoader(configFileName);
+        context.setServerConfig(rpcConfigLoader.loadRpcServerConfig());
+    }
+
+    /**
+     * 使用默认配置文件启动创建rpc服务器
+     */
+    public RpcServer() {
+        this("drpc.properties");
     }
 
     /**
@@ -61,7 +75,6 @@ public class RpcServer {
         context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getCommonConfig()));
         // 创建过滤器
         context.setFilterChain(constructServerFilters());
-
         new ServerBootstrap()
                 .group(new NioEventLoopGroup(), new NioEventLoopGroup())
                 .channel(NioServerSocketChannel.class)

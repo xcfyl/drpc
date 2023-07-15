@@ -35,8 +35,14 @@ public class RpcServerContext {
      * 服务端的过滤器
      */
     private RpcServerFilterChain filterChain;
-
+    /**
+     * 注册中心
+     */
     private RpcRegistry registry;
+    /**
+     * 配置文件的路径
+     */
+    private String configFileName;
 
     public Map<String, Object> getServiceProviderCache() {
         return serviceProviderCache;
@@ -76,5 +82,13 @@ public class RpcServerContext {
 
     public void setRegistry(RpcRegistry registry) {
         this.registry = registry;
+    }
+
+    public String getConfigFileName() {
+        return configFileName;
+    }
+
+    public void setConfigFileName(String configFileName) {
+        this.configFileName = configFileName;
     }
 }
