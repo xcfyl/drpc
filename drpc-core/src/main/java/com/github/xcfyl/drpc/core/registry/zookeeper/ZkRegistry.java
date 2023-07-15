@@ -6,7 +6,7 @@ import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEvent;
 import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEventData;
 import com.github.xcfyl.drpc.core.registry.DrpcConsumerData;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
-import com.github.xcfyl.drpc.core.registry.Registry;
+import com.github.xcfyl.drpc.core.registry.DrpcRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/22 20:54
  */
-public class ZkRegistry implements Registry {
+public class ZkRegistry implements DrpcRegistry {
     private static final String ROOT = "/drpc";
     private final ZkClient zkClient;
 

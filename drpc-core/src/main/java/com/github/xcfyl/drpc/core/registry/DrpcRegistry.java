@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author 西城风雨楼
  */
-public interface Registry {
+public interface DrpcRegistry {
     /**
      * 将某个服务信息写入注册中心
      *

@@ -15,7 +15,7 @@ import com.github.xcfyl.drpc.core.pubsub.DrpcEventPublisher;
 import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEventListener;
 import com.github.xcfyl.drpc.core.registry.DrpcConsumerData;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
-import com.github.xcfyl.drpc.core.registry.Registry;
+import com.github.xcfyl.drpc.core.registry.DrpcRegistry;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -72,7 +72,7 @@ public class DrpcClient {
     public void subscribeService(String serviceName) {
         try {
             DrpcConsumerData registryData = getConsumerRegistryData(serviceName);
-            Registry registry = context.getRegistry();
+            DrpcRegistry registry = context.getRegistry();
             registry.subscribe(registryData);
             // 订阅之后，尝试和当前服务下的所有服务列表建立连接
             List<DrpcProviderData> providers = registry.queryProviders(serviceName);

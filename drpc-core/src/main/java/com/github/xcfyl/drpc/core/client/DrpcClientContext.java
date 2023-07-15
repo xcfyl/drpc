@@ -4,7 +4,7 @@ import com.github.xcfyl.drpc.core.filter.client.DrpcClientFilterChain;
 import com.github.xcfyl.drpc.core.protocol.DrpcResponse;
 import com.github.xcfyl.drpc.core.proxy.DrpcProxy;
 import com.github.xcfyl.drpc.core.registry.DrpcConsumerData;
-import com.github.xcfyl.drpc.core.registry.Registry;
+import com.github.xcfyl.drpc.core.registry.DrpcRegistry;
 import com.github.xcfyl.drpc.core.router.DrpcRouter;
 import com.github.xcfyl.drpc.core.serializer.DrpcSerializer;
 
@@ -50,7 +50,7 @@ public class DrpcClientContext {
     /**
      * 客户端的注册中心
      */
-    private Registry registry;
+    private DrpcRegistry registry;
     /**
      * 客户端所使用的代理对象
      */
@@ -103,11 +103,11 @@ public class DrpcClientContext {
         this.filterChain = filterChain;
     }
 
-    public Registry getRegistry() {
+    public DrpcRegistry getRegistry() {
         return registry;
     }
 
-    public void setRegistry(Registry registry) {
+    public void setRegistry(DrpcRegistry registry) {
         this.registry = registry;
     }
 

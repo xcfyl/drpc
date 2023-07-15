@@ -2,7 +2,7 @@ package com.github.xcfyl.drpc.core.server;
 
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerFilterChain;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
-import com.github.xcfyl.drpc.core.registry.Registry;
+import com.github.xcfyl.drpc.core.registry.DrpcRegistry;
 import com.github.xcfyl.drpc.core.serializer.DrpcSerializer;
 
 import java.util.Map;
@@ -38,7 +38,7 @@ public class DrpcServerContext {
     /**
      * 注册中心
      */
-    private Registry registry;
+    private DrpcRegistry registry;
     /**
      * 配置文件的路径
      */
@@ -76,11 +76,11 @@ public class DrpcServerContext {
         this.filterChain = filterChain;
     }
 
-    public Registry getRegistry() {
+    public DrpcRegistry getRegistry() {
         return registry;
     }
 
-    public void setRegistry(Registry registry) {
+    public void setRegistry(DrpcRegistry registry) {
         this.registry = registry;
     }
 
