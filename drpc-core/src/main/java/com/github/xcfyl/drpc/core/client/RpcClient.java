@@ -1,21 +1,21 @@
 package com.github.xcfyl.drpc.core.client;
 
-import com.github.xcfyl.drpc.core.common.config.RpcConfigLoader;
-import com.github.xcfyl.drpc.core.common.enums.RpcRegistryDataAttrName;
-import com.github.xcfyl.drpc.core.common.factory.RpcProxyFactory;
-import com.github.xcfyl.drpc.core.common.factory.RpcRegistryFactory;
-import com.github.xcfyl.drpc.core.common.factory.RpcRouterFactory;
-import com.github.xcfyl.drpc.core.common.factory.RpcSerializerFactory;
+import com.github.xcfyl.drpc.core.common.config.ConfigLoader;
+import com.github.xcfyl.drpc.core.common.enums.AttributeName;
+import com.github.xcfyl.drpc.core.common.factory.ProxyFactory;
+import com.github.xcfyl.drpc.core.common.factory.RegistryFactory;
+import com.github.xcfyl.drpc.core.common.factory.RouterFactory;
+import com.github.xcfyl.drpc.core.common.factory.SerializerFactory;
 import com.github.xcfyl.drpc.core.common.utils.CommonUtils;
-import com.github.xcfyl.drpc.core.filter.client.RpcClientFilterChain;
-import com.github.xcfyl.drpc.core.filter.client.RpcClientLogFilter;
+import com.github.xcfyl.drpc.core.filter.client.ClientFilterChain;
+import com.github.xcfyl.drpc.core.filter.client.ClientLogFilter;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolEncoder;
 import com.github.xcfyl.drpc.core.pubsub.RpcEventPublisher;
 import com.github.xcfyl.drpc.core.pubsub.listener.ServiceUpdateEventListener;
-import com.github.xcfyl.drpc.core.registry.ConsumerRegistryData;
-import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
-import com.github.xcfyl.drpc.core.registry.RpcRegistry;
+import com.github.xcfyl.drpc.core.registry.ConsumerData;
+import com.github.xcfyl.drpc.core.registry.ProviderData;
+import com.github.xcfyl.drpc.core.registry.Registry;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -33,12 +33,12 @@ import java.util.List;
  */
 @Slf4j
 public class RpcClient {
-    private final RpcClientContext context;
+    private final ClientContext context;
 
     public RpcClient(String configFileName) {
-        context = new RpcClientContext();
+        context = new ClientContext();
         context.setConfigFileName(configFileName);
-        RpcConfigLoader rpcConfigLoader = new RpcConfigLoader(configFileName);
+        ConfigLoader rpcConfigLoader = new ConfigLoader(configFileName);
         context.setClientConfig(rpcConfigLoader.loadRpcClientConfig());
     }
 
@@ -46,22 +46,22 @@ public class RpcClient {
         this("drpc.properties");
     }
 
-    public RpcReference init() throws Exception {
-        RpcClientConfig config = context.getClientConfig();
+    public RemoteReference init() throws Exception {
+        ClientConfig config = context.getClientConfig();
         // 创建注册中心
-        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
+        context.setRegistry(RegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
         // 创建过滤器对象
         context.setFilterChain(constructClientFilters());
         // 创建序列化器
-        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getSerializeType()));
+        context.setSerializer(SerializerFactory.createRpcSerializer(config.getSerializeType()));
         // 设置连接处理器
         context.setConnectionManager(new ConnectionManager(createBootstrap()));
         // 创建路由对象
-        context.setRouter(RpcRouterFactory.createRpcRouter(config.getRouterType(), context.getConnectionManager()));
+        context.setRouter(RouterFactory.createRpcRouter(config.getRouterType(), context.getConnectionManager()));
         // 注册客户端的事件监听器
         registerClientEventListener();
         // 生成RpcReference对象
-        return new RpcReference(RpcProxyFactory.createRpcProxy(config.getProxyType(), context));
+        return new RemoteReference(ProxyFactory.createRpcProxy(config.getProxyType(), context));
     }
 
     /**
@@ -71,13 +71,13 @@ public class RpcClient {
      */
     public void subscribeService(String serviceName) {
         try {
-            ConsumerRegistryData registryData = getConsumerRegistryData(serviceName);
-            RpcRegistry registry = context.getRegistry();
+            ConsumerData registryData = getConsumerRegistryData(serviceName);
+            Registry registry = context.getRegistry();
             registry.subscribe(registryData);
             // 订阅之后，尝试和当前服务下的所有服务列表建立连接
-            List<ProviderRegistryData> providers = registry.queryProviders(serviceName);
+            List<ProviderData> providers = registry.queryProviders(serviceName);
             ConnectionManager connectionManager = context.getConnectionManager();
-            for (ProviderRegistryData providerData : providers) {
+            for (ProviderData providerData : providers) {
                 String ip = providerData.getIp();
                 Integer port = providerData.getPort();
                 connectionManager.connect(serviceName, ip + ":" + port);
@@ -89,21 +89,21 @@ public class RpcClient {
         }
     }
 
-    private RpcClientFilterChain constructClientFilters() {
+    private ClientFilterChain constructClientFilters() {
         // 创建过滤器对象
-        RpcClientFilterChain filterChain = new RpcClientFilterChain();
-        filterChain.addFilter(new RpcClientLogFilter());
+        ClientFilterChain filterChain = new ClientFilterChain();
+        filterChain.addFilter(new ClientLogFilter());
         return filterChain;
     }
 
-    private ConsumerRegistryData getConsumerRegistryData(String serviceName) {
+    private ConsumerData getConsumerRegistryData(String serviceName) {
         // 在这里订阅服务
-        ConsumerRegistryData registryData = new ConsumerRegistryData();
+        ConsumerData registryData = new ConsumerData();
         registryData.setApplicationName(context.getClientConfig().getApplicationName());
         registryData.setIp(CommonUtils.getCurrentMachineIp());
         registryData.setServiceName(serviceName);
-        registryData.setAttr(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
-        registryData.setAttr(RpcRegistryDataAttrName.TYPE.getDescription(), "consumer");
+        registryData.setAttr(AttributeName.CREATE_TIME.getDescription(), System.currentTimeMillis());
+        registryData.setAttr(AttributeName.TYPE.getDescription(), "consumer");
         return registryData;
     }
 
@@ -121,7 +121,7 @@ public class RpcClient {
                     protected void initChannel(SocketChannel channel) throws Exception {
                         channel.pipeline().addLast(new RpcTransferProtocolEncoder());
                         channel.pipeline().addLast(new RpcTransferProtocolDecoder());
-                        channel.pipeline().addLast(new RpcClientHandler(context));
+                        channel.pipeline().addLast(new ClientHandler(context));
                     }
                 });
     }

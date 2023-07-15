@@ -1,16 +1,16 @@
 package com.github.xcfyl.drpc.core.server;
 
-import com.github.xcfyl.drpc.core.common.config.RpcConfigLoader;
-import com.github.xcfyl.drpc.core.common.enums.RpcRegistryDataAttrName;
-import com.github.xcfyl.drpc.core.common.factory.RpcRegistryFactory;
-import com.github.xcfyl.drpc.core.common.factory.RpcSerializerFactory;
+import com.github.xcfyl.drpc.core.common.config.ConfigLoader;
+import com.github.xcfyl.drpc.core.common.enums.AttributeName;
+import com.github.xcfyl.drpc.core.common.factory.RegistryFactory;
+import com.github.xcfyl.drpc.core.common.factory.SerializerFactory;
 import com.github.xcfyl.drpc.core.common.utils.CommonUtils;
 import com.github.xcfyl.drpc.core.exception.RpcCommonException;
-import com.github.xcfyl.drpc.core.filter.server.RpcServerFilterChain;
-import com.github.xcfyl.drpc.core.filter.server.RpcServerLogFilter;
+import com.github.xcfyl.drpc.core.filter.server.ServerFilterChain;
+import com.github.xcfyl.drpc.core.filter.server.ServerLogFilter;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolDecoder;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocolEncoder;
-import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
+import com.github.xcfyl.drpc.core.registry.ProviderData;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -35,7 +35,7 @@ public class RpcServer {
     /**
      * Rpc服务器上下文数据
      */
-    private final RpcServerContext context;
+    private final ServerContext context;
     /**
      * 用于执行服务注册的线程池
      */
@@ -49,9 +49,9 @@ public class RpcServer {
      * @param configFileName
      */
     public RpcServer(String configFileName) {
-        context = new RpcServerContext();
+        context = new ServerContext();
         context.setConfigFileName(configFileName);
-        RpcConfigLoader rpcConfigLoader = new RpcConfigLoader(configFileName);
+        ConfigLoader rpcConfigLoader = new ConfigLoader(configFileName);
         context.setServerConfig(rpcConfigLoader.loadRpcServerConfig());
     }
 
@@ -68,11 +68,11 @@ public class RpcServer {
      * @throws Exception
      */
     public void init() throws Exception {
-        RpcServerConfig config = context.getServerConfig();
+        ServerConfig config = context.getServerConfig();
         // 设置注册中心对象
-        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
+        context.setRegistry(RegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
         // 创建序列化器对象
-        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getSerializeType()));
+        context.setSerializer(SerializerFactory.createRpcSerializer(config.getSerializeType()));
         // 创建过滤器
         context.setFilterChain(constructServerFilters());
         new ServerBootstrap()
@@ -88,7 +88,7 @@ public class RpcServer {
                     protected void initChannel(SocketChannel channel) throws Exception {
                         channel.pipeline().addLast(new RpcTransferProtocolEncoder());
                         channel.pipeline().addLast(new RpcTransferProtocolDecoder());
-                        channel.pipeline().addLast(new RpcServerHandler(context));
+                        channel.pipeline().addLast(new ServerHandler(context));
                     }
                 })
                 .bind(config.getPort())
@@ -105,7 +105,7 @@ public class RpcServer {
         threadPoolExecutor.submit(() -> {
             // 首先将当前服务写入注册中心
             try {
-                ProviderRegistryData registryData = getProviderRegistryData(service);
+                ProviderData registryData = getProviderRegistryData(service);
                 // 将数据从注册中心移除
                 context.getRegistry().unregister(registryData);
                 // 删除本地缓存的注册数据
@@ -128,7 +128,7 @@ public class RpcServer {
         threadPoolExecutor.submit(() -> {
             try {
                 // 首先将当前服务写入注册中心
-                ProviderRegistryData registryData = getProviderRegistryData(service);
+                ProviderData registryData = getProviderRegistryData(service);
                 context.getRegistry().register(registryData);
                 // 将当前服务写入本地缓存中
                 context.getRegistryDataCache().put(registryData.getServiceName(), registryData);
@@ -139,13 +139,13 @@ public class RpcServer {
         });
     }
 
-    private RpcServerFilterChain constructServerFilters() {
-        RpcServerFilterChain filterChain = new RpcServerFilterChain();
-        filterChain.addFilter(new RpcServerLogFilter());
+    private ServerFilterChain constructServerFilters() {
+        ServerFilterChain filterChain = new ServerFilterChain();
+        filterChain.addFilter(new ServerLogFilter());
         return filterChain;
     }
 
-    private ProviderRegistryData getProviderRegistryData(Object service) throws Exception {
+    private ProviderData getProviderRegistryData(Object service) throws Exception {
         // 首先将当前服务写入注册中心
         Class<?>[] interfaces = service.getClass().getInterfaces();
         if (interfaces.length != 1) {
@@ -154,14 +154,14 @@ public class RpcServer {
         }
         Class<?> clazz = interfaces[0];
         String serviceName = clazz.getName();
-        ProviderRegistryData registryData = new ProviderRegistryData();
+        ProviderData registryData = new ProviderData();
         registryData.setIp(CommonUtils.getCurrentMachineIp());
         registryData.setServiceName(serviceName);
-        RpcServerConfig config = context.getServerConfig();
+        ServerConfig config = context.getServerConfig();
         registryData.setPort(config.getPort());
         registryData.setApplicationName(config.getApplicationName());
-        registryData.setAttr(RpcRegistryDataAttrName.TYPE.getDescription(), "provider");
-        registryData.setAttr(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
+        registryData.setAttr(AttributeName.TYPE.getDescription(), "provider");
+        registryData.setAttr(AttributeName.CREATE_TIME.getDescription(), System.currentTimeMillis());
         return registryData;
     }
 }

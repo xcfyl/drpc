@@ -2,11 +2,11 @@ package com.github.xcfyl.drpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.pubsub.RpcEventPublisher;
-import com.github.xcfyl.drpc.core.pubsub.event.RpcServiceUpdateEvent;
+import com.github.xcfyl.drpc.core.pubsub.event.ServiceUpdateEvent;
 import com.github.xcfyl.drpc.core.pubsub.event.ServiceUpdateEventData;
-import com.github.xcfyl.drpc.core.registry.ConsumerRegistryData;
-import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
-import com.github.xcfyl.drpc.core.registry.RpcRegistry;
+import com.github.xcfyl.drpc.core.registry.ConsumerData;
+import com.github.xcfyl.drpc.core.registry.ProviderData;
+import com.github.xcfyl.drpc.core.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/22 20:54
  */
-public class ZkRegistry implements RpcRegistry {
+public class ZkRegistry implements Registry {
     private static final String ROOT = "/drpc";
     private final ZkClient zkClient;
 
@@ -27,7 +27,7 @@ public class ZkRegistry implements RpcRegistry {
     }
 
     @Override
-    public void register(ProviderRegistryData registryData) throws Exception {
+    public void register(ProviderData registryData) throws Exception {
         if (!zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
@@ -42,13 +42,13 @@ public class ZkRegistry implements RpcRegistry {
     }
 
     @Override
-    public void unregister(ProviderRegistryData registryData) throws Exception {
+    public void unregister(ProviderData registryData) throws Exception {
         String providerNodePath = ZkPathHelper.getProviderPath(ROOT, registryData.getApplicationName(), registryData.getIp(), registryData.getPort());
         zkClient.deleteNode(providerNodePath);
     }
 
     @Override
-    public void subscribe(ConsumerRegistryData registryData) throws Exception {
+    public void subscribe(ConsumerData registryData) throws Exception {
         if (!zkClient.existNode(ROOT)) {
             zkClient.createPersistentData(ROOT, "");
         }
@@ -62,19 +62,19 @@ public class ZkRegistry implements RpcRegistry {
     }
 
     @Override
-    public void unsubscribe(ConsumerRegistryData registryData) throws Exception {
+    public void unsubscribe(ConsumerData registryData) throws Exception {
         String consumerNodePath = ZkPathHelper.getConsumerPath(ROOT, registryData.getServiceName(), registryData.getApplicationName(), registryData.getIp());
         zkClient.deleteNode(consumerNodePath);
     }
 
     @Override
-    public List<ProviderRegistryData> queryProviders(String serviceName) throws Exception {
+    public List<ProviderData> queryProviders(String serviceName) throws Exception {
         String servicePath = ZkPathHelper.getProvidersPath(ROOT, serviceName);
         return queryProviderRegistryData(servicePath);
     }
 
     @Override
-    public List<ConsumerRegistryData> queryConsumers(String serviceName) throws Exception {
+    public List<ConsumerData> queryConsumers(String serviceName) throws Exception {
         String consumerPath = ZkPathHelper.getConsumersPath(ROOT, serviceName);
         return queryConsumerRegistryData(consumerPath);
     }
@@ -95,13 +95,13 @@ public class ZkRegistry implements RpcRegistry {
      * @param servicePath
      * @return
      */
-    private List<ConsumerRegistryData> queryConsumerRegistryData(String servicePath) throws Exception {
+    private List<ConsumerData> queryConsumerRegistryData(String servicePath) throws Exception {
         List<String> paths = zkClient.getChildrenPaths(servicePath);
-        List<ConsumerRegistryData> registryDataList = new ArrayList<>();
+        List<ConsumerData> registryDataList = new ArrayList<>();
         for (String addr : paths) {
             String providerPath = servicePath + "/" + addr;
             String data = zkClient.getNodeData(providerPath);
-            ConsumerRegistryData registryData = JSON.parseObject(data, ConsumerRegistryData.class);
+            ConsumerData registryData = JSON.parseObject(data, ConsumerData.class);
             registryDataList.add(registryData);
         }
         return registryDataList;
@@ -113,30 +113,30 @@ public class ZkRegistry implements RpcRegistry {
      * @param servicePath
      * @return
      */
-    private List<ProviderRegistryData> queryProviderRegistryData(String servicePath) throws Exception {
+    private List<ProviderData> queryProviderRegistryData(String servicePath) throws Exception {
         List<String> paths = zkClient.getChildrenPaths(servicePath);
-        List<ProviderRegistryData> registryDataList  = new ArrayList<>();
+        List<ProviderData> registryDataList  = new ArrayList<>();
         for (String addr : paths) {
             String providerPath = servicePath + "/" + addr;
             String data = zkClient.getNodeData(providerPath);
-            ProviderRegistryData registryData = JSON.parseObject(data, ProviderRegistryData.class);
+            ProviderData registryData = JSON.parseObject(data, ProviderData.class);
             registryDataList.add(registryData);
         }
         return registryDataList;
     }
 
-    private void watchServiceChange(ConsumerRegistryData registryData) throws Exception {
+    private void watchServiceChange(ConsumerData registryData) throws Exception {
         String servicePath = ZkPathHelper.getProvidersPath(ROOT, registryData.getServiceName());
         String consumerNodePath = ZkPathHelper.getConsumerPath(ROOT, registryData.getServiceName(), registryData.getApplicationName(), registryData.getIp());
         zkClient.watchChildNodeData(servicePath, watchedEvent -> {
             try {
                 if (zkClient.existNode(consumerNodePath)) {
                     // 某个消费者取消订阅之后，就会删除自己的节点信息，因此这里不再进行事件触发，并且不再进行下一次订阅
-                    List<ProviderRegistryData> registryDataList = queryProviderRegistryData(servicePath);
+                    List<ProviderData> registryDataList = queryProviderRegistryData(servicePath);
                     ServiceUpdateEventData updateEventData = new ServiceUpdateEventData();
                     updateEventData.setServiceName(registryData.getServiceName());
                     updateEventData.setNewServiceList(registryDataList);
-                    RpcServiceUpdateEvent updateEvent = new RpcServiceUpdateEvent();
+                    ServiceUpdateEvent updateEvent = new ServiceUpdateEvent();
                     updateEvent.setData(updateEventData);
                     RpcEventPublisher eventPublisher = RpcEventPublisher.getInstance();
                     eventPublisher.publishEvent(updateEvent);

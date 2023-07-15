@@ -2,10 +2,10 @@ package com.github.xcfyl.drpc.core.pubsub.listener;
 
 import com.github.xcfyl.drpc.core.client.ConnectionWrapper;
 import com.github.xcfyl.drpc.core.client.ConnectionManager;
-import com.github.xcfyl.drpc.core.client.RpcClientContext;
-import com.github.xcfyl.drpc.core.pubsub.event.RpcServiceUpdateEvent;
+import com.github.xcfyl.drpc.core.client.ClientContext;
+import com.github.xcfyl.drpc.core.pubsub.event.ServiceUpdateEvent;
 import com.github.xcfyl.drpc.core.pubsub.event.ServiceUpdateEventData;
-import com.github.xcfyl.drpc.core.registry.ProviderRegistryData;
+import com.github.xcfyl.drpc.core.registry.ProviderData;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,10 +22,10 @@ import java.util.Map;
  * @date create at 2023/6/22 23:30
  */
 @Slf4j
-public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUpdateEvent> {
-    private final RpcClientContext rpcClientContext;
+public class ServiceUpdateEventListener implements RpcEventListener<ServiceUpdateEvent> {
+    private final ClientContext rpcClientContext;
 
-    public ServiceUpdateEventListener(RpcClientContext rpcClientContext) {
+    public ServiceUpdateEventListener(ClientContext rpcClientContext) {
         this.rpcClientContext = rpcClientContext;
     }
 
@@ -35,10 +35,10 @@ public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUp
      * @param event
      */
     @Override
-    public void callback(RpcServiceUpdateEvent event) {
+    public void callback(ServiceUpdateEvent event) {
         ServiceUpdateEventData data = event.getData();
         String serviceName = data.getServiceName();
-        List<ProviderRegistryData> newProviderDataList = data.getNewServiceList();
+        List<ProviderData> newProviderDataList = data.getNewServiceList();
         ConnectionManager connectionManager = rpcClientContext.getConnectionManager();
         List<ConnectionWrapper> connections =connectionManager.getOriginalConnections(serviceName);
         Map<String, ConnectionWrapper> connectionWrapperMap = new HashMap<>();
@@ -46,7 +46,7 @@ public class ServiceUpdateEventListener implements RpcEventListener<RpcServiceUp
             connectionWrapperMap.put(connectionWrapper.toString(), connectionWrapper);
         }
         List<ConnectionWrapper> newConnections = new ArrayList<>();
-        for (ProviderRegistryData registryData : newProviderDataList) {
+        for (ProviderData registryData : newProviderDataList) {
             String ip = registryData.getIp();
             Integer port = registryData.getPort();
             ConnectionWrapper connectionWrapper = new ConnectionWrapper();

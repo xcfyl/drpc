@@ -3,12 +3,12 @@ package com.github.xcfyl.drpc.core.proxy.jdk;
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.client.ConnectionManager;
 import com.github.xcfyl.drpc.core.client.ConnectionWrapper;
-import com.github.xcfyl.drpc.core.client.RpcClientContext;
-import com.github.xcfyl.drpc.core.client.SubscribedServiceWrapper;
+import com.github.xcfyl.drpc.core.client.ClientContext;
+import com.github.xcfyl.drpc.core.client.ServiceWrapper;
 import com.github.xcfyl.drpc.core.protocol.RpcRequest;
 import com.github.xcfyl.drpc.core.protocol.RpcResponse;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocol;
-import com.github.xcfyl.drpc.core.router.RpcRouter;
+import com.github.xcfyl.drpc.core.router.Router;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -26,10 +26,10 @@ import java.util.concurrent.TimeoutException;
  */
 @Slf4j
 public class RpcInvocationHandler<T> implements InvocationHandler {
-    private final SubscribedServiceWrapper<T> serviceWrapper;
-    private final RpcClientContext rpcClientContext;
+    private final ServiceWrapper<T> serviceWrapper;
+    private final ClientContext rpcClientContext;
 
-    public RpcInvocationHandler(RpcClientContext rpcClientContext, SubscribedServiceWrapper<T> serviceWrapper) {
+    public RpcInvocationHandler(ClientContext rpcClientContext, ServiceWrapper<T> serviceWrapper) {
         this.serviceWrapper = serviceWrapper;
         this.rpcClientContext = rpcClientContext;
     }
@@ -55,7 +55,7 @@ public class RpcInvocationHandler<T> implements InvocationHandler {
         // 调用过滤器对连接对象进行过滤
         rpcClientContext.getFilterChain().doFilter(filteredConnections, request);
         // 获取当前客户端的路由对象
-        RpcRouter router = rpcClientContext.getRouter();
+        Router router = rpcClientContext.getRouter();
         // 使用路由对象从过滤后的连接对象中选择一个连接
         ConnectionWrapper connectionWrapper = router.select(serviceName);
         // 使用连接对象将该rpc协议对象发送给服务提供者
