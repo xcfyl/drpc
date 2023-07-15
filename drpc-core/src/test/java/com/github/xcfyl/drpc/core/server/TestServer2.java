@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestServer2 {
     public static void main(String[] args) throws Exception {
-        RpcServer rpcServer = new RpcServer("drpc_server2.properties");
+        DrpcServer rpcServer = new DrpcServer("drpc_server2.properties");
         rpcServer.init();
         rpcServer.registerService(new HelloServiceImpl());
     }

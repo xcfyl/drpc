@@ -8,10 +8,10 @@ import com.github.xcfyl.drpc.core.server.HelloService;
  */
 public class TestClient {
     public static void main(String[] args) throws Throwable {
-        RpcClient rpcClient = new RpcClient("drpc_client.properties");
-        RemoteReference rpcReference = rpcClient.init();
+        DrpcClient rpcClient = new DrpcClient("drpc_client.properties");
+        DrpcRemoteReference rpcReference = rpcClient.init();
         rpcClient.subscribeService(HelloService.class.getName());
-        ServiceWrapper<HelloService> wrapper = new ServiceWrapper<>();
+        DrpcServiceWrapper<HelloService> wrapper = new DrpcServiceWrapper<>();
         wrapper.setSync(true);
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);

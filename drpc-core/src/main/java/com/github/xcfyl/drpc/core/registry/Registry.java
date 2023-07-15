@@ -14,7 +14,7 @@ public interface Registry {
      * @param registryData
      * @return
      */
-    void register(ProviderData registryData) throws Exception;
+    void register(DrpcProviderData registryData) throws Exception;
 
     /**
      * 将某个服务信息从注册中心删除
@@ -22,7 +22,7 @@ public interface Registry {
      * @param registryData
      * @return
      */
-    void unregister(ProviderData registryData) throws Exception;
+    void unregister(DrpcProviderData registryData) throws Exception;
 
     /**
      * 订阅注册中心中某个服务的数据，后续有变更的时候，可以及时获得感知
@@ -30,7 +30,7 @@ public interface Registry {
      * @param registryData
      * @return
      */
-    void subscribe(ConsumerData registryData) throws Exception;
+    void subscribe(DrpcConsumerData registryData) throws Exception;
 
     /**
      * 取消订阅注册中心某个服务的数据，后续将不再关注数据的变化
@@ -38,7 +38,7 @@ public interface Registry {
      * @param
      * @return
      */
-    void unsubscribe(ConsumerData registryData) throws Exception;
+    void unsubscribe(DrpcConsumerData registryData) throws Exception;
 
     /**
      * 查询某个服务下面所有服务提供者的信息
@@ -46,7 +46,7 @@ public interface Registry {
      * @param serviceName
      * @return
      */
-    List<ProviderData> queryProviders(String serviceName) throws Exception;
+    List<DrpcProviderData> queryProviders(String serviceName) throws Exception;
 
     /**
      * 查询某个服务下面所有消费者的信息
@@ -54,7 +54,7 @@ public interface Registry {
      * @param serviceName
      * @return
      */
-    List<ConsumerData> queryConsumers(String serviceName) throws Exception;
+    List<DrpcConsumerData> queryConsumers(String serviceName) throws Exception;
 
     /**
      * 启动注册中心
