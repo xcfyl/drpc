@@ -16,7 +16,7 @@ public class TestClient {
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             String reply = helloService.hello("zhangsan" + i);
             System.out.println(reply);
         }

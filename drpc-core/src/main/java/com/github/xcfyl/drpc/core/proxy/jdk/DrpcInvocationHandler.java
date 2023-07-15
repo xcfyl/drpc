@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 
 /**
  * rpc客户端发起rpc请求的时候，代理类的执行逻辑
@@ -60,6 +60,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
         DrpcConnectionWrapper connectionWrapper = router.select(serviceName);
         // 使用连接对象将该rpc协议对象发送给服务提供者
         connectionWrapper.writeAndFlush(protocol);
+
         // 判断是否是同步方法调用，如果是同步方法调用，那么会
         if (serviceWrapper.isSync()) {
             long beginTime = System.currentTimeMillis();
@@ -67,6 +68,9 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
             while (System.currentTimeMillis() - beginTime < timeout) {
                 DrpcResponse response = rpcClientContext.getResponseCache().get(requestId);
                 if (response != null) {
+                    // 将缓存的结果删除
+                    rpcClientContext.getResponseCache().remove(requestId);
+                    System.out.println(rpcClientContext.getResponseCache().size());
                     return response.getBody();
                 }
             }
