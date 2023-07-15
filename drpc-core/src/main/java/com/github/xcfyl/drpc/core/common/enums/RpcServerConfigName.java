@@ -5,6 +5,11 @@ package com.github.xcfyl.drpc.core.common.enums;
  * @date create at 2023/6/23 16:05
  */
 public enum RpcServerConfigName implements RpcEnum {
+    SERVER_MAX_REQUEST_LENGTH(0, "server.request.limit"),
+    SERVER_REGISTRY_TYPE(1, "server.registry.type"),
+    SERVER_REGISTRY_ADDR(2, "server.registry.addr"),
+    SERVER_APPLICATION_NAME(3, "server.application.name"),
+    SERVER_SERIALIZE_TYPE(4, "server.serializer"),
     SERVER_PORT(0, "server.port");
 
     private final int code;

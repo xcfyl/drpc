@@ -1,6 +1,5 @@
 package com.github.xcfyl.drpc.core.server;
 
-import com.github.xcfyl.drpc.core.common.config.RpcConfigLoader;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -10,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestServer1 {
     public static void main(String[] args) throws Exception {
-        RpcServer rpcServer = new RpcServer("drpc1.properties");
+        RpcServer rpcServer = new RpcServer("drpc_server1.properties");
         rpcServer.init();
         rpcServer.registerService(new HelloServiceImpl());
     }

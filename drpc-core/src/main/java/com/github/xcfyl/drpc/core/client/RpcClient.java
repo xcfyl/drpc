@@ -49,19 +49,19 @@ public class RpcClient {
     public RpcReference init() throws Exception {
         RpcClientConfig config = context.getClientConfig();
         // 创建注册中心
-        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getCommonConfig()));
+        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
         // 创建过滤器对象
         context.setFilterChain(constructClientFilters());
         // 创建序列化器
-        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getCommonConfig()));
+        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getSerializeType()));
         // 设置连接处理器
         context.setConnectionManager(new ConnectionManager(createBootstrap()));
         // 创建路由对象
-        context.setRouter(RpcRouterFactory.createRpcRouter(config, context.getConnectionManager()));
+        context.setRouter(RpcRouterFactory.createRpcRouter(config.getRouterType(), context.getConnectionManager()));
         // 注册客户端的事件监听器
         registerClientEventListener();
         // 生成RpcReference对象
-        return new RpcReference(RpcProxyFactory.createRpcProxy(context));
+        return new RpcReference(RpcProxyFactory.createRpcProxy(config.getProxyType(), context));
     }
 
     /**
@@ -99,7 +99,7 @@ public class RpcClient {
     private ConsumerRegistryData getConsumerRegistryData(String serviceName) {
         // 在这里订阅服务
         ConsumerRegistryData registryData = new ConsumerRegistryData();
-        registryData.setApplicationName(context.getClientConfig().getCommonConfig().getApplicationName());
+        registryData.setApplicationName(context.getClientConfig().getApplicationName());
         registryData.setIp(CommonUtils.getCurrentMachineIp());
         registryData.setServiceName(serviceName);
         registryData.setAttr(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());

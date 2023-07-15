@@ -70,9 +70,9 @@ public class RpcServer {
     public void init() throws Exception {
         RpcServerConfig config = context.getServerConfig();
         // 设置注册中心对象
-        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getCommonConfig()));
+        context.setRegistry(RpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));
         // 创建序列化器对象
-        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getCommonConfig()));
+        context.setSerializer(RpcSerializerFactory.createRpcSerializer(config.getSerializeType()));
         // 创建过滤器
         context.setFilterChain(constructServerFilters());
         new ServerBootstrap()
@@ -159,7 +159,7 @@ public class RpcServer {
         registryData.setServiceName(serviceName);
         RpcServerConfig config = context.getServerConfig();
         registryData.setPort(config.getPort());
-        registryData.setApplicationName(config.getCommonConfig().getApplicationName());
+        registryData.setApplicationName(config.getApplicationName());
         registryData.setAttr(RpcRegistryDataAttrName.TYPE.getDescription(), "provider");
         registryData.setAttr(RpcRegistryDataAttrName.CREATE_TIME.getDescription(), System.currentTimeMillis());
         return registryData;

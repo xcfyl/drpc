@@ -1,6 +1,5 @@
 package com.github.xcfyl.drpc.core.client;
 
-import com.github.xcfyl.drpc.core.common.config.RpcConfigLoader;
 import com.github.xcfyl.drpc.core.server.HelloService;
 
 /**
@@ -9,7 +8,7 @@ import com.github.xcfyl.drpc.core.server.HelloService;
  */
 public class TestClient {
     public static void main(String[] args) throws Throwable {
-        RpcClient rpcClient = new RpcClient("drpc1.properties");
+        RpcClient rpcClient = new RpcClient("drpc_client.properties");
         RpcReference rpcReference = rpcClient.init();
         rpcClient.subscribeService(HelloService.class.getName());
         SubscribedServiceWrapper<HelloService> wrapper = new SubscribedServiceWrapper<>();

@@ -8,6 +8,7 @@ import com.github.xcfyl.drpc.core.client.SubscribedServiceWrapper;
 import com.github.xcfyl.drpc.core.protocol.RpcRequest;
 import com.github.xcfyl.drpc.core.protocol.RpcResponse;
 import com.github.xcfyl.drpc.core.protocol.RpcTransferProtocol;
+import com.github.xcfyl.drpc.core.router.RpcRouter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationHandler;
@@ -35,21 +36,31 @@ public class RpcInvocationHandler<T> implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 生成本次请求id
         String requestId = UUID.randomUUID().toString();
+        // 当前调用的服务的名称
         String serviceName = serviceWrapper.getServiceClass().getName();
+        // 当前调用的服务的方法名称
         String methodName = method.getName();
+        // 创建Rpc请求对象
         RpcRequest request = new RpcRequest(requestId, serviceName, methodName, args);
-        ConnectionManager connectionManager = rpcClientContext.getConnectionManager();
-        List<ConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
-        List<ConnectionWrapper> filteredConnections = new ArrayList<>(originalConnections);
-        // 对连接缓存进行过滤
-        rpcClientContext.getFilterChain().doFilter(filteredConnections, request);
-        // 由路由对象从过滤后的连接缓存中选择一个连接对象
-        ConnectionWrapper connectionWrapper = rpcClientContext.getRouter().select(serviceName);
+        // 创建rpc协议对象
         RpcTransferProtocol protocol = new RpcTransferProtocol(JSON.toJSONString(request).getBytes());
+        // 获取客户端连接管理器对象
+        ConnectionManager connectionManager = rpcClientContext.getConnectionManager();
+        // 获取当前客户端本地缓存的所有连接对象
+        List<ConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
+        // 复制一份原始连接对象，交给过滤器进行过滤
+        List<ConnectionWrapper> filteredConnections = new ArrayList<>(originalConnections);
+        // 调用过滤器对连接对象进行过滤
+        rpcClientContext.getFilterChain().doFilter(filteredConnections, request);
+        // 获取当前客户端的路由对象
+        RpcRouter router = rpcClientContext.getRouter();
+        // 使用路由对象从过滤后的连接对象中选择一个连接
+        ConnectionWrapper connectionWrapper = router.select(serviceName);
+        // 使用连接对象将该rpc协议对象发送给服务提供者
         connectionWrapper.writeAndFlush(protocol);
-
-        // 判断是否是同步方法调用
+        // 判断是否是同步方法调用，如果是同步方法调用，那么会
         if (serviceWrapper.isSync()) {
             long beginTime = System.currentTimeMillis();
             long timeout = rpcClientContext.getClientConfig().getRequestTimeout();
