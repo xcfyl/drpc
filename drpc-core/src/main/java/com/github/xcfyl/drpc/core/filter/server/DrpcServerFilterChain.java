@@ -13,11 +13,11 @@ public class DrpcServerFilterChain {
     private final List<DrpcServerFilter> filters = new ArrayList<>();
     private int curIndex;
 
-    public void addFilter(DrpcServerFilter filter) {
+    public synchronized void addFilter(DrpcServerFilter filter) {
         filters.add(filter);
     }
 
-    public void doFilter(DrpcRequest request) {
+    public synchronized void doFilter(DrpcRequest request) {
         if (curIndex >= filters.size()) {
             return;
         }

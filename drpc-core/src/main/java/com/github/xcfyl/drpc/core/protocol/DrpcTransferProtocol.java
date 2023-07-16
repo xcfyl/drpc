@@ -1,9 +1,6 @@
 package com.github.xcfyl.drpc.core.protocol;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +11,12 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/22 09:44
  */
-@Data
-@NoArgsConstructor
 public class DrpcTransferProtocol implements Serializable {
     private static final long serialVersionUID = -3657714509000090585L;
     /**
      * 协议标识，用于检测是否为rpc协议
      */
-    private static short magicNumber = 1998;
+    private final static short MAGIC_NUMBER = 1998;
     /**
      * 本次传输的数据长度
      */
@@ -33,12 +28,16 @@ public class DrpcTransferProtocol implements Serializable {
     /**
      * 协议的附加属性
      */
-    private Map<String, Object> attr;
+    private final Map<String, Object> attrs;
+
+    public DrpcTransferProtocol() {
+        attrs = new HashMap<>();
+    }
 
     public DrpcTransferProtocol(byte[] body) {
+        this();
         this.length = body.length;
         this.body = body;
-        attr = new HashMap<>();
     }
 
     /**
@@ -46,11 +45,35 @@ public class DrpcTransferProtocol implements Serializable {
      *
      * @return 返回协议头部长度
      */
-    public int getHeaderLength() {
+    public static int getHeaderLength() {
         return 6;
     }
 
     public static short getMagicNumber() {
-        return magicNumber;
+        return MAGIC_NUMBER;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public byte[] getBody() {
+        return body;
+    }
+
+    public void setBody(byte[] body) {
+        this.body = body;
+    }
+
+    public void setAttr(String key, Object value) {
+        attrs.put(key, value);
+    }
+
+    public Object get(String key) {
+        return attrs.get(key);
     }
 }

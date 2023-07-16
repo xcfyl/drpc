@@ -16,7 +16,7 @@ import java.util.List;
 public class DrpcTransferProtocolDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> list) throws Exception {
-        if (byteBuf.readableBytes() >= 6) {
+        if (byteBuf.readableBytes() >= DrpcTransferProtocol.getHeaderLength()) {
             int readIndex = byteBuf.readerIndex();
             byteBuf.markReaderIndex();
             if (byteBuf.readShort() != DrpcTransferProtocol.getMagicNumber()) {

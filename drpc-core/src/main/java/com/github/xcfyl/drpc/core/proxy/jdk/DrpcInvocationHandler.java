@@ -2,8 +2,8 @@ package com.github.xcfyl.drpc.core.proxy.jdk;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
-import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.client.DrpcClientContext;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.client.DrpcServiceWrapper;
 import com.github.xcfyl.drpc.core.protocol.DrpcRequest;
 import com.github.xcfyl.drpc.core.protocol.DrpcResponse;
@@ -16,7 +16,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * rpc客户端发起rpc请求的时候，代理类的执行逻辑
@@ -78,6 +81,10 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
                 if (response != null) {
                     // 将缓存的结果删除
                     rpcClientContext.getResponseCache().remove(requestId);
+                    if (response.getThrowable() != null) {
+                        // 如果本次请求出现错误，那么重新将该异常进行抛出
+                        throw response.getThrowable();
+                    }
                     return response.getBody();
                 }
             }
