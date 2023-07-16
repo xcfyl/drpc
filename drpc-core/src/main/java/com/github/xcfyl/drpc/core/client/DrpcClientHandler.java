@@ -6,6 +6,8 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -15,6 +17,7 @@ import io.netty.util.ReferenceCountUtil;
  * @date create at 2023/6/22 10:30
  */
 public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcClientHandler.class);
     private final DrpcClientContext rpcClientContext;
 
     public DrpcClientHandler(DrpcClientContext rpcClientContext) {
@@ -26,6 +29,9 @@ public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
         DrpcTransferProtocol protocol = (DrpcTransferProtocol) msg;
         DrpcResponse response = rpcClientContext.getSerializer().deserialize(protocol.getBody(), DrpcResponse.class);
         rpcClientContext.getResponseCache().put(response.getId(), response);
+        if (logger.isDebugEnabled()) {
+            logger.debug("receive a response, {}", response);
+        }
         ReferenceCountUtil.release(msg);
     }
 

@@ -3,7 +3,8 @@ package com.github.xcfyl.drpc.core.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +17,9 @@ import java.util.Map;
  * @author 西城风雨楼
  * @date create at 2023/6/23 15:26
  */
-@Slf4j
 public class DprcConnectionManager {
+    private static final Logger logger = LoggerFactory.getLogger(DprcConnectionManager.class);
+
     private final Bootstrap bootstrap;
     /**
      * 没有经过过滤器处理的连接缓存
@@ -49,8 +51,7 @@ public class DprcConnectionManager {
         String[] split = addr.split(":");
         String ip = split[0];
         int port = Integer.parseInt(split[1]);
-        ChannelFuture channelFuture = null;
-        channelFuture = getChannelFuture(ip, port);
+        ChannelFuture channelFuture = getChannelFuture(ip, port);
         DrpcConnectionWrapper connectionWrapper = new DrpcConnectionWrapper();
         connectionWrapper.setChannelFuture(channelFuture);
         connectionWrapper.setIp(ip);
@@ -62,7 +63,7 @@ public class DprcConnectionManager {
         try {
             return bootstrap.connect(ip, port).sync();
         } catch (Exception e) {
-            log.error("get connection failure ip #{}, port #{}, exception is #{}", ip, port, e.getMessage());
+            logger.error("get connection failure ip {}, port {}, exception is {}", ip, port, e.getMessage());
         }
         return null;
     }

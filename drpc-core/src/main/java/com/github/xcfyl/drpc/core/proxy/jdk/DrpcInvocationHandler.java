@@ -10,6 +10,8 @@ import com.github.xcfyl.drpc.core.protocol.DrpcResponse;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocol;
 import com.github.xcfyl.drpc.core.router.DrpcRouter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -27,12 +29,13 @@ import java.util.concurrent.TimeoutException;
  * @author 西城风雨楼
  * @date create at 2023/6/22 11:17
  */
-@Slf4j
 public class DrpcInvocationHandler<T> implements InvocationHandler {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcInvocationHandler.class);
+    private static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(4, 8, 30,
+            TimeUnit.MINUTES, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+
     private final DrpcServiceWrapper<T> serviceWrapper;
     private final DrpcClientContext rpcClientContext;
-    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 30,
-            TimeUnit.MINUTES, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
 
     public DrpcInvocationHandler(DrpcClientContext rpcClientContext, DrpcServiceWrapper<T> serviceWrapper) {
         this.serviceWrapper = serviceWrapper;
@@ -43,7 +46,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 生成本次请求id
         String requestId = UUID.randomUUID().toString();
-        executor.submit(() -> {
+        EXECUTOR.submit(() -> {
             try {
                 // 当前调用的服务的名称
                 String serviceName = serviceWrapper.getServiceClass().getName();
@@ -68,7 +71,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
                 // 使用连接对象将该rpc协议对象发送给服务提供者
                 connectionWrapper.writeAndFlush(protocol);
             } catch (Exception e) {
-                log.error("send request exception -> {}", e.getMessage());
+                logger.error("send request exception -> {}", e.getMessage());
             }
         });
 

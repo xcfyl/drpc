@@ -51,8 +51,6 @@ public class DrpcServer {
     public DrpcServer(String configFileName) {
         context = new DrpcServerContext();
         context.setConfigFileName(configFileName);
-        DrpcConfigLoader rpcConfigLoader = new DrpcConfigLoader(configFileName);
-        context.setServerConfig(rpcConfigLoader.loadRpcServerConfig());
     }
 
     /**
@@ -68,6 +66,8 @@ public class DrpcServer {
      * @throws Exception
      */
     public void init() throws Exception {
+        DrpcConfigLoader rpcConfigLoader = new DrpcConfigLoader(context.getConfigFileName());
+        context.setServerConfig(rpcConfigLoader.loadRpcServerConfig());
         DrpcServerConfig config = context.getServerConfig();
         // 设置注册中心对象
         context.setRegistry(DrpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));

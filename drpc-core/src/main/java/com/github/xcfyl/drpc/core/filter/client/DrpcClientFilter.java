@@ -11,4 +11,5 @@ import java.util.List;
 public interface DrpcClientFilter {
     void filter(DrpcClientFilterChain chain, List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request);
     String getName();
+    Integer getOrder();
 }

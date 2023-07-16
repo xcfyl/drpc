@@ -1,5 +1,8 @@
 package com.github.xcfyl.drpc.core.pubsub;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -12,6 +15,8 @@ import java.util.List;
  * @date create at 2023/6/22 23:22
  */
 public class DrpcEventPublisher {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcEventPublisher.class);
+
     private final List<DrpcEventListener<?>> eventListeners = new ArrayList<>();
 
     private static class RpcEventPublisherHolder {
@@ -29,6 +34,9 @@ public class DrpcEventPublisher {
      */
     public synchronized void addEventListener(DrpcEventListener<?> eventListener) {
         eventListeners.add(eventListener);
+        if (logger.isDebugEnabled()) {
+            logger.debug("add a new event listener {}", eventListener);
+        }
     }
 
     /**
@@ -38,6 +46,9 @@ public class DrpcEventPublisher {
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public synchronized void publishEvent(DrpcEvent event) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("publish a new event {}", event);
+        }
         for (DrpcEventListener listener : eventListeners) {
             Class eventType = parseEventType(listener);
             if (eventType == event.getClass()) {

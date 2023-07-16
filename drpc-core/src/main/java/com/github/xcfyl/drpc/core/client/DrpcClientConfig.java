@@ -13,8 +13,6 @@ import lombok.ToString;
  * @author 西城风雨楼
  * @date create at 2023/6/22 09:56
  */
-@ToString
-@Data
 public class DrpcClientConfig {
     /**
      * 应用名称
@@ -48,4 +46,82 @@ public class DrpcClientConfig {
      * 内置的路由类型
      */
     private DrpcRouterType routerType;
+
+    public String getApplicationName() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
+    public Integer getMaxRequestLength() {
+        return maxRequestLength;
+    }
+
+    public void setMaxRequestLength(Integer maxRequestLength) {
+        this.maxRequestLength = maxRequestLength;
+    }
+
+    public DrpcRegistryType getRegistryType() {
+        return registryType;
+    }
+
+    public void setRegistryType(DrpcRegistryType registryType) {
+        this.registryType = registryType;
+    }
+
+    public String getRegistryAddr() {
+        return registryAddr;
+    }
+
+    public void setRegistryAddr(String registryAddr) {
+        this.registryAddr = registryAddr;
+    }
+
+    public DrpcSerializeType getSerializeType() {
+        return serializeType;
+    }
+
+    public void setSerializeType(DrpcSerializeType serializeType) {
+        this.serializeType = serializeType;
+    }
+
+    public Long getRequestTimeout() {
+        return requestTimeout;
+    }
+
+    public void setRequestTimeout(Long requestTimeout) {
+        this.requestTimeout = requestTimeout;
+    }
+
+    public DrpcProxyType getProxyType() {
+        return proxyType;
+    }
+
+    public void setProxyType(DrpcProxyType proxyType) {
+        this.proxyType = proxyType;
+    }
+
+    public DrpcRouterType getRouterType() {
+        return routerType;
+    }
+
+    public void setRouterType(DrpcRouterType routerType) {
+        this.routerType = routerType;
+    }
+
+    @Override
+    public String toString() {
+        return "DrpcClientConfig{" +
+                "applicationName='" + applicationName + '\'' +
+                ", maxRequestLength=" + maxRequestLength +
+                ", registryType=" + registryType +
+                ", registryAddr='" + registryAddr + '\'' +
+                ", serializeType=" + serializeType +
+                ", requestTimeout=" + requestTimeout +
+                ", proxyType=" + proxyType +
+                ", routerType=" + routerType +
+                '}';
+    }
 }

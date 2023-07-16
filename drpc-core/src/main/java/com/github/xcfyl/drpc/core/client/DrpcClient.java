@@ -22,7 +22,6 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +40,6 @@ public class DrpcClient {
     public DrpcClient(String configFileName) {
         context = new DrpcClientContext();
         context.setConfigFileName(configFileName);
-        DrpcConfigLoader rpcConfigLoader = new DrpcConfigLoader(configFileName);
-        context.setClientConfig(rpcConfigLoader.loadRpcClientConfig());
     }
 
     public DrpcClient() {
@@ -50,6 +47,8 @@ public class DrpcClient {
     }
 
     public DrpcRemoteReference init() throws Exception {
+        DrpcConfigLoader rpcConfigLoader = new DrpcConfigLoader(context.getConfigFileName());
+        context.setClientConfig(rpcConfigLoader.loadRpcClientConfig());
         DrpcClientConfig config = context.getClientConfig();
         // 创建注册中心
         context.setRegistry(DrpcRegistryFactory.createRpcRegistry(config.getRegistryType(), config.getRegistryAddr()));

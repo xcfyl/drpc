@@ -17,6 +17,7 @@ public class DrpcClientLogFilter extends DrpcAbstractClientFilter {
     @Override
     public void filter(DrpcClientFilterChain chain, List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
         logger.debug("send request {}", request);
+        logger.debug("current connections are {}", connectionWrappers);
         chain.doFilter(connectionWrappers, request);
     }
 }

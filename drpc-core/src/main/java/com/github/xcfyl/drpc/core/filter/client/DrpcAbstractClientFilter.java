@@ -9,4 +9,13 @@ public abstract class DrpcAbstractClientFilter implements DrpcClientFilter {
     public String getName() {
         return getClass().getName();
     }
+
+    /**
+     * 默认拥有最小的优先级
+     * @return
+     */
+    @Override
+    public Integer getOrder() {
+        return Integer.MAX_VALUE;
+    }
 }
