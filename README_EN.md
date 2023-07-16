@@ -4,7 +4,7 @@
 
 # 一、README.md
 
-+ [中文](../README.md)
++ [中文](README.md)
 
 # 二、Introduction
 

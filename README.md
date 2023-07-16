@@ -4,7 +4,7 @@
 
 # 一、README.md
 
-+ [English](docs/README_EN.md)
++ [English](README_EN.md)
 
 # 二、简介
 
@@ -18,8 +18,6 @@
 6. 基于责任链模式的rpc客户端和服务端过滤器
 7. rpc路由层设计和实现，主要包括随机路由策略和轮询路由策略
 8. 和springboot的简易整合，支持简单的注解开发
-
-[English](docs/README_EN.md)
 
 # 三、基本上使用
 
