@@ -14,5 +14,6 @@ public class ProviderFilter extends DrpcAbstractServerFilter {
     @Override
     public void filter(DrpcServerFilterChain chain, DrpcRequest request) {
         System.out.println("这是测试filter");
+        chain.doFilter(request);
     }
 }

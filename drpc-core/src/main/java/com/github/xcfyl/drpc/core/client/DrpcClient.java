@@ -48,7 +48,7 @@ public class DrpcClient {
         this("drpc.properties");
     }
 
-    public DrpcRemoteReference init() throws Exception {
+    public void init() throws Exception {
         DrpcConfigLoader rpcConfigLoader = new DrpcConfigLoader(context.getConfigFileName());
         context.setClientConfig(rpcConfigLoader.loadRpcClientConfig());
         DrpcClientConfig config = context.getClientConfig();
@@ -64,7 +64,11 @@ public class DrpcClient {
         context.setRouter(DrpcRouterFactory.createRpcRouter(config.getRouterType(), context.getConnectionManager()));
         // 注册客户端的事件监听器
         registerClientEventListener();
+    }
+
+    public DrpcRemoteReference getDrpcRemoteReference() {
         // 生成RpcReference对象
+        DrpcClientConfig config = context.getClientConfig();
         return new DrpcRemoteReference(DrpcProxyFactory.createRpcProxy(config.getProxyType(), context));
     }
 

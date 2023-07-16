@@ -17,5 +17,6 @@ public class ConsumerFilter extends DrpcAbstractClientFilter {
     @Override
     public void filter(DrpcClientFilterChain chain, List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
         System.out.println("这是测试filter");
+        chain.doFilter(connectionWrappers, request);
     }
 }
