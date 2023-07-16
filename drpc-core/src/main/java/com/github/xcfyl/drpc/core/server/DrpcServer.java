@@ -141,7 +141,7 @@ public class DrpcServer {
 
     private DrpcServerFilterChain constructServerFilters() {
         DrpcServerFilterChain filterChain = new DrpcServerFilterChain();
-//        filterChain.addFilter(new DrpcServerLogFilter());
+        filterChain.addFilter(new DrpcServerLogFilter());
         return filterChain;
     }
 

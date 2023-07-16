@@ -92,7 +92,7 @@ public class DrpcClient {
     private DrpcClientFilterChain constructClientFilters() {
         // 创建过滤器对象
         DrpcClientFilterChain filterChain = new DrpcClientFilterChain();
-//        filterChain.addFilter(new DrpcClientLogFilter());
+        filterChain.addFilter(new DrpcClientLogFilter());
         return filterChain;
     }
 

@@ -28,6 +28,8 @@ import java.util.concurrent.*;
 public class DrpcInvocationHandler<T> implements InvocationHandler {
     private final DrpcServiceWrapper<T> serviceWrapper;
     private final DrpcClientContext rpcClientContext;
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 10,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
 
     public DrpcInvocationHandler(DrpcClientContext rpcClientContext, DrpcServiceWrapper<T> serviceWrapper) {
         this.serviceWrapper = serviceWrapper;
@@ -38,28 +40,34 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 生成本次请求id
         String requestId = UUID.randomUUID().toString();
-        // 当前调用的服务的名称
-        String serviceName = serviceWrapper.getServiceClass().getName();
-        // 当前调用的服务的方法名称
-        String methodName = method.getName();
-        // 创建Rpc请求对象
-        DrpcRequest request = new DrpcRequest(requestId, serviceName, methodName, args);
-        // 创建rpc协议对象
-        DrpcTransferProtocol protocol = new DrpcTransferProtocol(JSON.toJSONString(request).getBytes());
-        // 获取客户端连接管理器对象
-        DprcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
-        // 获取当前客户端本地缓存的所有连接对象
-        List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
-        // 复制一份原始连接对象，交给过滤器进行过滤
-        List<DrpcConnectionWrapper> filteredConnections = new ArrayList<>(originalConnections);
-        // 调用过滤器对连接对象进行过滤
-        rpcClientContext.getFilterChain().doFilter(filteredConnections, request);
-        // 获取当前客户端的路由对象
-        DrpcRouter router = rpcClientContext.getRouter();
-        // 使用路由对象从过滤后的连接对象中选择一个连接
-        DrpcConnectionWrapper connectionWrapper = router.select(serviceName);
-        // 使用连接对象将该rpc协议对象发送给服务提供者
-        connectionWrapper.writeAndFlush(protocol);
+        executor.submit(() -> {
+            try {
+                // 当前调用的服务的名称
+                String serviceName = serviceWrapper.getServiceClass().getName();
+                // 当前调用的服务的方法名称
+                String methodName = method.getName();
+                // 创建Rpc请求对象
+                DrpcRequest request = new DrpcRequest(requestId, serviceName, methodName, args);
+                // 创建rpc协议对象
+                DrpcTransferProtocol protocol = new DrpcTransferProtocol(JSON.toJSONString(request).getBytes());
+                // 获取客户端连接管理器对象
+                DprcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
+                // 获取当前客户端本地缓存的所有连接对象
+                List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
+                // 复制一份原始连接对象，交给过滤器进行过滤
+                List<DrpcConnectionWrapper> filteredConnections = new ArrayList<>(originalConnections);
+                // 调用过滤器对连接对象进行过滤
+                rpcClientContext.getFilterChain().doFilter(filteredConnections, request);
+                // 获取当前客户端的路由对象
+                DrpcRouter router = rpcClientContext.getRouter();
+                // 使用路由对象从过滤后的连接对象中选择一个连接
+                DrpcConnectionWrapper connectionWrapper = router.select(serviceName);
+                // 使用连接对象将该rpc协议对象发送给服务提供者
+                connectionWrapper.writeAndFlush(protocol);
+            } catch (Exception e) {
+                log.error("send request exception -> {}", e.getMessage());
+            }
+        });
 
         // 判断是否是同步方法调用，如果是同步方法调用，那么会
         if (serviceWrapper.isSync()) {

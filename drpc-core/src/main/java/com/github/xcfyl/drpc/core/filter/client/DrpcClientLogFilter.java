@@ -2,7 +2,8 @@ package com.github.xcfyl.drpc.core.filter.client;
 
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.protocol.DrpcRequest;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -10,10 +11,11 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/24 16:13
  */
-@Slf4j
 public class DrpcClientLogFilter implements DrpcClientFilter {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcClientLogFilter.class);
+
     @Override
     public void filter(DrpcClientFilterChain chain, List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
-        log.debug("send request #{}", request);
+        logger.debug("send request {}", request);
     }
 }

@@ -14,11 +14,17 @@ public class DrpcClientFilterChain {
     private final List<DrpcClientFilter> filters = new ArrayList<>();
     private int curIndex = 0;
 
-    public void addFilter(DrpcClientFilter filter) {
+    public synchronized void addFilter(DrpcClientFilter filter) {
         filters.add(filter);
     }
 
-    public void doFilter(List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
+    /**
+     * doFilter方法可能被多个线程同时调用，因此需要将该方法加锁
+     *
+     * @param connectionWrappers
+     * @param request
+     */
+    public synchronized void doFilter(List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
         if (curIndex >= filters.size()) {
             return;
         }

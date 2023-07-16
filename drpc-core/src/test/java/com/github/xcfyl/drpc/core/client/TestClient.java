@@ -4,7 +4,6 @@ import com.github.xcfyl.drpc.core.server.HelloService;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
