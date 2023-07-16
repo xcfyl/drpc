@@ -29,7 +29,7 @@ public class Consumer {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 40; i++) {
             new Thread(() -> {
-                for (int j = 0; j < 1000; j++) {
+                for (int j = 0; j < 3; j++) {
                     Random random = new Random();
                     int len = random.nextInt(20);
                     StringBuilder stringBuilder = new StringBuilder();
