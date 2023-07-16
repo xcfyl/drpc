@@ -9,6 +9,8 @@ import com.github.xcfyl.drpc.api.HelloService;
 public class HelloServiceImpl implements HelloService {
     @Override
     public Integer hello(String num) {
-        return num.length();
+        while (true) {
+
+        }
     }
 }

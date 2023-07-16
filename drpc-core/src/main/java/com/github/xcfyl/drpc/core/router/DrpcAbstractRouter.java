@@ -39,7 +39,7 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
         cache.clear();
         cache.addAll(originalConnections);
         doRefresh();
-        log.debug("router refreshed -> #{}", cache);
+        log.debug("router refreshed, cache is {}", cache);
     }
 
     @Override

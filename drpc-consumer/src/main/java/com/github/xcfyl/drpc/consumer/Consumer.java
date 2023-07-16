@@ -20,6 +20,8 @@ public class Consumer {
         rpcClient.subscribeService(HelloService.class.getName());
         DrpcServiceWrapper<HelloService> wrapper = new DrpcServiceWrapper<>();
         wrapper.setSync(true);
+        wrapper.setTimeout(1000L);
+        wrapper.setRetryTimes(4);
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         AtomicLong atomicLong = new AtomicLong(0);
