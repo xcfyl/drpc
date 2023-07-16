@@ -21,4 +21,11 @@ public interface DrpcRouter {
      * 调用该方法，可以刷新当前路由层的数据
      */
     void refresh(String serviceName);
+
+    /**
+     * 返回router的名称
+     *
+     * @return
+     */
+    String getName();
 }

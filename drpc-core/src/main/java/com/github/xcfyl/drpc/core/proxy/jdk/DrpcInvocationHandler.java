@@ -31,8 +31,8 @@ import java.util.concurrent.TimeoutException;
 public class DrpcInvocationHandler<T> implements InvocationHandler {
     private final DrpcServiceWrapper<T> serviceWrapper;
     private final DrpcClientContext rpcClientContext;
-    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 10,
-            TimeUnit.SECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 30,
+            TimeUnit.MINUTES, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
 
     public DrpcInvocationHandler(DrpcClientContext rpcClientContext, DrpcServiceWrapper<T> serviceWrapper) {
         this.serviceWrapper = serviceWrapper;

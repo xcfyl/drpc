@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.server;
+package com.github.xcfyl.drpc.api;
 
 /**
  * @author 西城风雨楼

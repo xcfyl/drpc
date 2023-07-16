@@ -1,4 +1,6 @@
-package com.github.xcfyl.drpc.core.server;
+package com.github.xcfyl.drpc.api.impl;
+
+import com.github.xcfyl.drpc.api.HelloService;
 
 /**
  * @author 西城风雨楼

@@ -2,6 +2,7 @@ package com.github.xcfyl.drpc.core.router;
 
 import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
+import com.github.xcfyl.drpc.core.exception.DrpcRouterException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -22,10 +23,13 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
 
     @Override
     public synchronized DrpcConnectionWrapper select(String serviceName) throws Exception {
+        if (cache.size() == 0) {
+            throw new DrpcRouterException("can't route, no connection found");
+        }
         DrpcConnectionWrapper connectionWrapper = doSelect(serviceName);
-//        if (log.isDebugEnabled()) {
-//            log.debug("router -> {}, select connection is {}", this.getClass().getName(), connectionWrapper);
-//        }
+        if (log.isDebugEnabled()) {
+            log.debug("router is {}, select connection is {}", getName(), connectionWrapper);
+        }
         return connectionWrapper;
     }
 
@@ -36,6 +40,11 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
         cache.addAll(originalConnections);
         doRefresh();
         log.debug("router refreshed -> #{}", cache);
+    }
+
+    @Override
+    public String getName() {
+        return getClass().getName();
     }
 
     /**

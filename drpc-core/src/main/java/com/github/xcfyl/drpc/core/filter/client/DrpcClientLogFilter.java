@@ -11,11 +11,12 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/24 16:13
  */
-public class DrpcClientLogFilter implements DrpcClientFilter {
+public class DrpcClientLogFilter extends DrpcAbstractClientFilter {
     private static final Logger logger = LoggerFactory.getLogger(DrpcClientLogFilter.class);
 
     @Override
     public void filter(DrpcClientFilterChain chain, List<DrpcConnectionWrapper> connectionWrappers, DrpcRequest request) {
         logger.debug("send request {}", request);
+        chain.doFilter(connectionWrappers, request);
     }
 }

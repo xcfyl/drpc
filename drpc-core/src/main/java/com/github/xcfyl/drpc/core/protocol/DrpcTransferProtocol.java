@@ -2,6 +2,7 @@ package com.github.xcfyl.drpc.core.protocol;
 
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,5 +76,14 @@ public class DrpcTransferProtocol implements Serializable {
 
     public Object get(String key) {
         return attrs.get(key);
+    }
+
+    @Override
+    public String toString() {
+        return "DrpcTransferProtocol{" +
+                "length=" + length +
+                ", body=" + Arrays.toString(body) +
+                ", attrs=" + attrs +
+                '}';
     }
 }

@@ -1,6 +1,9 @@
-package com.github.xcfyl.drpc.core.client;
+package com.github.xcfyl.drpc.consumer;
 
-import com.github.xcfyl.drpc.core.server.HelloService;
+import com.github.xcfyl.drpc.api.HelloService;
+import com.github.xcfyl.drpc.core.client.DrpcClient;
+import com.github.xcfyl.drpc.core.client.DrpcRemoteReference;
+import com.github.xcfyl.drpc.core.client.DrpcServiceWrapper;
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -8,9 +11,9 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author 西城风雨楼
- * @date create at 2023/6/23 23:23
+ * @date create at 2023/7/16 14:34
  */
-public class TestClient {
+public class Consumer {
     public static void main(String[] args) throws Throwable {
         DrpcClient rpcClient = new DrpcClient("drpc_client.properties");
         DrpcRemoteReference rpcReference = rpcClient.init();
@@ -20,11 +23,11 @@ public class TestClient {
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         AtomicLong atomicLong = new AtomicLong(0);
-        CountDownLatch latch = new CountDownLatch(15);
+//        CountDownLatch latch = new CountDownLatch(15);
         long start = System.currentTimeMillis();
-        for (int i = 0; i < 15; i++) {
-            new Thread(() -> {
-                for (int j = 0; j < 10000; j++) {
+//        for (int i = 0; i < 15; i++) {
+//            new Thread(() -> {
+                for (int j = 0; j < 1; j++) {
                     Random random = new Random();
                     int len = random.nextInt(20);
                     StringBuilder stringBuilder = new StringBuilder();
@@ -34,11 +37,11 @@ public class TestClient {
                     Integer reply = helloService.hello(stringBuilder.toString());
                     atomicLong.addAndGet(reply);
                 }
-                latch.countDown();
-            }).start();
-        }
+//                latch.countDown();
+//            }).start();
+//        }
         System.out.println("等待执行结束");
-        latch.await();
+//        latch.await();
         long end = System.currentTimeMillis();
         System.out.println("总共花了: " + (end - start) + "ms");
         System.out.println("总共执行: " + atomicLong.get());

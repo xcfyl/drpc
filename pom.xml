@@ -11,6 +11,9 @@
     <description>采用模块化实现一款简易的rpc框架</description>
     <modules>
         <module>drpc-core</module>
+        <module>drpc-api</module>
+        <module>drpc-provider</module>
+        <module>drpc-consumer</module>
     </modules>
 
     <properties>

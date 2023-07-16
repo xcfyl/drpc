@@ -9,4 +9,5 @@ import com.github.xcfyl.drpc.core.protocol.DrpcRequest;
  */
 public interface DrpcServerFilter {
     void filter(DrpcServerFilterChain chain, DrpcRequest request);
+    String getName();
 }

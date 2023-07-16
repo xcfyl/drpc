@@ -11,7 +11,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.text.resources.cldr.fo.FormatData_fo;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -26,8 +25,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class DrpcServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(DrpcServerHandler.class);
-    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 3,
-            TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(4, 8, 30,
+            TimeUnit.MINUTES, new ArrayBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
     private final DrpcServerContext rpcServerContext;
 
     public DrpcServerHandler(DrpcServerContext rpcServerContext) {
@@ -38,9 +37,15 @@ public class DrpcServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         executor.submit(() -> {
             DrpcSerializer serializer = rpcServerContext.getSerializer();
+            DrpcTransferProtocol protocol = (DrpcTransferProtocol) msg;
+            DrpcRequest request;
             try {
-                DrpcTransferProtocol protocol = (DrpcTransferProtocol) msg;
-                DrpcRequest request = serializer.deserialize(protocol.getBody(), DrpcRequest.class);
+                request = serializer.deserialize(protocol.getBody(), DrpcRequest.class);
+            } catch (Exception e) {
+                logger.error("deserialize request failure, exception is {}", e.getMessage());
+                return;
+            }
+            try {
                 // 执行过滤逻辑
                 rpcServerContext.getFilterChain().doFilter(request);
                 Object service = rpcServerContext.getServiceProviderCache().get(request.getServiceName());
@@ -53,20 +58,26 @@ public class DrpcServerHandler extends ChannelInboundHandlerAdapter {
                     }
                 }
                 if (targetMethod == null) {
-                    throw new DrpcRequestException("未知方法调用");
+                    throw new DrpcRequestException("unknown method");
                 }
 
                 Object result = null;
-                if (targetMethod.getReturnType() == Void.TYPE) {
-                    targetMethod.invoke(service, request.getArgs());
-                } else {
-                    result = targetMethod.invoke(service, request.getArgs());
+                try {
+                    if (targetMethod.getReturnType() == Void.TYPE) {
+                        targetMethod.invoke(service, request.getArgs());
+                    } else {
+                        result = targetMethod.invoke(service, request.getArgs());
+                    }
+                } catch (Exception e) {
+                    throw new DrpcRequestException("method invoke failure", e);
                 }
                 DrpcResponse response = new DrpcResponse(request.getId(), result);
                 protocol = new DrpcTransferProtocol(JSON.toJSONString(response).getBytes());
                 ctx.writeAndFlush(protocol);
+            } catch (DrpcRequestException requestException) {
+                writeFailure(ctx, serializer, request.getId(), requestException);
             } catch (Exception e) {
-                writeFailure(ctx, serializer, e);
+                logger.error("rpc server, handle request failure, exception is {}", e.getMessage());
             }
         });
     }
@@ -80,13 +91,13 @@ public class DrpcServerHandler extends ChannelInboundHandlerAdapter {
         }
     }
 
-    private void writeFailure(ChannelHandlerContext ctx, DrpcSerializer serializer, Throwable throwable) {
+    private void writeFailure(ChannelHandlerContext ctx, DrpcSerializer serializer, String requestId, Throwable throwable) {
         try {
             // 如果方法出错了
             DrpcResponse response = new DrpcResponse();
+            response.setId(requestId);
             response.setThrowable(throwable);
-            DrpcTransferProtocol transferProtocol;
-            transferProtocol = new DrpcTransferProtocol(serializer.serialize(response));
+            DrpcTransferProtocol transferProtocol = new DrpcTransferProtocol(serializer.serialize(response));
             ctx.writeAndFlush(transferProtocol);
             logger.error("handle request failure -> {}", throwable.getMessage());
         } catch (Exception e) {

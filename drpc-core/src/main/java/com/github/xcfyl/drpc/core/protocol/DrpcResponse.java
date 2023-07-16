@@ -69,4 +69,14 @@ public class DrpcResponse {
     public void setThrowable(Throwable throwable) {
         this.throwable = throwable;
     }
+
+    @Override
+    public String toString() {
+        return "DrpcResponse{" +
+                "id='" + id + '\'' +
+                ", body=" + body +
+                ", throwable=" + throwable +
+                ", attrs=" + attrs +
+                '}';
+    }
 }

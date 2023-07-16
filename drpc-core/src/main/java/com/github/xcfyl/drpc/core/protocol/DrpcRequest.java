@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.protocol;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,6 +82,17 @@ public class DrpcRequest {
 
     public Object getAttr(String key) {
         return attrs.get(key);
+    }
+
+    @Override
+    public String toString() {
+        return "DrpcRequest{" +
+                "id='" + id + '\'' +
+                ", serviceName='" + serviceName + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", args=" + Arrays.toString(args) +
+                ", attrs=" + attrs +
+                '}';
     }
 }
 
