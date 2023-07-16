@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @author 西城风雨楼
  * @date create at 2023/7/16 20:46
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @ResponseBody
 public class ReplyController {
-    @Autowired
+    @Resource
     private ReplyService replyService;
 
     @GetMapping("/reply")
