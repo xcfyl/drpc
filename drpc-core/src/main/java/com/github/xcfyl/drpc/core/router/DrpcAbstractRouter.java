@@ -35,9 +35,7 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
 
     @Override
     public synchronized void refresh(String serviceName) {
-        List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
-        cache.clear();
-        cache.addAll(originalConnections);
+        fillCache(serviceName, connectionManager);
         doRefresh();
         log.debug("router refreshed, cache is {}", cache);
     }
@@ -45,6 +43,12 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
     @Override
     public String getName() {
         return getClass().getName();
+    }
+
+    private void fillCache(String serviceName, DprcConnectionManager connectionManager) {
+        List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
+        cache.clear();
+        cache.addAll(originalConnections);
     }
 
     /**

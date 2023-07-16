@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DrpcInvocationHandler<T> implements InvocationHandler {
     private static final Logger logger = LoggerFactory.getLogger(DrpcInvocationHandler.class);
-    private static final ThreadPoolExecutor EXECUTOR = new ThreadPoolExecutor(4, 8, 30,
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8, 30,
             TimeUnit.MINUTES, new ArrayBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
 
     private final DrpcServiceWrapper<T> serviceWrapper;
@@ -42,6 +42,9 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
         if (serviceWrapper.getTimeout() == null) {
             serviceWrapper.setTimeout(rpcClientContext.getClientConfig().getRequestTimeout());
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("service wrapper is {}", serviceWrapper);
+        }
     }
 
     @Override
@@ -50,7 +53,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
         String requestId = UUID.randomUUID().toString();
         Integer retryTimes = serviceWrapper.getRetryTimes();
         while (retryTimes >= 0) {
-            EXECUTOR.submit(() -> {
+            threadPoolExecutor.submit(() -> {
                 sendRequest(serviceWrapper, requestId, method.getName(), args);
             });
             // 判断是否是同步方法调用，如果是同步方法调用，那么会

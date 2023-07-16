@@ -39,8 +39,8 @@ public class DrpcServer {
     /**
      * 用于执行服务注册的线程池
      */
-    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10,
-            1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(100),
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8,
+            1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**
@@ -113,7 +113,7 @@ public class DrpcServer {
                 // 删除本地缓存的服务提供者数据
                 context.getServiceProviderCache().remove(registryData.getServiceName());
             } catch (Exception e) {
-                log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
+                log.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
             }
         });
     }
@@ -134,7 +134,7 @@ public class DrpcServer {
                 context.getRegistryDataCache().put(registryData.getServiceName(), registryData);
                 context.getServiceProviderCache().put(registryData.getServiceName(), service);
             } catch (Exception e) {
-                log.error("register service failure, service name is #{}, exception is #{}", service, e.getMessage());
+                log.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
             }
         });
     }

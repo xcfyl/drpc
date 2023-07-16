@@ -25,11 +25,11 @@ public class Consumer {
         wrapper.setServiceClass(HelloService.class);
         HelloService helloService = rpcReference.get(wrapper);
         AtomicLong atomicLong = new AtomicLong(0);
-//        CountDownLatch latch = new CountDownLatch(15);
+        CountDownLatch latch = new CountDownLatch(40);
         long start = System.currentTimeMillis();
-//        for (int i = 0; i < 15; i++) {
-//            new Thread(() -> {
-                for (int j = 0; j < 1; j++) {
+        for (int i = 0; i < 40; i++) {
+            new Thread(() -> {
+                for (int j = 0; j < 1000; j++) {
                     Random random = new Random();
                     int len = random.nextInt(20);
                     StringBuilder stringBuilder = new StringBuilder();
@@ -39,11 +39,11 @@ public class Consumer {
                     Integer reply = helloService.hello(stringBuilder.toString());
                     atomicLong.addAndGet(reply);
                 }
-//                latch.countDown();
-//            }).start();
-//        }
+                latch.countDown();
+            }).start();
+        }
         System.out.println("等待执行结束");
-//        latch.await();
+        latch.await();
         long end = System.currentTimeMillis();
         System.out.println("总共花了: " + (end - start) + "ms");
         System.out.println("总共执行: " + atomicLong.get());
