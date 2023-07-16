@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * rpc客户端
@@ -74,10 +75,22 @@ public class DrpcClient {
      */
     public void subscribeService(String serviceName) throws Exception {
         DrpcRegistry registry = context.getRegistry();
-        List<DrpcProviderData> providers;
-        providers = registry.queryProviders(serviceName);
-        if (providers.isEmpty()) {
-            logger.error("subscribe service {} failure, no providers found!", serviceName);
+        List<DrpcProviderData> providers = null;
+        Integer subscribeRetryTimes = context.getClientConfig().getSubscribeRetryTimes();
+        Long subscribeRetryInterval = context.getClientConfig().getSubscribeRetryInterval();
+        while (subscribeRetryTimes >= 0) {
+            providers = registry.queryProviders(serviceName);
+            if (!providers.isEmpty()) {
+                break;
+            }
+            TimeUnit.MILLISECONDS.sleep(subscribeRetryInterval);
+            subscribeRetryTimes--;
+            if (logger.isDebugEnabled()) {
+                logger.debug("retry subscribe service {}", serviceName);
+            }
+        }
+        if (providers == null || providers.isEmpty()) {
+            logger.error("subscribe service {} failure, no providers found", serviceName);
             throw new DrpcClientException("subscribe service failure, no providers found!");
         }
         DrpcConsumerData registryData = getConsumerRegistryData(serviceName);

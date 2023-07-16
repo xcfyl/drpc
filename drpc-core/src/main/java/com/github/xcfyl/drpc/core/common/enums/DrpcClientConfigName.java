@@ -12,7 +12,15 @@ public enum DrpcClientConfigName implements DrpcEnum {
     CLIENT_SERIALIZE_TYPE(4, "client.serializer"),
     CLIENT_REQUEST_TIMEOUT(5, "client.request.timeout"),
     CLIENT_PROXY_TYPE(6, "client.proxy"),
-    CLIENT_ROUTER_TYPE(7, "client.router");
+    CLIENT_ROUTER_TYPE(7, "client.router"),
+    /**
+     * 客户端订阅失败的时候，重试的次数
+     */
+    CLIENT_SUBSCRIBE_RETRY_TIMES(8, "client.subscribe.retry.times"),
+    /**
+     * 订阅失败后的重试间隔
+     */
+    CLIENT_SUBSCRIBE_RETRY_INTERVAL(9, "client.subscribe.retry.interval");
 
     private final int code;
     private final String description;

@@ -120,6 +120,10 @@ public class DrpcConfigLoader {
         // 获取路由类型
         String routerType = getString(properties,
                 DrpcClientConfigName.CLIENT_ROUTER_TYPE.getDescription(), DrpcRouterType.RANDOM.getDescription());
+        Integer subscribeRetryTimes = getInteger(properties,
+                DrpcClientConfigName.CLIENT_SUBSCRIBE_RETRY_TIMES.getDescription(), 0);
+        Long subscribeRetryInterval = getLong(properties,
+                DrpcClientConfigName.CLIENT_SUBSCRIBE_RETRY_INTERVAL.getDescription(), 1000L);
         // 设置客户端的配置
         clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setProxyType(DrpcProxyType.fromDescription(proxyType));
@@ -129,6 +133,8 @@ public class DrpcConfigLoader {
         clientConfig.setRegistryType(DrpcRegistryType.fromDescription(registryType));
         clientConfig.setRegistryAddr(registryAddr);
         clientConfig.setSerializeType(DrpcSerializeType.fromDescription(serializeType));
+        clientConfig.setSubscribeRetryTimes(subscribeRetryTimes);
+        clientConfig.setSubscribeRetryInterval(subscribeRetryInterval);
         return clientConfig;
     }
 

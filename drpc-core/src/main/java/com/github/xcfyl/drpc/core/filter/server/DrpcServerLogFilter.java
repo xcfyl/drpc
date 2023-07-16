@@ -13,6 +13,6 @@ public class DrpcServerLogFilter extends DrpcAbstractServerFilter {
 
     @Override
     public void filter(DrpcServerFilterChain chain, DrpcRequest request) {
-        logger.debug("receive request #{}", request);
+        logger.debug("receive request {}", request);
     }
 }

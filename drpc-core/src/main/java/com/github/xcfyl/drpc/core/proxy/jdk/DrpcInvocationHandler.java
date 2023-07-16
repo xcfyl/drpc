@@ -111,6 +111,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
             // 使用连接对象将该rpc协议对象发送给服务提供者
             connectionWrapper.writeAndFlush(protocol);
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("send request exception -> {}", e.getMessage());
         }
     }

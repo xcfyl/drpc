@@ -10,6 +10,8 @@
     </parent>
 
     <artifactId>drpc-provider</artifactId>
+    <description>drpc的测试服务提供者</description>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -36,5 +38,4 @@
             <version>1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>

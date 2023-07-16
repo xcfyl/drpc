@@ -46,6 +46,14 @@ public class DrpcClientConfig {
      * 内置的路由类型
      */
     private DrpcRouterType routerType;
+    /**
+     * 订阅服务失败后重试的次数
+     */
+    private Integer subscribeRetryTimes;
+    /**
+     * 订阅服务失败后重试的间隔
+     */
+    private Long subscribeRetryInterval;
 
     public String getApplicationName() {
         return applicationName;
@@ -111,6 +119,22 @@ public class DrpcClientConfig {
         this.routerType = routerType;
     }
 
+    public Integer getSubscribeRetryTimes() {
+        return subscribeRetryTimes;
+    }
+
+    public void setSubscribeRetryTimes(Integer subscribeRetryTimes) {
+        this.subscribeRetryTimes = subscribeRetryTimes;
+    }
+
+    public Long getSubscribeRetryInterval() {
+        return subscribeRetryInterval;
+    }
+
+    public void setSubscribeRetryInterval(Long subscribeRetryInterval) {
+        this.subscribeRetryInterval = subscribeRetryInterval;
+    }
+
     @Override
     public String toString() {
         return "DrpcClientConfig{" +
@@ -122,6 +146,8 @@ public class DrpcClientConfig {
                 ", requestTimeout=" + requestTimeout +
                 ", proxyType=" + proxyType +
                 ", routerType=" + routerType +
+                ", subscribeRetryTimes=" + subscribeRetryTimes +
+                ", subscribeRetryInterval=" + subscribeRetryInterval +
                 '}';
     }
 }

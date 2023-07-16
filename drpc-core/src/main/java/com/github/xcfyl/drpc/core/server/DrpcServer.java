@@ -19,6 +19,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -31,8 +33,8 @@ import java.util.concurrent.TimeUnit;
  * @author 西城风雨楼
  * @date create at 2023/6/22 10:30
  */
-@Slf4j
 public class DrpcServer {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcServer.class);
     /**
      * Rpc服务器上下文数据
      */
@@ -114,7 +116,7 @@ public class DrpcServer {
                 // 删除本地缓存的服务提供者数据
                 context.getServiceProviderCache().remove(registryData.getServiceName());
             } catch (Exception e) {
-                log.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
+                logger.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
             }
         });
     }
@@ -134,8 +136,11 @@ public class DrpcServer {
                 // 将当前服务写入本地缓存中
                 context.getRegistryDataCache().put(registryData.getServiceName(), registryData);
                 context.getServiceProviderCache().put(registryData.getServiceName(), service);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("register service {}", registryData.getServiceName());
+                }
             } catch (Exception e) {
-                log.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
+                logger.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
             }
         });
     }
@@ -154,7 +159,7 @@ public class DrpcServer {
         // 首先将当前服务写入注册中心
         Class<?>[] interfaces = service.getClass().getInterfaces();
         if (interfaces.length != 1) {
-            log.error("{} implement too many interface!", service);
+            logger.error("{} implement too many interface!", service);
             throw new DrpcClientException("implement too many interface");
         }
         Class<?> clazz = interfaces[0];

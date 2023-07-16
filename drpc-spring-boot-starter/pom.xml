@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>drpc-spring-boot-starter</artifactId>
+    <description>drpc的springboot场景启动器</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
