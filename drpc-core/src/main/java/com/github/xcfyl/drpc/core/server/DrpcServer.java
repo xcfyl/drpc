@@ -5,6 +5,7 @@ import com.github.xcfyl.drpc.core.common.enums.DrpcAttributeName;
 import com.github.xcfyl.drpc.core.common.factory.DrpcRegistryFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcSerializerFactory;
 import com.github.xcfyl.drpc.core.common.utils.DrpcCommonUtils;
+import com.github.xcfyl.drpc.core.exception.DrpcClientException;
 import com.github.xcfyl.drpc.core.exception.DrpcCommonException;
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerFilterChain;
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerLogFilter;
@@ -150,7 +151,7 @@ public class DrpcServer {
         Class<?>[] interfaces = service.getClass().getInterfaces();
         if (interfaces.length != 1) {
             log.error("{} implement too many interface!", service);
-            throw new DrpcCommonException("implement too many interface");
+            throw new DrpcClientException("implement too many interface");
         }
         Class<?> clazz = interfaces[0];
         String serviceName = clazz.getName();
