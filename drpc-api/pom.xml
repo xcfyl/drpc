@@ -17,4 +17,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.xcfyl.drpc</groupId>
+            <artifactId>drpc-spring-boot-starter</artifactId>
+            <version>1.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

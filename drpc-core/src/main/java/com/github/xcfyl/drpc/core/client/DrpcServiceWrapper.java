@@ -2,6 +2,9 @@ package com.github.xcfyl.drpc.core.client;
 
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 包装客户端的订阅服务，给客户端订阅的服务增加额外的属性
  *

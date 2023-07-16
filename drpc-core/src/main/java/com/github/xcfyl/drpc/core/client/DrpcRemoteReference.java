@@ -19,9 +19,9 @@ public class DrpcRemoteReference {
      * @param serviceWrapper 包装了代理对象的对象
      * @return 返回clazz的代理类对象
      * @param <T> 返回的代理对象类型
-     * @throws Throwable 可能抛出的异常
+     * @throws Exception 可能抛出的异常
      */
-    public <T> T get(DrpcServiceWrapper<T> serviceWrapper) throws Throwable {
+    public <T> T get(DrpcServiceWrapper<T> serviceWrapper) throws Exception {
         return proxyFactory.get(serviceWrapper);
     }
 }

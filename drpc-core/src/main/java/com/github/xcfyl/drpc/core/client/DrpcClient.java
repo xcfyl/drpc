@@ -8,6 +8,7 @@ import com.github.xcfyl.drpc.core.common.factory.DrpcRouterFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcSerializerFactory;
 import com.github.xcfyl.drpc.core.common.utils.DrpcCommonUtils;
 import com.github.xcfyl.drpc.core.exception.DrpcClientException;
+import com.github.xcfyl.drpc.core.filter.client.DrpcClientFilter;
 import com.github.xcfyl.drpc.core.filter.client.DrpcClientFilterChain;
 import com.github.xcfyl.drpc.core.filter.client.DrpcClientLogFilter;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocolDecoder;
@@ -87,8 +88,15 @@ public class DrpcClient {
             Integer port = providerData.getPort();
             connectionManager.connect(serviceName, ip + ":" + port);
         }
+        if (logger.isDebugEnabled()) {
+            logger.debug("subscribe service {}", serviceName);
+        }
         // 连接完成之后，应该刷新路由
         context.getRouter().refresh(serviceName);
+    }
+
+    public void addFilter(DrpcClientFilter filter) {
+        context.getFilterChain().addFilter(filter);
     }
 
     private DrpcClientFilterChain constructClientFilters() {

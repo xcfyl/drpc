@@ -25,8 +25,14 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.13.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.github.xcfyl.drpc</groupId>
-            <artifactId>drpc-core</artifactId>
+            <artifactId>drpc-spring-boot-starter</artifactId>
             <version>1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

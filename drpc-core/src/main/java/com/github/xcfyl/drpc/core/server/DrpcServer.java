@@ -6,6 +6,7 @@ import com.github.xcfyl.drpc.core.common.factory.DrpcRegistryFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcSerializerFactory;
 import com.github.xcfyl.drpc.core.common.utils.DrpcCommonUtils;
 import com.github.xcfyl.drpc.core.exception.DrpcClientException;
+import com.github.xcfyl.drpc.core.filter.server.DrpcServerFilter;
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerFilterChain;
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerLogFilter;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocolDecoder;
@@ -137,6 +138,10 @@ public class DrpcServer {
                 log.error("register service failure, service name is {}, exception is {}", service, e.getMessage());
             }
         });
+    }
+
+    public void addFilter(DrpcServerFilter filter) {
+        context.getFilterChain().addFilter(filter);
     }
 
     private DrpcServerFilterChain constructServerFilters() {
