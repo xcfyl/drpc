@@ -11,6 +11,7 @@ import com.github.xcfyl.springboot.starter.annotation.DrpcService;
 public class ReplyServiceImpl implements ReplyService {
     @Override
     public String reply(String message) {
+        System.out.println("被调用了一次");
         return message;
     }
 }
