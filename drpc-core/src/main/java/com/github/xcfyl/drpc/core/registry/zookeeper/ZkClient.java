@@ -1,8 +1,10 @@
 package com.github.xcfyl.drpc.core.registry.zookeeper;
 
+import org.apache.curator.CuratorZookeeperClient;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.Watcher;
@@ -34,7 +36,11 @@ public class ZkClient {
 
     public void start() {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(baseSleepTimes, maxRetries);
-        curator = CuratorFrameworkFactory.newClient(zkAddress, retryPolicy);
+        curator = CuratorFrameworkFactory.builder().retryPolicy(retryPolicy)
+                .connectionTimeoutMs(1000)
+                .sessionTimeoutMs(6000)
+                .connectString(zkAddress)
+                .build();
         curator.start();
     }
 
