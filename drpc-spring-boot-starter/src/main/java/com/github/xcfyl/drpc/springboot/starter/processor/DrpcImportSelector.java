@@ -1,8 +1,8 @@
-package com.github.xcfyl.springboot.starter.processor;
+package com.github.xcfyl.drpc.springboot.starter.processor;
 
-import com.github.xcfyl.springboot.starter.annotation.DrpcReference;
-import com.github.xcfyl.springboot.starter.annotation.DrpcService;
-import com.github.xcfyl.springboot.starter.annotation.EnableDrpc;
+import com.github.xcfyl.drpc.springboot.starter.annotation.EnableDrpc;
+import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcReference;
+import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;

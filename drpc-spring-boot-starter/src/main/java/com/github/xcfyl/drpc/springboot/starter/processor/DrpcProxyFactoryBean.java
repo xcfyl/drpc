@@ -1,15 +1,18 @@
-package com.github.xcfyl.springboot.starter.processor;
+package com.github.xcfyl.drpc.springboot.starter.processor;
 
 import com.github.xcfyl.drpc.core.client.DrpcClient;
 import com.github.xcfyl.drpc.core.client.DrpcRemoteReference;
 import com.github.xcfyl.drpc.core.client.DrpcServiceWrapper;
 import com.github.xcfyl.drpc.core.filter.client.DrpcClientFilter;
-import com.github.xcfyl.springboot.starter.annotation.DrpcReference;
+import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.ObjectProvider;
 
 import javax.annotation.Resource;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
  * @date create at 2023/7/16 19:24
  */
 public class DrpcProxyFactoryBean<T> implements FactoryBean<T> {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcProxyFactoryBean.class);
     private final Class<T> clazz;
     @Resource
     private DrpcClient drpcClient;
@@ -44,7 +48,11 @@ public class DrpcProxyFactoryBean<T> implements FactoryBean<T> {
         try {
             DrpcRemoteReference remoteReference = drpcClient.init();
             drpcClient.subscribeService(clazz.getName());
-            for (DrpcClientFilter drpcClientFilter : drpcClientFilters.getIfAvailable(ArrayList::new)) {
+            List<DrpcClientFilter> clientFilters = drpcClientFilters.getIfAvailable(ArrayList::new);
+            if (logger.isDebugEnabled()) {
+                logger.debug("add client filters by annotation {}", clientFilters);
+            }
+            for (DrpcClientFilter drpcClientFilter : clientFilters) {
                 drpcClient.addFilter(drpcClientFilter);
             }
             return remoteReference.get(serviceWrapper);

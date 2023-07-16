@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.api;
 
-import com.github.xcfyl.springboot.starter.annotation.DrpcReference;
+import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcReference;
 
 /**
  * @author 西城风雨楼

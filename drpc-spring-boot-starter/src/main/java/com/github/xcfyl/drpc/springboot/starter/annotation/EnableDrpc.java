@@ -1,6 +1,6 @@
-package com.github.xcfyl.springboot.starter.annotation;
+package com.github.xcfyl.drpc.springboot.starter.annotation;
 
-import com.github.xcfyl.springboot.starter.processor.DrpcImportSelector;
+import com.github.xcfyl.drpc.springboot.starter.processor.DrpcImportSelector;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;

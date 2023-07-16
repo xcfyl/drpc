@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.xcfyl.springboot.starter.config.DrpcAutoConfiguration
+  com.github.xcfyl.drpc.springboot.starter.config.DrpcAutoConfiguration

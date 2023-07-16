@@ -19,6 +19,9 @@ public class DrpcClientFilterChain {
 
     public synchronized void addFilter(DrpcClientFilter filter) {
         filters.add(filter);
+        if (logger.isDebugEnabled()) {
+            logger.debug("add rpc client filter {}", filter.getName());
+        }
     }
 
     /**

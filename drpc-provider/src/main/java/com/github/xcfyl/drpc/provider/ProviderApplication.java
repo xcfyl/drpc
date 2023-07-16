@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.provider;
 
-import com.github.xcfyl.springboot.starter.annotation.EnableDrpc;
+import com.github.xcfyl.drpc.springboot.starter.annotation.EnableDrpc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

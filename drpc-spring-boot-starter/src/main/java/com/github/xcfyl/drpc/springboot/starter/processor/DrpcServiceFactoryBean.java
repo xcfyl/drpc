@@ -1,7 +1,9 @@
-package com.github.xcfyl.springboot.starter.processor;
+package com.github.xcfyl.drpc.springboot.starter.processor;
 
 import com.github.xcfyl.drpc.core.filter.server.DrpcServerFilter;
 import com.github.xcfyl.drpc.core.server.DrpcServer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.SmartFactoryBean;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * @date create at 2023/7/16 20:24
  */
 public class DrpcServiceFactoryBean<T> implements SmartFactoryBean<T> {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcServiceFactoryBean.class);
     private final Class<T> clazz;
     @Resource
     private DrpcServer drpcServer;
@@ -26,10 +29,19 @@ public class DrpcServiceFactoryBean<T> implements SmartFactoryBean<T> {
     }
 
     @Override
+    public boolean isSingleton() {
+        return true;
+    }
+
+    @Override
     public T getObject() throws Exception {
         T instance = clazz.getDeclaredConstructor().newInstance();
         drpcServer.registerService(instance);
-        for (DrpcServerFilter drpcServerFilter : drpcServerFilters.getIfAvailable(ArrayList::new)) {
+        List<DrpcServerFilter> serverFilters = drpcServerFilters.getIfAvailable(ArrayList::new);
+        if (logger.isDebugEnabled()) {
+            logger.debug("add server filters by annotation {}", drpcServerFilters);
+        }
+        for (DrpcServerFilter drpcServerFilter : serverFilters) {
             drpcServer.addFilter(drpcServerFilter);
         }
         return instance;

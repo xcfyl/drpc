@@ -1,7 +1,7 @@
 package com.github.xcfyl.drpc.provider.impl;
 
 import com.github.xcfyl.drpc.api.HelloService;
-import com.github.xcfyl.springboot.starter.annotation.DrpcService;
+import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcService;
 
 /**
  * @author 西城风雨楼

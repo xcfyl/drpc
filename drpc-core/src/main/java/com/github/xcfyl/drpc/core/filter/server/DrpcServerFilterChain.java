@@ -17,7 +17,11 @@ public class DrpcServerFilterChain {
     private int curIndex;
 
     public synchronized void addFilter(DrpcServerFilter filter) {
+        System.out.println(filters);
         filters.add(filter);
+        if (logger.isDebugEnabled()) {
+            logger.debug("add rpc server filter {}", filter.getName());
+        }
     }
 
     public synchronized void doFilter(DrpcRequest request) {

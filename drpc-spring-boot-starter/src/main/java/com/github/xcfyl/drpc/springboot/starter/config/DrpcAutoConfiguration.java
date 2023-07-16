@@ -1,4 +1,4 @@
-package com.github.xcfyl.springboot.starter.config;
+package com.github.xcfyl.drpc.springboot.starter.config;
 
 import com.github.xcfyl.drpc.core.client.DrpcClient;
 import com.github.xcfyl.drpc.core.client.DrpcRemoteReference;
