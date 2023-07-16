@@ -16,23 +16,25 @@ import java.util.List;
 public class DrpcTransferProtocolDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf byteBuf, List<Object> list) throws Exception {
-        int readIndex = byteBuf.readerIndex();
-        byteBuf.markReaderIndex();
-        if (byteBuf.readShort() != DrpcTransferProtocol.getMagicNumber()) {
-            ctx.close();
-            throw new DrpcRequestException("未知rpc协议");
-        }
+        if (byteBuf.readableBytes() >= 6) {
+            int readIndex = byteBuf.readerIndex();
+            byteBuf.markReaderIndex();
+            if (byteBuf.readShort() != DrpcTransferProtocol.getMagicNumber()) {
+                ctx.close();
+                throw new DrpcRequestException("未知rpc协议");
+            }
 
-        int length = byteBuf.readInt();
-        if (byteBuf.readableBytes() < length) {
-            // 当前数据没有完整到来
-            byteBuf.readerIndex(readIndex);
-            return;
-        }
+            int length = byteBuf.readInt();
+            if (byteBuf.readableBytes() < length) {
+                // 当前数据没有完整到来
+                byteBuf.readerIndex(readIndex);
+                return;
+            }
 
-        byte[] bytes = new byte[length];
-        byteBuf.readBytes(bytes);
-        DrpcTransferProtocol protocol = new DrpcTransferProtocol(bytes);
-        list.add(protocol);
+            byte[] bytes = new byte[length];
+            byteBuf.readBytes(bytes);
+            DrpcTransferProtocol protocol = new DrpcTransferProtocol(bytes);
+            list.add(protocol);
+        }
     }
 }

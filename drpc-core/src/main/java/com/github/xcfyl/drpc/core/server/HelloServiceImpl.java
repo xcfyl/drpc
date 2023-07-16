@@ -6,7 +6,7 @@ package com.github.xcfyl.drpc.core.server;
  */
 public class HelloServiceImpl implements HelloService {
     @Override
-    public String hello(String name) {
-        return "hello, " + name;
+    public Integer hello(String num) {
+        return num.length();
     }
 }

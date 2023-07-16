@@ -23,9 +23,9 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
     @Override
     public synchronized DrpcConnectionWrapper select(String serviceName) throws Exception {
         DrpcConnectionWrapper connectionWrapper = doSelect(serviceName);
-        if (log.isDebugEnabled()) {
-            log.debug("router -> {}, select connection is {}", this.getClass().getName(), connectionWrapper);
-        }
+//        if (log.isDebugEnabled()) {
+//            log.debug("router -> {}, select connection is {}", this.getClass().getName(), connectionWrapper);
+//        }
         return connectionWrapper;
     }
 

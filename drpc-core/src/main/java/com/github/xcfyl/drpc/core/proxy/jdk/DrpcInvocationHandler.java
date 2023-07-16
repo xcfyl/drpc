@@ -70,7 +70,6 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
                 if (response != null) {
                     // 将缓存的结果删除
                     rpcClientContext.getResponseCache().remove(requestId);
-                    System.out.println(rpcClientContext.getResponseCache().size());
                     return response.getBody();
                 }
             }
