@@ -10,7 +10,7 @@ public enum DrpcServerConfigName implements DrpcEnum {
     SERVER_REGISTRY_ADDR(2, "server.registry.addr"),
     SERVER_APPLICATION_NAME(3, "server.application.name"),
     SERVER_SERIALIZE_TYPE(4, "server.serializer"),
-    SERVER_PORT(0, "server.port");
+    SERVER_PORT(5, "server.port");
 
     private final int code;
     private final String description;

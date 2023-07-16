@@ -10,9 +10,9 @@ public enum DrpcClientConfigName implements DrpcEnum {
     CLIENT_REGISTRY_ADDR(2, "client.registry.addr"),
     CLIENT_APPLICATION_NAME(3, "client.application.name"),
     CLIENT_SERIALIZE_TYPE(4, "client.serializer"),
-    CLIENT_REQUEST_TIMEOUT(0, "client.request.timeout"),
-    CLIENT_PROXY_TYPE(1, "client.proxy"),
-    CLIENT_ROUTER_TYPE(2, "client.router");
+    CLIENT_REQUEST_TIMEOUT(5, "client.request.timeout"),
+    CLIENT_PROXY_TYPE(6, "client.proxy"),
+    CLIENT_ROUTER_TYPE(7, "client.router");
 
     private final int code;
     private final String description;
