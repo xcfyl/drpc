@@ -4,26 +4,24 @@
 
 # 一、README.md
 
-+ [English](docs/README_EN.md)
++ [中文](../README.md)
 
-# 二、简介
+# 二、Introduction
 
-该项目是采用模块化设计思路构建的简易rpc系统，适合rpc原理学习，掌握基本的rpc概念。主要包含如下内容：
+This project is a simple rpc system built with modular design ideas, suitable for learning rpc principles and mastering basic rpc concepts. The main contents are as follows:
 
-1. 基于netty的rpc通信协议格式
-2. 基于zookeeper的注册中心实现
-3. 基于jdk的动态代理
-4. 基于jdk和fastjson的序列化
-5. 基于观察者模式的事件发布机制
-6. 基于责任链模式的rpc客户端和服务端过滤器
-7. rpc路由层设计和实现，主要包括随机路由策略和轮询路由策略
-8. 和springboot的简易整合，支持简单的注解开发
+1. rpc communication protocol format based on netty
+2. Zookeeper-based registry implementation
+3. Jdk-based dynamic proxy
+4. jdk and FastJSON-based serialization
+5. Event publishing mechanism based on observer pattern
+6. Chain of Responsibility based rpc client and server filters
+7. Design and implementation of rpc routing layer, including random routing strategy and polling routing strategy
+8. Easy integration with springboot for easy annotation development
 
-[English](docs/README_EN.md)
+# 三、Quick Start
 
-# 三、基本上使用
-
-## 3.1 引入maven依赖
+## 3.1 Importing maven dependencies
 
 ```xml
 <dependency>
@@ -33,7 +31,7 @@
 </dependency>
 ```
 
-## 3.2 api定义
+## 3.2 API Definition
 
 ```java
 @DrpcReference
@@ -42,7 +40,7 @@ public interface ReplyService {
 }
 ```
 
-## 3.3 api实现定义
+## 3.3 API Implementation Definition
 
 ```java
 @DrpcService
@@ -54,11 +52,11 @@ public class ReplyServiceImpl implements ReplyService {
 }
 ```
 
-## 3.4 启用drpc
+## 3.4 Enabling drpc
 
-### 3.4.1 服务提供者
+### 3.4.1 Service Provider
 
-1. 服务提供者启用
+1. Enabling Service Provider
 
 ```java
 @EnableDrpc(scanPackages = "com.github.xcfyl.drpc")
@@ -70,7 +68,7 @@ public class ProviderApplication {
 }
 ```
 
-2. 服务提供者的配置文件
+2. The service provider configuration template
 
 ``` properties
 server.port=17001
@@ -81,9 +79,9 @@ server.application.name=app2
 server.serializer=jdk
 ```
 
-### 3.4.2 服务消费者
+### 3.4.2 Service Consumer
 
-1. 服务消费者启用
+1. Enabling Service Consumer
 
 ```java
 @SpringBootApplication
@@ -95,7 +93,7 @@ public class ConsumerApplication {
 }
 ```
 
-2. 服务消费者的配置文件
+2. The service consumer configuration template
 
 ```properties
 client.request.timeout=3000
