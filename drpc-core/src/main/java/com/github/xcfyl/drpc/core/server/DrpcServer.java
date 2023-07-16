@@ -149,7 +149,7 @@ public class DrpcServer {
         // 首先将当前服务写入注册中心
         Class<?>[] interfaces = service.getClass().getInterfaces();
         if (interfaces.length != 1) {
-            log.error("#{} implement too many interface!", service);
+            log.error("{} implement too many interface!", service);
             throw new DrpcCommonException("implement too many interface");
         }
         Class<?> clazz = interfaces[0];
