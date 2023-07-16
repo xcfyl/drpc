@@ -23,12 +23,12 @@
             <groupId>com.github.xcfyl.drpc</groupId>
             <artifactId>drpc-core</artifactId>
             <version>1.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xcfyl.drpc</groupId>
-            <artifactId>drpc-spring-boot-starter</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
