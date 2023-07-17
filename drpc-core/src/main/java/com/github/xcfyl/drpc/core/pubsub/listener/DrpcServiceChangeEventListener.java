@@ -1,16 +1,19 @@
-package com.github.xcfyl.drpc.core.pubsub;
+package com.github.xcfyl.drpc.core.pubsub.listener;
 
-import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcClientContext;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
+import com.github.xcfyl.drpc.core.pubsub.DrpcEventListener;
+import com.github.xcfyl.drpc.core.pubsub.data.DrpcServiceChangeEventData;
+import com.github.xcfyl.drpc.core.pubsub.event.DrpcServiceChangeEvent;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
 import io.netty.channel.ChannelFuture;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 如果rpc服务列表发生变化，那么会执行该事件监听器的逻辑
@@ -37,13 +40,13 @@ public class DrpcServiceChangeEventListener implements DrpcEventListener<DrpcSer
         DrpcServiceChangeEventData data = event.getData();
         String serviceName = data.getServiceName();
         List<DrpcProviderData> newProviderDataList = data.getNewServiceList();
-        DprcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
+        DrpcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
         List<DrpcConnectionWrapper> connections =connectionManager.getOriginalConnections(serviceName);
         Map<String, DrpcConnectionWrapper> connectionWrapperMap = new HashMap<>();
         for (DrpcConnectionWrapper connectionWrapper : connections) {
             connectionWrapperMap.put(connectionWrapper.toString(), connectionWrapper);
         }
-        List<DrpcConnectionWrapper> newConnections = new ArrayList<>();
+        CopyOnWriteArrayList<DrpcConnectionWrapper> newConnections = new CopyOnWriteArrayList<>();
         for (DrpcProviderData registryData : newProviderDataList) {
             String ip = registryData.getIp();
             Integer port = registryData.getPort();
@@ -51,7 +54,7 @@ public class DrpcServiceChangeEventListener implements DrpcEventListener<DrpcSer
             connectionWrapper.setIp(ip);
             connectionWrapper.setPort(port);
             if (!connectionWrapperMap.containsKey(connectionWrapper.toString())) {
-                ChannelFuture channelFuture = connectionManager.getChannelFuture(ip, port);
+                ChannelFuture channelFuture = connectionManager.connect(ip, port);
                 connectionWrapper.setChannelFuture(channelFuture);
             }
             newConnections.add(connectionWrapper);

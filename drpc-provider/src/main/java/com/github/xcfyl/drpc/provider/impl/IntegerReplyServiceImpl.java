@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.provider.impl;
 
-import com.github.xcfyl.drpc.api.HelloService;
+import com.github.xcfyl.drpc.api.IntegerReplyService;
 import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcService;
 
 /**
@@ -8,9 +8,9 @@ import com.github.xcfyl.drpc.springboot.starter.annotation.DrpcService;
  * @date create at 2023/7/16 19:50
  */
 @DrpcService
-public class HelloServiceImpl implements HelloService {
+public class IntegerReplyServiceImpl implements IntegerReplyService {
     @Override
-    public Integer hello(String num) {
-        return num.length();
+    public Integer reply(Integer num) {
+        return num;
     }
 }

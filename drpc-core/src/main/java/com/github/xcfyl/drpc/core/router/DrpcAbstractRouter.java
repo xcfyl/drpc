@@ -1,9 +1,10 @@
 package com.github.xcfyl.drpc.core.router;
 
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.exception.DrpcRouterException;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,23 +13,39 @@ import java.util.List;
  * @author 西城风雨楼
  * @date create at 2023/6/23 22:42
  */
-@Slf4j
 public abstract class DrpcAbstractRouter implements DrpcRouter {
-    protected final List<DrpcConnectionWrapper> cache = new ArrayList<>();
-    private final DprcConnectionManager connectionManager;
+    private static final Logger logger = LoggerFactory.getLogger(DrpcAbstractRouter.class);
 
-    public DrpcAbstractRouter(DprcConnectionManager connectionManager) {
+    protected final List<DrpcConnectionWrapper> cache = new ArrayList<>();
+    private final DrpcConnectionManager connectionManager;
+
+    public DrpcAbstractRouter(DrpcConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
+    /**
+     * select的基本作用是：
+     * （1）过滤掉缓存中不正常的连接
+     * （2）根据子类的select策略从cache中选择一个可用的连接返回给客户端
+     *
+     * @param serviceName
+     * @return
+     * @throws Exception
+     */
     @Override
     public synchronized DrpcConnectionWrapper select(String serviceName) throws Exception {
         if (cache.size() == 0) {
             throw new DrpcRouterException("can't route, no connection found");
         }
+        // 从缓存中移除连接已经不正常的连接
+        cache.removeIf(connectionWrapper -> !connectionWrapper.isOk());
         DrpcConnectionWrapper connectionWrapper = doSelect(serviceName);
-        if (log.isDebugEnabled()) {
-            log.debug("router is {}, select connection is {}", getName(), connectionWrapper);
+        if (connectionWrapper == null) {
+            logger.error("no connection found");
+            throw new DrpcRouterException("no connection found");
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("router is {}, select connection is {}", getName(), connectionWrapper);
         }
         return connectionWrapper;
     }
@@ -37,7 +54,7 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
     public synchronized void refresh(String serviceName) {
         fillCache(serviceName, connectionManager);
         doRefresh();
-        log.debug("router refreshed, cache is {}", cache);
+        logger.debug("router refreshed, cache is {}", cache);
     }
 
     @Override
@@ -45,7 +62,7 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
         return getClass().getName();
     }
 
-    private void fillCache(String serviceName, DprcConnectionManager connectionManager) {
+    private void fillCache(String serviceName, DrpcConnectionManager connectionManager) {
         List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
         cache.clear();
         cache.addAll(originalConnections);

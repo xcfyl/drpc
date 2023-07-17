@@ -1,4 +1,7 @@
-package com.github.xcfyl.drpc.core.pubsub;
+package com.github.xcfyl.drpc.core.pubsub.event;
+
+import com.github.xcfyl.drpc.core.pubsub.DrpcEvent;
+import com.github.xcfyl.drpc.core.pubsub.data.DrpcServiceChangeEventData;
 
 /**
  * 服务列表发生变化时，需要发送该事件

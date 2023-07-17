@@ -1,13 +1,13 @@
 package com.github.xcfyl.drpc.consumer.controller;
 
-import com.github.xcfyl.drpc.api.ReplyService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.xcfyl.drpc.api.IntegerReplyService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author 西城风雨楼
@@ -17,13 +17,15 @@ import javax.annotation.Resource;
 @ResponseBody
 public class ReplyController {
     @Resource
-    private ReplyService replyService;
+    private IntegerReplyService replyService;
+
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
 
     @GetMapping("/reply")
-    public String reply(@RequestParam("msg") String message) {
-        System.out.println("收到一个请求");
-        String reply = replyService.reply(message);
-        System.out.println(reply);
-        return reply;
+    public String reply(@RequestParam("num") Integer num) {
+        Integer reply = replyService.reply(num);
+        int sum = atomicInteger.addAndGet(reply);
+        System.out.println(sum);
+        return String.valueOf(sum);
     }
 }

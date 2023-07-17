@@ -2,12 +2,17 @@ package com.github.xcfyl.drpc.core.client;
 
 import com.github.xcfyl.drpc.core.protocol.DrpcResponse;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocol;
+import com.github.xcfyl.drpc.core.serializer.DrpcSerializer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -19,6 +24,8 @@ import org.slf4j.LoggerFactory;
 public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(DrpcClientHandler.class);
     private final DrpcClientContext rpcClientContext;
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8, 30,
+            TimeUnit.MINUTES, new ArrayBlockingQueue<>(3000), new ThreadPoolExecutor.CallerRunsPolicy());
 
     public DrpcClientHandler(DrpcClientContext rpcClientContext) {
         this.rpcClientContext = rpcClientContext;
@@ -26,13 +33,20 @@ public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        DrpcTransferProtocol protocol = (DrpcTransferProtocol) msg;
-        DrpcResponse response = rpcClientContext.getSerializer().deserialize(protocol.getBody(), DrpcResponse.class);
-        rpcClientContext.getResponseCache().put(response.getId(), response);
-        if (logger.isDebugEnabled()) {
-            logger.debug("receive a response, {}", response);
-        }
-        ReferenceCountUtil.release(msg);
+        threadPoolExecutor.submit(() -> {
+            try {
+                DrpcTransferProtocol protocol = (DrpcTransferProtocol) msg;
+                DrpcSerializer serializer = rpcClientContext.getSerializer();
+                DrpcResponse response = serializer.deserialize(protocol.getBody(), DrpcResponse.class);
+                 rpcClientContext.getResponseGuardedObject().setDrpcResponse(response);
+                if (logger.isDebugEnabled()) {
+                    logger.debug("receive a response, {}", response);
+                }
+                ReferenceCountUtil.release(msg);
+            } catch (Exception e) {
+                logger.error("client handle response failure {}", e.getMessage());
+            }
+        });
     }
 
     @Override

@@ -2,8 +2,8 @@ package com.github.xcfyl.drpc.core.registry.zookeeper;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.pubsub.DrpcEventPublisher;
-import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEvent;
-import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEventData;
+import com.github.xcfyl.drpc.core.pubsub.event.DrpcServiceChangeEvent;
+import com.github.xcfyl.drpc.core.pubsub.data.DrpcServiceChangeEventData;
 import com.github.xcfyl.drpc.core.registry.DrpcConsumerData;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
 import com.github.xcfyl.drpc.core.registry.DrpcRegistry;

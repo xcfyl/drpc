@@ -6,6 +6,7 @@ import com.github.xcfyl.drpc.core.common.factory.DrpcProxyFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcRegistryFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcRouterFactory;
 import com.github.xcfyl.drpc.core.common.factory.DrpcSerializerFactory;
+import com.github.xcfyl.drpc.core.common.retry.RetryUtils;
 import com.github.xcfyl.drpc.core.common.utils.DrpcCommonUtils;
 import com.github.xcfyl.drpc.core.exception.DrpcClientException;
 import com.github.xcfyl.drpc.core.filter.client.DrpcClientFilter;
@@ -14,7 +15,7 @@ import com.github.xcfyl.drpc.core.filter.client.DrpcClientLogFilter;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocolDecoder;
 import com.github.xcfyl.drpc.core.protocol.DrpcTransferProtocolEncoder;
 import com.github.xcfyl.drpc.core.pubsub.DrpcEventPublisher;
-import com.github.xcfyl.drpc.core.pubsub.DrpcServiceChangeEventListener;
+import com.github.xcfyl.drpc.core.pubsub.listener.DrpcServiceChangeEventListener;
 import com.github.xcfyl.drpc.core.registry.DrpcConsumerData;
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
 import com.github.xcfyl.drpc.core.registry.DrpcRegistry;
@@ -27,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * rpc客户端
@@ -59,9 +59,14 @@ public class DrpcClient {
         // 创建序列化器
         context.setSerializer(DrpcSerializerFactory.createRpcSerializer(config.getSerializeType()));
         // 设置连接处理器
-        context.setConnectionManager(new DprcConnectionManager(createBootstrap()));
+        DrpcConnectionManager connectionManager = new DrpcConnectionManager(createBootstrap());
+        connectionManager.setRetryConnectTimes(config.getReconnectTimes());
+        connectionManager.setRetryConnectInterval(connectionManager.getRetryConnectInterval());
+        context.setConnectionManager(connectionManager);
         // 创建路由对象
         context.setRouter(DrpcRouterFactory.createRpcRouter(config.getRouterType(), context.getConnectionManager()));
+        // 创建同步请求对象
+        context.setResponseGuardedObject(new DrpcResponseGuardedObject());
         // 注册客户端的事件监听器
         registerClientEventListener();
     }
@@ -79,37 +84,28 @@ public class DrpcClient {
      */
     public void subscribeService(String serviceName) throws Exception {
         DrpcRegistry registry = context.getRegistry();
-        List<DrpcProviderData> providers = null;
-        Integer subscribeRetryTimes = context.getClientConfig().getSubscribeRetryTimes();
-        int curRetryTime = 0;
-        Long subscribeRetryInterval = context.getClientConfig().getSubscribeRetryInterval();
-        while (curRetryTime <= subscribeRetryTimes) {
-            if (curRetryTime > 0) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("current retry times is {}, retry subscribe service {}", curRetryTime, serviceName);
-                }
-            }
-            providers = registry.queryProviders(serviceName);
-            if (!providers.isEmpty()) {
-                break;
-            }
-            if (logger.isDebugEnabled()) {
-                logger.debug("retry failure, next retry interval {}", subscribeRetryInterval);
-            }
-            TimeUnit.MILLISECONDS.sleep(subscribeRetryInterval);
-            curRetryTime++;
+        Integer retryTimes = context.getClientConfig().getSubscribeRetryTimes();
+        Long retryInterval = context.getClientConfig().getSubscribeRetryInterval();
+        List<DrpcProviderData> providers = registry.queryProviders(serviceName);
+
+        if (providers == null || providers.size() == 0) {
+            // 如果没有获取到providers信息，那么尝试重复获取
+            providers = RetryUtils.retry(retryTimes, retryInterval,
+                    () -> registry.queryProviders(serviceName),
+                    providers1 -> providers1 != null && providers1.size() != 0);
         }
+        // 如果经过尝试之后，还是没有获取到，那么说明确实没有providers发现
         if (providers == null || providers.isEmpty()) {
             logger.error("subscribe service {} failure, no providers found", serviceName);
             throw new DrpcClientException("subscribe service failure, no providers found!");
         }
         DrpcConsumerData registryData = getConsumerRegistryData(serviceName);
         registry.subscribe(registryData);
-        DprcConnectionManager connectionManager = context.getConnectionManager();
+        DrpcConnectionManager connectionManager = context.getConnectionManager();
         for (DrpcProviderData providerData : providers) {
             String ip = providerData.getIp();
             Integer port = providerData.getPort();
-            connectionManager.connect(serviceName, ip + ":" + port);
+            connectionManager.connect(serviceName, ip, port);
         }
         if (logger.isDebugEnabled()) {
             logger.debug("subscribe service {}", serviceName);
@@ -142,6 +138,7 @@ public class DrpcClient {
 
     private void registerClientEventListener() {
         DrpcEventPublisher eventPublisher = DrpcEventPublisher.getInstance();
+        // 注册用于监听服务变更的事件监听器
         eventPublisher.addEventListener(new DrpcServiceChangeEventListener(context));
     }
 

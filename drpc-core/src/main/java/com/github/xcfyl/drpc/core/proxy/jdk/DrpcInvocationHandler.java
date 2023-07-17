@@ -1,10 +1,11 @@
 package com.github.xcfyl.drpc.core.proxy.jdk;
 
 import com.alibaba.fastjson.JSON;
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcClientContext;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.client.DrpcServiceWrapper;
+import com.github.xcfyl.drpc.core.common.retry.RetryUtils;
 import com.github.xcfyl.drpc.core.exception.DrpcRequestException;
 import com.github.xcfyl.drpc.core.protocol.DrpcRequest;
 import com.github.xcfyl.drpc.core.protocol.DrpcResponse;
@@ -17,6 +18,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -57,38 +59,35 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 生成本次请求id
         String requestId = UUID.randomUUID().toString();
-        int curRetryTime = 0;
         Integer retryTimes = serviceWrapper.getRetryTimes();
-        while (curRetryTime <= retryTimes) {
-            if (curRetryTime > 0) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("current retry times is {}, next retry interval {}", curRetryTime, serviceWrapper.getRetryInterval());
-                }
+        Long retryInterval = serviceWrapper.getRetryInterval();
+
+        // 异步写数据
+        threadPoolExecutor.submit(() -> sendRequest(serviceWrapper, requestId, method.getName(), args));
+        if (!serviceWrapper.isSync()) {
+            // 如果不是同步请求，直接返回
+            return null;
+        }
+        // 如果是同步请求，那么通过guard获取数据
+        DrpcResponse response = rpcClientContext.getResponseGuardedObject()
+                .getDrpcResponse(requestId, serviceWrapper.getTimeout());
+
+        if (response == null) {
+            // 如果第一次请求超时
+            response = RetryUtils.retry(retryTimes, retryInterval, () -> {
+                // 在这里面编写重试的逻辑
+                return rpcClientContext.getResponseGuardedObject()
+                        .getDrpcResponse(requestId, serviceWrapper.getTimeout());
+            }, Objects::nonNull);
+        }
+
+        // 如果重试成功，那么尝试获取本次请求的结果
+        if (response != null) {
+            if (response.getThrowable() != null) {
+                throw response.getThrowable();
             }
-            threadPoolExecutor.submit(() -> {
-                sendRequest(serviceWrapper, requestId, method.getName(), args);
-            });
-            // 判断是否是同步方法调用，如果是同步方法调用，那么会
-            if (serviceWrapper.getSync()) {
-                long beginTime = System.currentTimeMillis();
-                long timeout = rpcClientContext.getClientConfig().getRequestTimeout();
-                while (System.currentTimeMillis() - beginTime < timeout) {
-                    DrpcResponse response = rpcClientContext.getResponseCache().get(requestId);
-                    if (response != null) {
-                        // 将缓存的结果删除
-                        rpcClientContext.getResponseCache().remove(requestId);
-                        if (response.getThrowable() != null) {
-                            // 如果本次请求出现错误，那么重新将该异常进行抛出
-                            throw response.getThrowable();
-                        }
-                        return response.getBody();
-                    }
-                }
-                curRetryTime++;
-                TimeUnit.MILLISECONDS.sleep(serviceWrapper.getRetryInterval());
-            } else {
-                return null;
-            }
+            return response.getBody();
+
         }
         if (logger.isDebugEnabled()) {
             logger.debug("request timeout, request id is {}, timeout limit is {}, retrytimes are {}",
@@ -107,7 +106,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
             // 创建rpc协议对象
             DrpcTransferProtocol protocol = new DrpcTransferProtocol(JSON.toJSONString(request).getBytes());
             // 获取客户端连接管理器对象
-            DprcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
+            DrpcConnectionManager connectionManager = rpcClientContext.getConnectionManager();
             // 获取当前客户端本地缓存的所有连接对象
             List<DrpcConnectionWrapper> originalConnections = connectionManager.getOriginalConnections(serviceName);
             // 复制一份原始连接对象，交给过滤器进行过滤

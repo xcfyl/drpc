@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.core.common.factory;
 
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
 import com.github.xcfyl.drpc.core.common.enums.DrpcRouterType;
 import com.github.xcfyl.drpc.core.router.DrpcRandomRouter;
 import com.github.xcfyl.drpc.core.router.DrpcRoundRobinRouter;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DrpcRouterFactory {
-    public static DrpcRouter createRpcRouter(DrpcRouterType type, DprcConnectionManager connectionManager) {
+    public static DrpcRouter createRpcRouter(DrpcRouterType type, DrpcConnectionManager connectionManager) {
         if (type == DrpcRouterType.RANDOM) {
             return new DrpcRandomRouter(connectionManager);
         } else if (type == DrpcRouterType.ROUND_ROBIN) {

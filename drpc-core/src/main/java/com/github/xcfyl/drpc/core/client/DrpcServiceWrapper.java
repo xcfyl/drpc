@@ -48,7 +48,7 @@ public class DrpcServiceWrapper<T> {
         this.serviceClass = serviceClass;
     }
 
-    public Boolean getSync() {
+    public Boolean isSync() {
         return isSync;
     }
 

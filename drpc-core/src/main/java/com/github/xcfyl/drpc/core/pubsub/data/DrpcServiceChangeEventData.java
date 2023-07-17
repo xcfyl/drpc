@@ -1,4 +1,4 @@
-package com.github.xcfyl.drpc.core.pubsub;
+package com.github.xcfyl.drpc.core.pubsub.data;
 
 import com.github.xcfyl.drpc.core.registry.DrpcProviderData;
 import lombok.ToString;

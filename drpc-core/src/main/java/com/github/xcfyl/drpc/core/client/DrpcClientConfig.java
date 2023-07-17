@@ -62,6 +62,14 @@ public class DrpcClientConfig {
      * 请求失败的时候，每次重试的间隔
      */
     private Long requestRetryInterval;
+    /**
+     * 重新连接的次数
+     */
+    private Integer reconnectTimes;
+    /**
+     * 重新连接的间隔
+     */
+    private Long reconnectInterval;
 
     public String getApplicationName() {
         return applicationName;
@@ -159,6 +167,22 @@ public class DrpcClientConfig {
         this.requestRetryInterval = requestRetryInterval;
     }
 
+    public Integer getReconnectTimes() {
+        return reconnectTimes;
+    }
+
+    public void setReconnectTimes(Integer reconnectTimes) {
+        this.reconnectTimes = reconnectTimes;
+    }
+
+    public Long getReconnectInterval() {
+        return reconnectInterval;
+    }
+
+    public void setReconnectInterval(Long reconnectInterval) {
+        this.reconnectInterval = reconnectInterval;
+    }
+
     @Override
     public String toString() {
         return "DrpcClientConfig{" +
@@ -174,6 +198,8 @@ public class DrpcClientConfig {
                 ", subscribeRetryInterval=" + subscribeRetryInterval +
                 ", requestRetryTimes=" + requestRetryTimes +
                 ", requestRetryInterval=" + requestRetryInterval +
+                ", reconnectTimes=" + reconnectTimes +
+                ", reconnectInterval=" + reconnectInterval +
                 '}';
     }
 }

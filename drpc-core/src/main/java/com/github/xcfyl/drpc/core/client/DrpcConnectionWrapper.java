@@ -1,9 +1,6 @@
 package com.github.xcfyl.drpc.core.client;
 
 import io.netty.channel.ChannelFuture;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
-import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +14,8 @@ import java.util.Objects;
  * @date create at 2023/6/23 15:27
  */
 public class DrpcConnectionWrapper {
+    private static final Logger logger = LoggerFactory.getLogger(DrpcConnectionWrapper.class);
+
     /**
      * 代表连接的channelFuture对象
      */
@@ -34,7 +33,30 @@ public class DrpcConnectionWrapper {
      * 这些连接可能有权重
      */
     private BigDecimal weight;
+    /**
+     * 属于哪个服务的连接
+     */
+    private String serviceName;
 
+    public DrpcConnectionWrapper() {
+
+    }
+
+    /**
+     * 判断当前连接是否正常
+     *
+     * @return
+     */
+    public boolean isOk() {
+        return channelFuture != null && channelFuture.channel() != null
+                && (channelFuture.channel().isActive() || channelFuture.channel().isOpen());
+    }
+
+    /**
+     * 发送数据
+     *
+     * @param data
+     */
     public void writeAndFlush(Object data) {
         channelFuture.channel().writeAndFlush(data);
     }
@@ -54,11 +76,6 @@ public class DrpcConnectionWrapper {
     @Override
     public int hashCode() {
         return Objects.hash(ip, port);
-    }
-
-    @Override
-    public String toString() {
-        return ip + ":" + port;
     }
 
     public ChannelFuture getChannelFuture() {
@@ -91,5 +108,23 @@ public class DrpcConnectionWrapper {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    @Override
+    public String toString() {
+        return "DrpcConnectionWrapper{" +
+                "ip='" + ip + '\'' +
+                ", port=" + port +
+                ", weight=" + weight +
+                ", serviceName='" + serviceName + '\'' +
+                '}';
     }
 }

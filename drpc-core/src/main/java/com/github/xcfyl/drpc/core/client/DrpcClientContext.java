@@ -30,7 +30,7 @@ public class DrpcClientContext {
     /**
      * 连接管理器
      */
-    private DprcConnectionManager connectionManager;
+    private DrpcConnectionManager connectionManager;
     /**
      * 当前rpc客户端使用的路由器
      */
@@ -59,6 +59,10 @@ public class DrpcClientContext {
      * 客户端的配置文件名称
      */
     private String configFileName;
+    /**
+     * 用于同步请求结果
+     */
+    private DrpcResponseGuardedObject responseGuardedObject;
 
     public DrpcClientContext() {
     }
@@ -111,11 +115,11 @@ public class DrpcClientContext {
         this.registry = registry;
     }
 
-    public DprcConnectionManager getConnectionManager() {
+    public DrpcConnectionManager getConnectionManager() {
         return connectionManager;
     }
 
-    public void setConnectionManager(DprcConnectionManager connectionManager) {
+    public void setConnectionManager(DrpcConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
     }
 
@@ -133,5 +137,13 @@ public class DrpcClientContext {
 
     public void setConfigFileName(String configFileName) {
         this.configFileName = configFileName;
+    }
+
+    public DrpcResponseGuardedObject getResponseGuardedObject() {
+        return responseGuardedObject;
+    }
+
+    public void setResponseGuardedObject(DrpcResponseGuardedObject responseGuardedObject) {
+        this.responseGuardedObject = responseGuardedObject;
     }
 }

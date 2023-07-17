@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.core.router;
 
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 import com.github.xcfyl.drpc.core.exception.DrpcRouterException;
 
@@ -14,7 +14,7 @@ import java.util.Random;
  * @date create at 2023/6/23 22:37
  */
 public class DrpcRandomRouter extends DrpcAbstractRouter {
-    public DrpcRandomRouter(DprcConnectionManager connectionManager) {
+    public DrpcRandomRouter(DrpcConnectionManager connectionManager) {
         super(connectionManager);
     }
 

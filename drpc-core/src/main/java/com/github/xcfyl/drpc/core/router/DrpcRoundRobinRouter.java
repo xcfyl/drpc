@@ -1,6 +1,6 @@
 package com.github.xcfyl.drpc.core.router;
 
-import com.github.xcfyl.drpc.core.client.DprcConnectionManager;
+import com.github.xcfyl.drpc.core.client.DrpcConnectionManager;
 import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 
 /**
@@ -12,7 +12,7 @@ import com.github.xcfyl.drpc.core.client.DrpcConnectionWrapper;
 public class DrpcRoundRobinRouter extends DrpcAbstractRouter {
     private int nextIndex;
 
-    public DrpcRoundRobinRouter(DprcConnectionManager connectionManager) {
+    public DrpcRoundRobinRouter(DrpcConnectionManager connectionManager) {
         super(connectionManager);
         nextIndex = 0;
     }
