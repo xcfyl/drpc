@@ -20,7 +20,15 @@ public enum DrpcClientConfigName implements DrpcEnum {
     /**
      * 订阅失败后的重试间隔
      */
-    CLIENT_SUBSCRIBE_RETRY_INTERVAL(9, "client.subscribe.retry.interval");
+    CLIENT_SUBSCRIBE_RETRY_INTERVAL(9, "client.subscribe.retry.interval"),
+    /**
+     * 客户端请求失败后重试的次数
+     */
+    CLIENT_REQUEST_RETRY_TIMES(10, "client.request.retry.times"),
+    /**
+     * 客户端请求失败后重试的间隔时间
+     */
+    CLIENT_REQUEST_RETRY_INTERVAL(11, "client.request.retry.interval");
 
     private final int code;
     private final String description;

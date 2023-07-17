@@ -54,6 +54,14 @@ public class DrpcClientConfig {
      * 订阅服务失败后重试的间隔
      */
     private Long subscribeRetryInterval;
+    /**
+     * 请求失败后，应该重试的次数
+     */
+    private Integer requestRetryTimes;
+    /**
+     * 请求失败的时候，每次重试的间隔
+     */
+    private Long requestRetryInterval;
 
     public String getApplicationName() {
         return applicationName;
@@ -135,6 +143,22 @@ public class DrpcClientConfig {
         this.subscribeRetryInterval = subscribeRetryInterval;
     }
 
+    public Integer getRequestRetryTimes() {
+        return requestRetryTimes;
+    }
+
+    public void setRequestRetryTimes(Integer requestRetryTimes) {
+        this.requestRetryTimes = requestRetryTimes;
+    }
+
+    public Long getRequestRetryInterval() {
+        return requestRetryInterval;
+    }
+
+    public void setRequestRetryInterval(Long requestRetryInterval) {
+        this.requestRetryInterval = requestRetryInterval;
+    }
+
     @Override
     public String toString() {
         return "DrpcClientConfig{" +
@@ -148,6 +172,8 @@ public class DrpcClientConfig {
                 ", routerType=" + routerType +
                 ", subscribeRetryTimes=" + subscribeRetryTimes +
                 ", subscribeRetryInterval=" + subscribeRetryInterval +
+                ", requestRetryTimes=" + requestRetryTimes +
+                ", requestRetryInterval=" + requestRetryInterval +
                 '}';
     }
 }

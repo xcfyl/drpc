@@ -27,13 +27,17 @@ public class DrpcServiceWrapper<T> {
      */
     private Integer retryTimes;
     /**
+     * 重复请求的间隔时间
+     */
+    private Long retryInterval;
+    /**
      * 超时时间
      */
     private Long timeout;
 
     public DrpcServiceWrapper() {
-        // 默认情况下只重试一次
-        retryTimes = 1;
+        // 默认情况下只重试3次
+        retryTimes = 3;
     }
 
     public Class<T> getServiceClass() {
@@ -66,5 +70,13 @@ public class DrpcServiceWrapper<T> {
 
     public void setTimeout(Long timeout) {
         this.timeout = timeout;
+    }
+
+    public Long getRetryInterval() {
+        return retryInterval;
+    }
+
+    public void setRetryInterval(Long retryInterval) {
+        this.retryInterval = retryInterval;
     }
 }

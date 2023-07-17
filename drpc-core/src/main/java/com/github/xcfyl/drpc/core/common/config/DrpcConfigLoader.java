@@ -124,6 +124,10 @@ public class DrpcConfigLoader {
                 DrpcClientConfigName.CLIENT_SUBSCRIBE_RETRY_TIMES.getDescription(), 0);
         Long subscribeRetryInterval = getLong(properties,
                 DrpcClientConfigName.CLIENT_SUBSCRIBE_RETRY_INTERVAL.getDescription(), 1000L);
+        Integer requestRetryTimes = getInteger(properties,
+                DrpcClientConfigName.CLIENT_REQUEST_RETRY_TIMES.getDescription(), 3);
+        Long requestRetryInterval = getLong(properties,
+                DrpcClientConfigName.CLIENT_REQUEST_RETRY_INTERVAL.getDescription(), 1000L);
         // 设置客户端的配置
         clientConfig.setRequestTimeout(requestTimeout);
         clientConfig.setProxyType(DrpcProxyType.fromDescription(proxyType));
@@ -135,6 +139,8 @@ public class DrpcConfigLoader {
         clientConfig.setSerializeType(DrpcSerializeType.fromDescription(serializeType));
         clientConfig.setSubscribeRetryTimes(subscribeRetryTimes);
         clientConfig.setSubscribeRetryInterval(subscribeRetryInterval);
+        clientConfig.setRequestRetryTimes(requestRetryTimes);
+        clientConfig.setRequestRetryInterval(requestRetryInterval);
         return clientConfig;
     }
 

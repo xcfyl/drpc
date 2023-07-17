@@ -42,6 +42,12 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
         if (serviceWrapper.getTimeout() == null) {
             serviceWrapper.setTimeout(rpcClientContext.getClientConfig().getRequestTimeout());
         }
+        if (serviceWrapper.getRetryTimes() == null) {
+            serviceWrapper.setRetryTimes(rpcClientContext.getClientConfig().getRequestRetryTimes());
+        }
+        if (serviceWrapper.getRetryInterval() == null) {
+            serviceWrapper.setRetryInterval(rpcClientContext.getClientConfig().getRequestRetryInterval());
+        }
         if (logger.isDebugEnabled()) {
             logger.debug("service wrapper is {}", serviceWrapper);
         }
@@ -56,7 +62,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
         while (curRetryTime <= retryTimes) {
             if (curRetryTime > 0) {
                 if (logger.isDebugEnabled()) {
-                    logger.debug("retry times {}", curRetryTime);
+                    logger.debug("current retry times is {}, next retry interval {}", curRetryTime, serviceWrapper.getRetryInterval());
                 }
             }
             threadPoolExecutor.submit(() -> {
@@ -79,6 +85,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
                     }
                 }
                 curRetryTime++;
+                TimeUnit.MILLISECONDS.sleep(serviceWrapper.getRetryInterval());
             } else {
                 return null;
             }
