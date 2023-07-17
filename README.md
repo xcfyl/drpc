@@ -96,7 +96,7 @@ public class ConsumerApplication {
 2. 服务消费者的配置文件
 
 ```properties
-client.request.timeout=1
+client.request.timeout=3000
 client.proxy=jdk
 client.router=roundrobin
 client.request.limit=2048
