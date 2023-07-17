@@ -51,8 +51,14 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 生成本次请求id
         String requestId = UUID.randomUUID().toString();
+        int curRetryTime = 0;
         Integer retryTimes = serviceWrapper.getRetryTimes();
-        while (retryTimes >= 0) {
+        while (curRetryTime <= retryTimes) {
+            if (curRetryTime > 0) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("retry times {}", curRetryTime);
+                }
+            }
             threadPoolExecutor.submit(() -> {
                 sendRequest(serviceWrapper, requestId, method.getName(), args);
             });
@@ -72,12 +78,9 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
                         return response.getBody();
                     }
                 }
+                curRetryTime++;
             } else {
                 return null;
-            }
-            retryTimes--;
-            if (logger.isDebugEnabled()) {
-                logger.debug("retry times {}", serviceWrapper.getRetryTimes() - retryTimes);
             }
         }
         if (logger.isDebugEnabled()) {

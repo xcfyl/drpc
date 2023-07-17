@@ -81,17 +81,23 @@ public class DrpcClient {
         DrpcRegistry registry = context.getRegistry();
         List<DrpcProviderData> providers = null;
         Integer subscribeRetryTimes = context.getClientConfig().getSubscribeRetryTimes();
+        int curRetryTime = 0;
         Long subscribeRetryInterval = context.getClientConfig().getSubscribeRetryInterval();
-        while (subscribeRetryTimes >= 0) {
+        while (curRetryTime <= subscribeRetryTimes) {
+            if (curRetryTime > 0) {
+                if (logger.isDebugEnabled()) {
+                    logger.debug("current retry times is {}, retry subscribe service {}", curRetryTime, serviceName);
+                }
+            }
             providers = registry.queryProviders(serviceName);
             if (!providers.isEmpty()) {
                 break;
             }
-            TimeUnit.MILLISECONDS.sleep(subscribeRetryInterval);
-            subscribeRetryTimes--;
             if (logger.isDebugEnabled()) {
-                logger.debug("retry subscribe service {}", serviceName);
+                logger.debug("retry failure, next retry interval {}", subscribeRetryInterval);
             }
+            TimeUnit.MILLISECONDS.sleep(subscribeRetryInterval);
+            curRetryTime++;
         }
         if (providers == null || providers.isEmpty()) {
             logger.error("subscribe service {} failure, no providers found", serviceName);
