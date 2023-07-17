@@ -129,20 +129,20 @@ public class DrpcConnectionManager {
      * @param connectionWrapper
      */
     public void remove(String serviceName, DrpcConnectionWrapper connectionWrapper) {
-         try {
-             lock.lock();
-             CopyOnWriteArrayList<DrpcConnectionWrapper> connectionWrappers = originalConnectionCache.getOrDefault(serviceName, new CopyOnWriteArrayList<>());
-             if (!connectionWrappers.contains(connectionWrapper)) {
-                 return;
-             }
-             connectionWrappers.remove(connectionWrapper);
-             if (connectionWrappers.size() == 0) {
-                 serviceNames.remove(serviceName);
-             }
-             originalConnectionCache.put(serviceName, connectionWrappers);
-         } finally {
-             lock.unlock();
-         }
+        try {
+            lock.lock();
+            CopyOnWriteArrayList<DrpcConnectionWrapper> connectionWrappers = originalConnectionCache.getOrDefault(serviceName, new CopyOnWriteArrayList<>());
+            if (!connectionWrappers.contains(connectionWrapper)) {
+                return;
+            }
+            connectionWrappers.remove(connectionWrapper);
+            if (connectionWrappers.size() == 0) {
+                serviceNames.remove(serviceName);
+            }
+            originalConnectionCache.put(serviceName, connectionWrappers);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public void replace(String serviceName, DrpcConnectionWrapper old, DrpcConnectionWrapper theNew) {
@@ -207,12 +207,15 @@ public class DrpcConnectionManager {
             if (channelFuture != null) {
                 return channelFuture;
             }
-            // 如果获取失败，那么这里尝试重复获取连接
+        } catch (Exception e) {
+            logger.error("get connection failure ip {}, port {}, exception is {}", ip, port, e.getMessage());
+        }
+        try {
             return RetryUtils.retry(retryConnectTimes, retryConnectInterval,
                     () -> bootstrap.connect(ip, port).sync(),
                     Objects::nonNull);
         } catch (Exception e) {
-            logger.error("get connection failure ip {}, port {}, exception is {}", ip, port, e.getMessage());
+            logger.error("retry get connection failure ip {}, port {}", ip, port);
         }
         return null;
     }
