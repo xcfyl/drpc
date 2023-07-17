@@ -59,7 +59,7 @@ public class ReplyServiceImpl implements ReplyService {
 1. Enabling Service Provider
 
 ```java
-@EnableDrpc(scanPackages = "com.github.xcfyl.drpc")
+@EnableDrpcServer(scanPackages = "com.github.xcfyl.drpc")
 @SpringBootApplication
 public class ProviderApplication {
     public static void main(String[] args) {
@@ -85,7 +85,7 @@ server.serializer=jdk
 
 ```java
 @SpringBootApplication
-@EnableDrpc(scanPackages = "com.github.xcfyl.drpc")
+@EnableDrpcClient(scanPackages = "com.github.xcfyl.drpc")
 public class ConsumerApplication {
     public static void main(String[] args) throws Throwable {
         SpringApplication.run(ConsumerApplication.class, args);
