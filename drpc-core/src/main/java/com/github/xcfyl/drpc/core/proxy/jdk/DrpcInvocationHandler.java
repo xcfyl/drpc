@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class DrpcInvocationHandler<T> implements InvocationHandler {
     private static final Logger logger = LoggerFactory.getLogger(DrpcInvocationHandler.class);
     private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8, 30,
-            TimeUnit.MINUTES, new ArrayBlockingQueue<>(1000), new ThreadPoolExecutor.CallerRunsPolicy());
+            TimeUnit.MINUTES, new ArrayBlockingQueue<>(3000), new ThreadPoolExecutor.CallerRunsPolicy());
 
     private final DrpcServiceWrapper<T> serviceWrapper;
     private final DrpcClientContext rpcClientContext;

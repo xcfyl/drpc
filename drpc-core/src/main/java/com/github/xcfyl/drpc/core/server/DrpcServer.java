@@ -44,8 +44,8 @@ public class DrpcServer {
     /**
      * 用于执行服务注册的线程池
      */
-    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8,
-            1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1000),
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 4,
+            10, TimeUnit.MINUTES, new ArrayBlockingQueue<>(1000),
             new ThreadPoolExecutor.CallerRunsPolicy());
 
     /**

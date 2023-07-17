@@ -79,4 +79,15 @@ public class DrpcServiceWrapper<T> {
     public void setRetryInterval(Long retryInterval) {
         this.retryInterval = retryInterval;
     }
+
+    @Override
+    public String toString() {
+        return "DrpcServiceWrapper{" +
+                "serviceClass=" + serviceClass +
+                ", isSync=" + isSync +
+                ", retryTimes=" + retryTimes +
+                ", retryInterval=" + retryInterval +
+                ", timeout=" + timeout +
+                '}';
+    }
 }

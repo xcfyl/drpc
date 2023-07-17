@@ -37,8 +37,8 @@ public class ZkClient {
     public void start() {
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(baseSleepTimes, maxRetries);
         curator = CuratorFrameworkFactory.builder().retryPolicy(retryPolicy)
-                .connectionTimeoutMs(1000)
-                .sessionTimeoutMs(6000)
+                .connectionTimeoutMs(60000)
+                .sessionTimeoutMs(60000)
                 .connectString(zkAddress)
                 .build();
         curator.start();
