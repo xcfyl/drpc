@@ -1,10 +1,5 @@
 package com.github.xcfyl.drpc.core.client;
 
-import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 包装客户端的订阅服务，给客户端订阅的服务增加额外的属性
  *
@@ -36,8 +31,6 @@ public class DrpcServiceWrapper<T> {
     private Long timeout;
 
     public DrpcServiceWrapper() {
-        // 默认情况下只重试3次
-        retryTimes = 3;
     }
 
     public Class<T> getServiceClass() {

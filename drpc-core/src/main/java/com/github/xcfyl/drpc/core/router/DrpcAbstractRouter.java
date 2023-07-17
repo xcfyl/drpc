@@ -33,28 +33,34 @@ public abstract class DrpcAbstractRouter implements DrpcRouter {
      * @throws Exception
      */
     @Override
-    public synchronized DrpcConnectionWrapper select(String serviceName) throws Exception {
-        if (cache.size() == 0) {
-            throw new DrpcRouterException("can't route, no connection found");
+    public DrpcConnectionWrapper select(String serviceName) throws Exception {
+        synchronized (cache) {
+            if (cache.size() == 0) {
+                throw new DrpcRouterException("can't route, no connection found");
+            }
+            // 从缓存中移除连接已经不正常的连接
+            cache.removeIf(connectionWrapper -> !connectionWrapper.isOk());
+            if (cache.size() == 0) {
+                throw new DrpcRouterException("can't route, no connection found");
+            }
+            DrpcConnectionWrapper connectionWrapper = doSelect(serviceName);
+            if (connectionWrapper == null) {
+                throw new DrpcRouterException("no connection found");
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("router is {}, select connection is {}", getName(), connectionWrapper);
+            }
+            return connectionWrapper;
         }
-        // 从缓存中移除连接已经不正常的连接
-        cache.removeIf(connectionWrapper -> !connectionWrapper.isOk());
-        DrpcConnectionWrapper connectionWrapper = doSelect(serviceName);
-        if (connectionWrapper == null) {
-            logger.error("no connection found");
-            throw new DrpcRouterException("no connection found");
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("router is {}, select connection is {}", getName(), connectionWrapper);
-        }
-        return connectionWrapper;
     }
 
     @Override
-    public synchronized void refresh(String serviceName) {
-        fillCache(serviceName, connectionManager);
-        doRefresh();
-        logger.debug("router refreshed, cache is {}", cache);
+    public void refresh(String serviceName) {
+        synchronized (cache) {
+            fillCache(serviceName, connectionManager);
+            doRefresh();
+            logger.debug("router refreshed, cache is {}", cache);
+        }
     }
 
     @Override

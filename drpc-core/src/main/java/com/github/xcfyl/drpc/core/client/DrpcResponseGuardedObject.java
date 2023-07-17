@@ -57,9 +57,6 @@ public class DrpcResponseGuardedObject {
         locks[index].lock();
         // 先添加一个标记，标识当前自己还在等待结果
         responses[index].put(requestId, STILL_WAIT);
-        if (logger.isDebugEnabled()) {
-            logger.debug("locks {} locked, new response {} query from guarded", index, requestId);
-        }
         long now = System.currentTimeMillis();
         long futureTime = now + timeout;
         try {
@@ -82,9 +79,6 @@ public class DrpcResponseGuardedObject {
         } catch (InterruptedException e) {
             logger.debug("wait response interrupted {}", e.getMessage());
         } finally {
-            if (logger.isDebugEnabled()) {
-                logger.debug("locks {} unlocked", index);
-            }
             // 当要退出get方法时，不论是否获取成功，都需要将response[index]对应位置的数据进行清除
             responses[index].remove(requestId);
             locks[index].unlock();
@@ -97,20 +91,11 @@ public class DrpcResponseGuardedObject {
         locks[index].lock();
         try {
             if (responses[index].get(response.getId()) != STILL_WAIT) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("locks {} locked, response {} has canceled", index, response.getId());
-                }
                 return;
-            }
-            if (logger.isDebugEnabled()) {
-                logger.debug("locks {} locked, new response {} added in guarded", index, response.getId());
             }
             responses[index].put(response.getId(), response);
             conditions[index].signalAll();
         } finally {
-            if (logger.isDebugEnabled()) {
-                logger.debug("locks {} unlocked", index);
-            }
             locks[index].unlock();
         }
     }
@@ -118,31 +103,5 @@ public class DrpcResponseGuardedObject {
     private int getIndex(String requestId) {
         int hash = Objects.hash(requestId);
         return hash & (length - 1);
-    }
-
-    public static void main(String[] args) {
-        DrpcResponseGuardedObject guardedObject = new DrpcResponseGuardedObject();
-
-        for (int i = 0; i < 1000; i++) {
-            final int j = i;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(guardedObject.getDrpcResponse(String.valueOf(j), 3000));
-                }
-            }).start();
-        }
-
-        for (int i = 0; i < 1000; i++) {
-            final int j = i;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    DrpcResponse response = new DrpcResponse();
-                    response.setId(String.valueOf(j));
-                    guardedObject.setDrpcResponse(response);
-                }
-            }).start();
-        }
     }
 }

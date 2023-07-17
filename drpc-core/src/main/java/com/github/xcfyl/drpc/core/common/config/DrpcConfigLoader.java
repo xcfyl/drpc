@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.common.config;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xcfyl.drpc.core.client.DrpcClientConfig;
 import com.github.xcfyl.drpc.core.common.enums.*;
 import com.github.xcfyl.drpc.core.exception.DrpcConfigException;
@@ -82,6 +83,11 @@ public class DrpcConfigLoader {
         serverConfig.setRegistryType(DrpcRegistryType.fromDescription(registryType));
         serverConfig.setRegistryAddr(registryAddr);
         serverConfig.setSerializeType(DrpcSerializeType.fromDescription(serializeType));
+        if (logger.isDebugEnabled()) {
+            logger.debug("===========================DrpcClient========================");
+            logger.debug("{}", JSON.toJSON(serverConfig));
+            logger.debug("=============================================================");
+        }
         return serverConfig;
     }
 
@@ -147,6 +153,11 @@ public class DrpcConfigLoader {
         clientConfig.setRequestRetryInterval(requestRetryInterval);
         clientConfig.setReconnectTimes(reconnectTimes);
         clientConfig.setReconnectInterval(reconnectInterval);
+        if (logger.isDebugEnabled()) {
+            logger.debug("===========================DrpcClient========================");
+            logger.debug("{}", JSON.toJSON(clientConfig));
+            logger.debug("=============================================================");
+        }
         return clientConfig;
     }
 

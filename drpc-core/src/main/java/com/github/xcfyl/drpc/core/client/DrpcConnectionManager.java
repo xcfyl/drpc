@@ -63,28 +63,16 @@ public class DrpcConnectionManager {
 
     private void startCheckConnectionAlive() {
         timerTask.scheduleWithFixedDelay(() -> {
-            if (logger.isDebugEnabled()) {
-                logger.debug("start check connect alive");
-            }
             try {
                 for (String serviceName : serviceNames) {
                     List<DrpcConnectionWrapper> originalConnections = getOriginalConnections(serviceName);
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("check service {}, connections {}", serviceName, originalConnections);
-                    }
                     for (DrpcConnectionWrapper connectionWrapper : originalConnections) {
                         if (connectionWrapper.isOk()) {
-                            if (logger.isDebugEnabled()) {
-                                logger.debug("connection {} is still alive", connectionWrapper);
-                            }
                             continue;
                         }
 
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("connection {} not alive, retry reconnect it", connectionWrapper);
-                        }
                         // 执行重试逻辑
-                        RetryUtils.retry(retryConnectTimes, retryConnectInterval, () -> {
+                        Boolean retryOk = RetryUtils.retry("CheckConnectionRetry", retryConnectTimes, retryConnectInterval, () -> {
                             DrpcConnectionWrapper newConnectionWrapper = getConnectionWrapper(
                                     serviceName, connectionWrapper.getIp(), connectionWrapper.getPort());
                             if (newConnectionWrapper.isOk()) {
@@ -92,10 +80,15 @@ public class DrpcConnectionManager {
                             }
                             return newConnectionWrapper.isOk();
                         }, bool -> bool);
+
+                        if (Boolean.FALSE.equals(retryOk)) {
+                            logger.error("retry connect service {}, ip {}, port {} failure",
+                                    serviceName, connectionWrapper.getIp(), connectionWrapper.getPort());
+                        }
                     }
                 }
             } catch (Exception e) {
-                logger.error("connect check error {}", e.getMessage());
+                logger.error("connection check error {}", e.getMessage());
             }
         }, 5, 10, TimeUnit.MINUTES);
     }
@@ -211,13 +204,16 @@ public class DrpcConnectionManager {
             logger.error("get connection failure ip {}, port {}, exception is {}", ip, port, e.getMessage());
         }
         try {
-            return RetryUtils.retry(retryConnectTimes, retryConnectInterval,
+            ChannelFuture channelFuture = RetryUtils.retry("ConnectRetry", retryConnectTimes, retryConnectInterval,
                     () -> bootstrap.connect(ip, port).sync(),
                     Objects::nonNull);
+            if (channelFuture != null) {
+                return channelFuture;
+            }
         } catch (Exception e) {
-            logger.error("retry get connection failure ip {}, port {}", ip, port);
+            logger.error("retry get connection failure ip {}, port {}, exception {}", ip, port, e.getMessage());
         }
-        return null;
+        throw new RuntimeException("retry connect failure");
     }
 
     public Bootstrap getBootstrap() {

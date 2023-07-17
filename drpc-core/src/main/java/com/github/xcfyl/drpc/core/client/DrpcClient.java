@@ -90,7 +90,7 @@ public class DrpcClient {
 
         if (providers == null || providers.size() == 0) {
             // 如果没有获取到providers信息，那么尝试重复获取
-            providers = RetryUtils.retry(retryTimes, retryInterval,
+            providers = RetryUtils.retry("queryProvidersRetry", retryTimes, retryInterval,
                     () -> registry.queryProviders(serviceName),
                     providers1 -> providers1 != null && providers1.size() != 0);
         }
@@ -106,9 +106,6 @@ public class DrpcClient {
             String ip = providerData.getIp();
             Integer port = providerData.getPort();
             connectionManager.connect(serviceName, ip, port);
-        }
-        if (logger.isDebugEnabled()) {
-            logger.debug("subscribe service {}", serviceName);
         }
         // 连接完成之后，应该刷新路由
         context.getRouter().refresh(serviceName);

@@ -1,5 +1,6 @@
 package com.github.xcfyl.drpc.core.common.retry;
 
+import io.netty.util.internal.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,22 +17,36 @@ public class RetryUtils {
     /**
      * 重试执行某个操作，直到RetryDo返回的结果通过了predicate
      * 或者超过最大重试次数
+     */
+    public static <T> T retry(String retryName, int retryTimes, long retryInterval,
+                              RetryDo<T> retryDo, Predicate<T> predicate) throws Exception {
+        return retry(retryName, retryTimes, retryInterval, Long.MAX_VALUE, retryDo, predicate);
+    }
+
+    /**
+     * 在指定时间内尽可能多的重试
      *
      * @param retryTimes
      * @param retryInterval
+     * @param timeout
      * @param retryDo
-     * @param <T>
+     * @param predicate
      * @return
+     * @param <T>
      * @throws Exception
      */
-    public static <T> T retry(int retryTimes, long retryInterval,
+    public static <T> T retry(String retryName, int retryTimes, long retryInterval, long timeout,
                               RetryDo<T> retryDo, Predicate<T> predicate) throws Exception {
         if (logger.isDebugEnabled()) {
-            logger.debug("start retry, retry times {}, retry interval {}", retryTimes, retryInterval);
+            if (StringUtil.isNullOrEmpty(retryName)) {
+                retryName = "";
+            }
+            logger.debug("start retry {}, retry times {}, retry interval {}", retryName, retryTimes, retryInterval);
         }
 
+        long now = System.currentTimeMillis();
         int curTime = 1;
-        while (curTime <= retryTimes) {
+        while (curTime <= retryTimes && now <= timeout) {
             if (logger.isDebugEnabled()) {
                 logger.debug("current retry time {}", curTime);
             }
@@ -44,6 +59,7 @@ public class RetryUtils {
             }
             curTime++;
             TimeUnit.MILLISECONDS.sleep(retryInterval);
+            now = System.currentTimeMillis();
         }
         if (logger.isDebugEnabled()) {
             logger.debug("retry failure");

@@ -39,9 +39,6 @@ public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
                 DrpcSerializer serializer = rpcClientContext.getSerializer();
                 DrpcResponse response = serializer.deserialize(protocol.getBody(), DrpcResponse.class);
                  rpcClientContext.getResponseGuardedObject().setDrpcResponse(response);
-                if (logger.isDebugEnabled()) {
-                    logger.debug("receive a response, {}", response);
-                }
                 ReferenceCountUtil.release(msg);
             } catch (Exception e) {
                 logger.error("client handle response failure {}", e.getMessage());

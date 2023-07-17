@@ -74,7 +74,7 @@ public class DrpcInvocationHandler<T> implements InvocationHandler {
 
         if (response == null) {
             // 如果第一次请求超时
-            response = RetryUtils.retry(retryTimes, retryInterval, () -> {
+            response = RetryUtils.retry("GetResponseRetry", retryTimes, retryInterval, () -> {
                 // 在这里面编写重试的逻辑
                 return rpcClientContext.getResponseGuardedObject()
                         .getDrpcResponse(requestId, serviceWrapper.getTimeout());

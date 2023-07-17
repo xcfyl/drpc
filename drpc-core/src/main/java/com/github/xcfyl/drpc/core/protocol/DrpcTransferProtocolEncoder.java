@@ -20,8 +20,5 @@ public class DrpcTransferProtocolEncoder extends MessageToByteEncoder<DrpcTransf
         byteBuf.writeShort(DrpcTransferProtocol.getMagicNumber());
         byteBuf.writeInt(protocol.getLength());
         byteBuf.writeBytes(protocol.getBody());
-        if (logger.isDebugEnabled()) {
-            logger.debug("encode a new protocol {}", protocol);
-        }
     }
 }

@@ -39,9 +39,6 @@ public class DrpcTransferProtocolDecoder extends ByteToMessageDecoder {
             byteBuf.readBytes(bytes);
             DrpcTransferProtocol protocol = new DrpcTransferProtocol(bytes);
             list.add(protocol);
-            if (logger.isDebugEnabled()) {
-                logger.debug("decode a new protocol {}", protocol);
-            }
         }
     }
 }
