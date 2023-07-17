@@ -96,7 +96,7 @@ public class ConsumerApplication {
 2. The service consumer configuration template
 
 ```properties
-client.request.timeout=3000
+client.request.timeout=1
 client.proxy=jdk
 client.router=roundrobin
 client.request.limit=2048
@@ -106,6 +106,8 @@ client.application.name=client1
 client.serializer=jdk
 client.subscribe.retry.times=3
 client.subscribe.retry.interval=1000
+client.request.retry.times=3
+client.request.retry.interval=3000
 ```
 
 ### 3.4.3 controller
