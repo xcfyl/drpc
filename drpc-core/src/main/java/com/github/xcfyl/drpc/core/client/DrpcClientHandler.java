@@ -24,8 +24,12 @@ import java.util.concurrent.TimeUnit;
 public class DrpcClientHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(DrpcClientHandler.class);
     private final DrpcClientContext rpcClientContext;
-    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4, 8, 30,
-            TimeUnit.MINUTES, new ArrayBlockingQueue<>(3000), new ThreadPoolExecutor.CallerRunsPolicy());
+    private final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+            8,
+            16,
+            30, TimeUnit.MINUTES,
+            new ArrayBlockingQueue<>(3000),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
     public DrpcClientHandler(DrpcClientContext rpcClientContext) {
         this.rpcClientContext = rpcClientContext;

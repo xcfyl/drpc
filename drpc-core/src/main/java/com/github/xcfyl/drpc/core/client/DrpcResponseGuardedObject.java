@@ -41,7 +41,7 @@ public class DrpcResponseGuardedObject {
     }
 
     public DrpcResponseGuardedObject() {
-        this(64);
+        this(128);
     }
 
     public int getLength() {
